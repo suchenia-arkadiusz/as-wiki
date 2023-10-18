@@ -1,6 +1,6 @@
 import express from "express";
-import {registerUser, validateRegisterInput} from "./register-user.js";
-import {loginUser} from "./login-user.js";
+import {registerUser, validateRegisterInput} from "./register-user";
+import {loginUser} from "./login-user";
 
 export const authRoute = () => {
   const router = express.Router();

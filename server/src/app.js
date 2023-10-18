@@ -1,7 +1,7 @@
 import express from "express";
-import {dbConnect} from "./db/connect.js";
-import {config} from "./config/config.js";
-import {routes} from "./routes.js";
+import {dbConnect} from "./db/connect";
+import {config} from "./config/config";
+import {routes} from "./routes";
 
 const app = express();
 app.use(express.json())

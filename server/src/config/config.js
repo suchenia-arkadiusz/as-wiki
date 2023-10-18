@@ -7,5 +7,6 @@ export const config = {
     host: process.env.DB_HOST || "localhost"
   },
   dbClient: undefined,
-  uriPrefix: "/api/v1"
+  uriPrefix: "/api/v1",
+  tokenSecret: process.env.APP_TOKEN_SECRET || "dev-token"
 }
