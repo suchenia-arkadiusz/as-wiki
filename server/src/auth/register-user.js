@@ -1,9 +1,7 @@
-import {getUserByUsername} from "./helpers/get-user";
 import {createUser} from "./helpers/upsert-user";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import {config} from "../config/config";
-import {insertAuthToken} from "./helpers/upsert-auth";
+import {generateJWT} from "./utils/generate-jwt";
+import {refreshToken} from "./refresh-token";
 
 export const registerUser = async (req, res) => {
   const {username, password, email, firstName, lastName, avatarURL} = req.body;
@@ -12,36 +10,13 @@ export const registerUser = async (req, res) => {
 
   const savedUser = await createUser({username, password: encryptedPassword, email, firstName, lastName, avatarURL});
 
-  const token = generateJWT(savedUser.id, username, email, firstName, lastName)
+  const user = {userId: savedUser.id, username, email, firstName, lastName, avatarURL}
 
-  await insertAuthToken({userId: savedUser.id, token})
+  const token = generateJWT(user)
+  const refreshToken = generateJWT(user, "1d")
 
-  res.status(201).json(savedUser);
+  res
+    .cookie("refreshToken", refreshToken, {httpOnly: true, sameSite: "strict"})
+    .header("Authorization", token)
+    .send(user)
 };
-
-const generateJWT = (userId, username, email, firstName, lastName) => jwt.sign(
-    {userId, username, email, firstName, lastName},
-    config.tokenSecret,
-    {
-      expiresIn: "1h"
-    }
-  )
-
-export const validateRegisterInput = async (req, res, next) => {
-  const {username, password, email} = req.body;
-
-  if (!(email && username && password)) {
-    console.error("VALIDATION ERROR = 'Username', 'Password' and 'e-mail' are mandatory!");
-    res.status(400).json({message: "'Username', 'Password' and 'e-mail' are mandatory!"});
-    return;
-  }
-
-  const existedUser = await getUserByUsername(username);
-  if (!!existedUser) {
-    console.error("VALIDATION ERROR = User with given username already exists!");
-    res.status(409).json({message: "User with given username already exists!"});
-    return;
-  }
-
-  next();
-}

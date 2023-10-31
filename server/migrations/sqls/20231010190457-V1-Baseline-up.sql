@@ -9,14 +9,6 @@ CREATE TABLE "USERS" (
     "avatar_url" TEXT
 );
 
-CREATE TABLE "AUTH" (
-    "id" uuid PRIMARY KEY,
-    "user_id" uuid NOT NULL,
-    "token" text,
-    "refresh_token" text,
-    CONSTRAINT fk_auth_user FOREIGN KEY(user_id) REFERENCES "USERS"(id)
-);
-
 CREATE TABLE "GROUPS" (
     "id" uuid PRIMARY KEY,
     "name" VARCHAR(50) UNIQUE NOT NULL,

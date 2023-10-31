@@ -3,31 +3,22 @@ import {dbConnect} from "./db/connect";
 import {config} from "./config/config";
 import {routes} from "./routes";
 
-const app = express();
-app.use(express.json())
+const start = () => {
+  const app = express();
+  app.use(express.json())
 
-const db = dbConnect(config.db);
+  config.dbClient = dbConnect(config.db);
 
-config.dbClient = db;
+  addRoutes(app);
 
-const addRoutes = () => {
-  const appRoutes = routes();
-  appRoutes.forEach(route => app.use(route.prefix, route.route))
+  app.listen(3000, () => {
+    console.log("The asWiki app is started!");
+  })
 }
 
-const query = `SELECT * FROM "USERS"`;
-db.query(query, (err, res) => {
-  if (err) {
-    console.error(err);
-    return;
+  const addRoutes = (app) => {
+    const appRoutes = routes();
+    appRoutes.forEach(route => app.use(route.prefix, route.route))
   }
-  console.log(res.rows);
-})
 
-addRoutes();
-
-
-app.listen(3000, () => {
-  console.log("The asWiki app is started!");
-})
-
+start()

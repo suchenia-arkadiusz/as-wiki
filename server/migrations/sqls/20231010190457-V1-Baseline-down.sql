@@ -9,4 +9,3 @@ drop table "PAGES";
 drop table "PROJECTS";
 drop table "USERS";
 drop table "ATTACHMENTS";
-drop table "AUTH";
