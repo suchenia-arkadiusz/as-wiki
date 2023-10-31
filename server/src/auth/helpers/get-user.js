@@ -1,4 +1,4 @@
-import {config} from "../../config/config";
+import { config } from "../../config/config";
 
 export const getUserByUsername = async (username) => {
   const client = config.dbClient;
@@ -7,7 +7,7 @@ export const getUserByUsername = async (username) => {
   const res = await client.query(query, [username]);
 
   return res.rows.length > 0 ? mapUser(res.rows[0]) : undefined;
-}
+};
 
 const mapUser = (user) => ({
   id: user.id,
@@ -17,5 +17,5 @@ const mapUser = (user) => ({
   firstName: user.first_name,
   lastName: user.last_name,
   createdAt: user.created_at,
-  avatarURL: user.avatar_url
-})
+  avatarURL: user.avatar_url,
+});
