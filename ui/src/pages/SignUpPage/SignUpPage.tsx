@@ -1,5 +1,13 @@
+import "./SignUpPage.css";
+import SignUpCard from "./components/SignUpCard/SignUpCard.tsx";
+
 const SignUpPage = () => {
-  return <div>Sign Up Page</div>;
+  return (
+    <div className="app-signup-page-container">
+      Sign Up Page
+      <SignUpCard />
+    </div>
+  );
 };
 
 export default SignUpPage;

@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage/HomePage.tsx";
 
 function App() {
   return (
-    <>
+    <div>
       <NavBar />
       <div>
         <Routes>
@@ -14,7 +14,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
