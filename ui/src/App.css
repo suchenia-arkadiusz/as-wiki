@@ -1,0 +1,13 @@
+.primary-btn {
+  /*background-color: #d2e6b5;*/
+  border: none;
+  text-decoration: none;
+  border-radius: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.25s ease-out;
+}
+
+.primary-btn:hover {
+  background-color: #d2e6b5;
+}

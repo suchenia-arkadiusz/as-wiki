@@ -1,6 +1,6 @@
 .app-text-input {
-  border-radius: 5px;
-  border: 1px solid #d9d9d9;
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -10,6 +10,11 @@
   font-size: 0.8em;
 }
 
+.app-text-input:active {
+  border: none;
+}
+
 .app-input-not-validated {
-  border: 1px solid red;
+  border: none;
+  border-bottom: 1px solid red;
 }

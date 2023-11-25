@@ -1,6 +1,15 @@
 import "./Input.css";
+import { HTMLProps } from "react";
 
-const Input = (props) => {
+type InputProps = HTMLProps<HTMLInputElement> & {
+  label: string;
+  value: string;
+  isRequired?: boolean;
+  validated: boolean;
+  inputKey: string | undefined;
+};
+
+const Input = (props: InputProps) => {
   const { label, value, placeholder, isRequired, validated, type, onChange, inputKey } = props;
 
   return (

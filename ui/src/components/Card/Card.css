@@ -1,0 +1,9 @@
+.app-card-center-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid #b9b9b9;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  padding: 20px;
+}

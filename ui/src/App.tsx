@@ -1,21 +1,22 @@
 import "./App.css";
 import { NavBar } from "./components/NavBar/NavBar.tsx";
 import { Route, Routes } from "react-router-dom";
-import SignUpPage from "./pages/SignUpPage/SignUpPage.tsx";
 import HomePage from "./pages/HomePage/HomePage.tsx";
+import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
+import { UserController } from "./contexts/UserContext.tsx";
 
-function App() {
+const App = () => {
   return (
-    <div>
+    <UserController>
       <NavBar />
       <div>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </div>
-    </div>
+    </UserController>
   );
-}
+};
 
 export default App;
