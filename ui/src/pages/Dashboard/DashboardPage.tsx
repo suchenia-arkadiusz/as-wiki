@@ -2,10 +2,14 @@ import styled from "styled-components";
 import { Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.tsx";
+import RecentlyViewedPanel from "./components/RecentlyViewedPanel/RecentlyViewedPanel.tsx";
+import UserInfoPanel from "./components/UserInfoPanel/UserInfoPanel.tsx";
 
 const DashboardPageContainer = styled.div`
   padding: 10px;
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 const DashboardPage = () => {
@@ -13,12 +17,12 @@ const DashboardPage = () => {
 
   return (
     <>
-      {userContext?.getUser() === undefined ? (
+      {userContext?.getUser() == null ? (
         <Navigate replace to="/" />
       ) : (
         <DashboardPageContainer>
-          Dashboard page
-          <br /> {userContext.getUser()?.username}
+          <RecentlyViewedPanel />
+          <UserInfoPanel />
         </DashboardPageContainer>
       )}
     </>

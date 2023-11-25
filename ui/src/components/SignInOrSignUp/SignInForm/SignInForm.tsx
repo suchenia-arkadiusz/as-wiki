@@ -43,6 +43,7 @@ const SignInForm = () => {
       email: "a@a.com",
       firstName: "Arek",
       lastName: "Suchenia",
+      avatarUrl: undefined,
     });
     navigate("/dashboard", { replace: true });
   };

@@ -1,5 +1,4 @@
 .primary-btn {
-  /*background-color: #d2e6b5;*/
   border: none;
   text-decoration: none;
   border-radius: 2rem;
@@ -10,4 +9,10 @@
 
 .primary-btn:hover {
   background-color: #d2e6b5;
+}
+
+.app-default-link {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
 }
