@@ -1,18 +1,14 @@
-CREATE TABLE "USERS" (
-    "id" uuid PRIMARY KEY ,
-    "username" VARCHAR(50) UNIQUE NOT NULL,
-    "password" VARCHAR(255) NOT NULL,
-    "e_mail" VARCHAR(255) UNIQUE NOT NULL,
-    "first_name" VARCHAR(50),
-    "last_name" VARCHAR(50),
-    "created_at" TIMESTAMP NOT NULL,
-    "avatar_url" TEXT
-);
-
 CREATE TABLE "GROUPS" (
     "id" uuid PRIMARY KEY,
     "name" VARCHAR(50) UNIQUE NOT NULL,
-    "version" INTEGER DEFAULT 1
+    "version" INTEGER DEFAULT 1,
+    "permissions" VARCHAR(255) NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "created_by" uuid,
+    "updated_at" TIMESTAMP NOT NULL,
+    "updated_by" uuid,
+    CONSTRAINT fk_group_created_by FOREIGN KEY(created_by) REFERENCES "USERS"(id),
+    CONSTRAINT fk_group_updated_by FOREIGN KEY(updated_by) REFERENCES "USERS"(id)
 );
 
 CREATE TABLE "USER_GROUPS" (
@@ -99,5 +95,9 @@ CREATE TABLE "PAGE_ATTACHMENTS" (
     CONSTRAINT fk_page_attachment_attachment_id FOREIGN KEY(attachment_id) REFERENCES "ATTACHMENTS"(id)
 );
 
-INSERT INTO "GROUPS" (id, name, version) values (gen_random_uuid(), 'ADMIN', 1);
-INSERT INTO "GROUPS" (id, name, version) values (gen_random_uuid(), 'USER', 1);
+INSERT INTO "GROUPS" (id, name, permissions, created_at, created_by, updated_at, updated_by) SELECT gen_random_uuid(), 'ADMIN', 'admin',
+ now(), "USERS".id, now(), "USERS".id FROM "USERS" WHERE "username" = 'admin';
+INSERT INTO "GROUPS" (id, name, permissions, created_at, created_by, updated_at, updated_by) SELECT gen_random_uuid(), 'USER',
+'project:read,project:write,page:read,page:write', now(), "USERS".id, now(), "USERS".id FROM "USERS" WHERE "username" = 'admin';
+
+INSERT INTO "USER_GROUPS" (user_id, group_id) SELECT "USERS".id, "GROUPS".id FROM "USERS", "GROUPS" WHERE "USERS".username = 'admin' AND "GROUPS".name = 'ADMIN';

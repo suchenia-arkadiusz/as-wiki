@@ -1,4 +1,3 @@
-drop table migrations;
 drop table "USER_GROUPS";
 drop table "PROJECT_PERMISSIONS";
 drop table "PAGE_PERMISSIONS";
@@ -9,3 +8,4 @@ drop table "PAGES";
 drop table "PROJECTS";
 drop table "USERS";
 drop table "ATTACHMENTS";
+drop table migrations;
