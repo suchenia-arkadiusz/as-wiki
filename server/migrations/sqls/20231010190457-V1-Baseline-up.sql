@@ -98,3 +98,6 @@ CREATE TABLE "PAGE_ATTACHMENTS" (
     CONSTRAINT fk_page_attachment_page_id FOREIGN KEY(page_id) REFERENCES "PAGES"(id),
     CONSTRAINT fk_page_attachment_attachment_id FOREIGN KEY(attachment_id) REFERENCES "ATTACHMENTS"(id)
 );
+
+INSERT INTO "GROUPS" (id, name, version) values (gen_random_uuid(), 'ADMIN', 1);
+INSERT INTO "GROUPS" (id, name, version) values (gen_random_uuid(), 'USER', 1);
