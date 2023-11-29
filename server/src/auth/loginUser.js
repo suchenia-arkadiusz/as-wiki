@@ -1,6 +1,6 @@
-import { getUserByUsername } from "./helpers/get-user";
+import { getUserByUsername } from "./helpers/getUser";
 import bcrypt from "bcryptjs";
-import { generateJWT } from "./utils/generate-jwt";
+import { generateJWT } from "./utils/generateJWT";
 
 export const loginUser = async (req, res) => {
   const { username, password: userPassword } = req.body;
@@ -13,7 +13,11 @@ export const loginUser = async (req, res) => {
   const token = generateJWT({ userId: user.id, ...user });
   const refreshToken = generateJWT({ userId: user.id, ...user }, "1d");
 
-  res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict" }).header("Authorization", token).send(responseUser);
+  res
+    .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict", secure: true })
+    .cookie("jwt", token, { httpOnly: true, sameSite: "strict", secure: true })
+    .header("authorization", token)
+    .send(responseUser);
 };
 
 const isPasswordMatched = async (password, storedPassword) => await bcrypt.compare(password, storedPassword);

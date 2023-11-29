@@ -1,4 +1,4 @@
-import { getUserByUsername } from "../helpers/get-user";
+import { getUserByUsername } from "../helpers/getUser";
 
 export const validateRegisterInput = async (req, res, next) => {
   const { username, password, email } = req.body;

@@ -1,7 +1,7 @@
-import { createUser } from "./helpers/upsert-user";
+import { createUser } from "./helpers/upsertUser";
 import bcrypt from "bcryptjs";
-import { generateJWT } from "./utils/generate-jwt";
-import { refreshToken } from "./refresh-token";
+import { generateJWT } from "./utils/generateJWT";
+import { refreshToken } from "./refreshToken";
 
 export const registerUser = async (req, res) => {
   const { username, password, email, firstName, lastName, avatarURL } = req.body;
@@ -15,5 +15,9 @@ export const registerUser = async (req, res) => {
   const token = generateJWT(user);
   const refreshToken = generateJWT(user, "1d");
 
-  res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict" }).header("Authorization", token).send(user);
+  res
+    .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict" })
+    .cookie("jwt", token, { httpOnly: true, sameSite: "strict", secure: true })
+    .header("authorization", token)
+    .send(user);
 };

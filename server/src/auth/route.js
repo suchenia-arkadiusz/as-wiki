@@ -1,8 +1,8 @@
 import express from "express";
-import { registerUser } from "./register-user";
-import { loginUser } from "./login-user";
-import { validateRegisterInput } from "./utils/validate-tegister-input";
-import { refreshToken } from "./refresh-token";
+import { registerUser } from "./registerUser";
+import { loginUser } from "./loginUser";
+import { validateRegisterInput } from "./utils/validateRegisterInput";
+import { refreshToken } from "./refreshToken";
 
 export const authRoute = () => {
   const router = express.Router();

@@ -2,10 +2,12 @@ import express from "express";
 import { dbConnect } from "./db/connect";
 import { config } from "./config/config";
 import { routes } from "./routes";
+import cookieParser from "cookie-parser";
 
 const start = () => {
   const app = express();
   app.use(express.json());
+  app.use(cookieParser());
 
   config.dbClient = dbConnect(config.db);
 
