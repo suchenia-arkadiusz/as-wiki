@@ -32,7 +32,7 @@ const Icon = ({ iconName, width, height, color, hoverColor }: IconProps) => {
 };
 
 Icon.defaultProps = {
-  color: "#5b5b5b",
+  color: "#747474",
   hoverColor: "#ff4848",
   width: "16px",
   height: "16px",
