@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import Icon from "../../../../components/Icon/Icon.tsx";
 import Loader from "../../../../components/Loader/Loader.tsx";
 import { useEffect, useState } from "react";
+import ProjectLogo from "../ProjectLogo/ProjectLogo.tsx";
+import TableRow from "./TableRow.tsx";
+import { Project } from "../../types.ts";
 
 const ProjectsTableContainer = styled.div`
   display: flex;
@@ -20,53 +22,40 @@ const HeaderCell = styled.th`
   font-weight: bold;
 `;
 
-const TableRow = styled.tr`
-  height: 50px;
-  border-bottom: 1px solid #d9d9d9;
-`;
-
-const TableCell = styled.td`
-  color: #747474;
-`;
-
-const IconsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  color: #747474;
-`;
-
 const ProjectsTable = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState<Array<Project>>([]);
 
   useEffect(() => {
     setTimeout(() => {
-      setData([
+      const data: Array<Project> = [
         {
           id: "1",
-          name: "Project 1",
+          name: "asWiki",
           description: "Description 1",
+          color: "#ffaeae",
         },
         {
           id: "2",
-          name: "Project 2",
+          name: "Some Interesting Project",
           description: "Description 2",
+          color: "#ffffff",
+          logoUrl: "https://t4.ftcdn.net/jpg/02/16/28/19/360_F_216281970_6gotBzdxtFD6vjh7RGmcc4X2JpJz3pr0.jpg",
         },
         {
           id: "3",
           name: "Project 3",
           description: "Description 3",
+          color: "#97ffa8",
         },
-      ]);
+      ].map((item) => ({
+        ...item,
+        logo: <ProjectLogo projectName={item.name} projectColor={item.color} logoUrl={item.logoUrl} />,
+      }));
+      setData(data);
       setIsLoaded(true);
-    }, 2000);
+    }, 1000);
   }, []);
-
-  const handleIconClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation();
-    alert("Icon clicked");
-  };
 
   return (
     <>
@@ -83,17 +72,7 @@ const ProjectsTable = () => {
             </thead>
             <tbody>
               {data.map((project: Project) => (
-                <TableRow onClick={() => alert(`${project.name} clicked`)}>
-                  <TableCell>{project.id}</TableCell>
-                  <TableCell>{project.name}</TableCell>
-                  <TableCell>{project.description}</TableCell>
-                  <TableCell>
-                    <IconsContainer onClick={(e) => handleIconClick(e)}>
-                      <Icon iconName="Pen" />
-                      <Icon iconName="Trash" />
-                    </IconsContainer>
-                  </TableCell>
-                </TableRow>
+                <TableRow key={project.id} project={project} />
               ))}
             </tbody>
           </table>
