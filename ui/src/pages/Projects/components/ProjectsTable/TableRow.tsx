@@ -1,6 +1,7 @@
 import Icon from "../../../../components/Icon/Icon.tsx";
 import styled from "styled-components";
 import { Project } from "../../types.ts";
+import { Link } from "react-router-dom";
 
 const TableRowContainer = styled.tr`
   height: 50px;
@@ -31,9 +32,13 @@ const TableRow = (props: TableRowProps) => {
   };
 
   return (
-    <TableRowContainer onClick={() => alert(`${project.name} clicked`)} key={project.id}>
+    <TableRowContainer key={project.id}>
       <TableCell>{project.logo}</TableCell>
-      <TableCell>{project.name}</TableCell>
+      <TableCell>
+        <Link to={`/projects/${project.id}`} style={{ textDecoration: "none", color: "inherit", fontWeight: "inherit" }}>
+          {project.name}
+        </Link>
+      </TableCell>
       <TableCell>{project.description}</TableCell>
       <TableCell>
         <IconsContainer onClick={(e) => handleIconClick(e)}>

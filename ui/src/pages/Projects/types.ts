@@ -4,7 +4,7 @@ export type Project = {
   id: string;
   name: string;
   description: string;
-  color: string;
-  logo: ReactNode;
+  color?: string;
+  logo?: ReactNode;
   logoUrl?: string;
 };

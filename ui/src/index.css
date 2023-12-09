@@ -4,7 +4,7 @@
   font-family: "Lato", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-size: 0.9rem;
+  font-size: 1rem;
 
   color-scheme: light dark;
   background-color: #fff;
@@ -16,9 +16,16 @@
 h1 {
   font-size: 1.6rem;
   margin-bottom: 20px;
+  color: #393939;
 }
 
 h2 {
   font-size: 1.4rem;
   margin-bottom: 15px;
+  color: #393939;
+}
+
+p {
+  color: #747474;
+  margin-bottom: 20px;
 }
