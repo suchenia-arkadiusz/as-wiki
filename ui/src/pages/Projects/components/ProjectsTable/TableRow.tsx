@@ -1,23 +1,7 @@
 import Icon from "../../../../components/Icon/Icon.tsx";
-import styled from "styled-components";
 import { Project } from "../../types.ts";
 import { Link } from "react-router-dom";
-
-const TableRowContainer = styled.tr`
-  height: 50px;
-  border-bottom: 1px solid #d9d9d9;
-`;
-
-const TableCell = styled.td`
-  color: #747474;
-`;
-
-const IconsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  color: #747474;
-`;
+import { IconsContainer, TableCell, TableRowContainer } from "../../../../components/styles.ts";
 
 type TableRowProps = {
   project: Project;
@@ -25,11 +9,6 @@ type TableRowProps = {
 
 const TableRow = (props: TableRowProps) => {
   const { project } = props;
-
-  const handleIconClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation();
-    alert("Icon clicked");
-  };
 
   return (
     <TableRowContainer key={project.id}>
@@ -41,7 +20,10 @@ const TableRow = (props: TableRowProps) => {
       </TableCell>
       <TableCell>{project.description}</TableCell>
       <TableCell>
-        <IconsContainer onClick={(e) => handleIconClick(e)}>
+        <IconsContainer>
+          <Link to={`/projects/${project.id}`} style={{ textDecoration: "none", color: "inherit", fontWeight: "inherit" }}>
+            <Icon iconName="InfoCircle" />
+          </Link>
           <Icon iconName="Pen" />
           <Icon iconName="Trash" />
         </IconsContainer>

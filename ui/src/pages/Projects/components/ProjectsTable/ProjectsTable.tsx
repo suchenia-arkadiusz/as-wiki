@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Loader from "../../../../components/Loader/Loader.tsx";
 import { useEffect, useState } from "react";
 import ProjectLogo from "../ProjectLogo/ProjectLogo.tsx";
 import TableRow from "./TableRow.tsx";
 import { Project } from "../../types.ts";
+import TableLoader from "../../../../components/Loader/TableLoader/TableLoader.tsx";
 
 const ProjectsTableContainer = styled.div`
   display: flex;
@@ -54,33 +54,25 @@ const ProjectsTable = () => {
       }));
       setData(data);
       setIsLoaded(true);
-    }, 1000);
+    }, 10000);
   }, []);
 
   return (
-    <>
-      {isLoaded ? (
-        <ProjectsTableContainer>
-          <table style={{ borderCollapse: "collapse" }}>
-            <thead>
-              <HeaderRow>
-                <HeaderCell style={{ width: "50px" }}></HeaderCell>
-                <HeaderCell style={{ width: "600px", textAlign: "left" }}>NAME</HeaderCell>
-                <HeaderCell style={{ width: "1161px", textAlign: "left" }}>DESCRIPTION</HeaderCell>
-                <HeaderCell></HeaderCell>
-              </HeaderRow>
-            </thead>
-            <tbody>
-              {data.map((project: Project) => (
-                <TableRow key={project.id} project={project} />
-              ))}
-            </tbody>
-          </table>
-        </ProjectsTableContainer>
-      ) : (
-        <Loader />
-      )}
-    </>
+    <ProjectsTableContainer>
+      <table style={{ borderCollapse: "collapse" }}>
+        <thead>
+          <HeaderRow>
+            <HeaderCell style={{ width: "50px" }}></HeaderCell>
+            <HeaderCell style={{ width: "600px", textAlign: "left" }}>NAME</HeaderCell>
+            <HeaderCell style={{ textAlign: "left" }}>DESCRIPTION</HeaderCell>
+            <HeaderCell style={{ width: "100px" }}></HeaderCell>
+          </HeaderRow>
+        </thead>
+        <tbody>
+          {isLoaded ? data.map((project: Project) => <TableRow key={project.id} project={project} />) : <TableLoader nomOfColumns={4} />}
+        </tbody>
+      </table>
+    </ProjectsTableContainer>
   );
 };
 

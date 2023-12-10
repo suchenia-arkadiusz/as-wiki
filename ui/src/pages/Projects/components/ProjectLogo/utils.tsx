@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Buffer } from "buffer";
+import buffer from "buffer";
 
 export const generateProjectLogo = (projectName: string, projectColor: string) => {
   const projectLetter = projectName.substring(0, 1).toUpperCase();
@@ -19,7 +19,7 @@ export const generateProjectLogo = (projectName: string, projectColor: string) =
 };
 
 export const getImageFromUrl = async (url: string) => {
-  const base64Image = Buffer.from(
+  const base64Image = buffer.Buffer.from(
     (
       await axios.get(url, {
         method: "GET",
