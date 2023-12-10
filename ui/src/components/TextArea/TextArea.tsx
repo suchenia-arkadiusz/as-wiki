@@ -1,15 +1,15 @@
-import "./Input.css";
+import "./TextArea.css";
 import { ForwardedRef, forwardRef, HTMLProps } from "react";
 
-type InputProps = HTMLProps<HTMLInputElement> & {
+type TextAreaProps = HTMLProps<HTMLTextAreaElement> & {
   label: string;
   isRequired?: boolean;
   validated: boolean;
   inputKey: string | undefined;
 };
 
-const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
-  const { label, placeholder, isRequired, validated, type, onChange, inputKey } = props;
+const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
+  const { label, placeholder, isRequired, validated, onChange, inputKey } = props;
 
   return (
     <div>
@@ -17,10 +17,9 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
         {label} {isRequired ? "*" : null}
       </label>
       <br />
-      <input
+      <textarea
         ref={ref}
-        className={`app-text-input${!validated ? " app-input-not-validated" : ""}`}
-        type={type}
+        className={`app-text-textarea${!validated ? " app-textarea-not-validated" : ""}`}
         key={inputKey}
         id={inputKey}
         placeholder={placeholder}
@@ -30,4 +29,4 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
   );
 });
 
-export default Input;
+export default TextArea;

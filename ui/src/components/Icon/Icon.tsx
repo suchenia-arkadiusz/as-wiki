@@ -22,6 +22,7 @@ const Icon = ({ iconName, width, height, color, hoverColor }: IconProps) => {
   };
 
   const iconStyle = {
+    background: "transparent",
     width: width,
     height: height,
     fill: isHover ? hoverColor : color,
@@ -33,7 +34,7 @@ const Icon = ({ iconName, width, height, color, hoverColor }: IconProps) => {
 
 Icon.defaultProps = {
   color: "#747474",
-  hoverColor: "#ff4848",
+  hoverColor: "#393939",
   width: "16px",
   height: "16px",
 };
