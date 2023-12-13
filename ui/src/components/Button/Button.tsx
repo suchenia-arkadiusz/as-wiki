@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Icon from "../Icon/Icon.tsx";
-import * as icons from "react-bootstrap-icons";
 
 const ButtonContainer = styled.button<{ $color?: string; $hoverColor?: string; $height: number; $padding?: string }>`
   height: ${(props) => props.$height}px;
@@ -21,8 +20,8 @@ const ButtonContainer = styled.button<{ $color?: string; $hoverColor?: string; $
 `;
 
 type IconButtonProps = {
-  iconName: keyof typeof icons;
   onClick: () => void;
+  iconName?: string;
   height?: number;
   text?: string;
   color?: string;
@@ -32,7 +31,7 @@ type IconButtonProps = {
   padding?: any;
 };
 
-const IconButton = (props: IconButtonProps) => {
+const Button = (props: IconButtonProps) => {
   const { iconName, onClick, text, color, hoverColor, height, iconPosition, className, padding } = props;
 
   return (
@@ -47,11 +46,11 @@ const IconButton = (props: IconButtonProps) => {
       {iconPosition === "right" ? (
         <>
           {text || ""}
-          <Icon iconName={iconName} hoverColor={hoverColor || "#393939"} color={color || "#747474"} />
+          <Icon iconName={iconName || ""} />
         </>
       ) : (
         <>
-          <Icon iconName={iconName} hoverColor={hoverColor} color={color} />
+          <Icon iconName={iconName || ""} />
           {text || ""}
         </>
       )}
@@ -59,4 +58,4 @@ const IconButton = (props: IconButtonProps) => {
   );
 };
 
-export default IconButton;
+export default Button;

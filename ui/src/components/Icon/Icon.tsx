@@ -1,42 +1,26 @@
-import * as icons from "react-bootstrap-icons";
-import { useState } from "react";
+import styled from "styled-components";
+
+const IconContainer = styled.span<{ $width: number; $height: number }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.$width}px;
+  height: ${(props) => props.$height}px;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+  }
+`;
 
 type IconProps = {
-  iconName: keyof typeof icons;
-  width?: string;
-  height?: string;
-  color?: string;
-  hoverColor?: string;
+  iconName: string;
+  width?: number;
+  height?: number;
 };
 
-const Icon = ({ iconName, width, height, color, hoverColor }: IconProps) => {
-  const [isHover, setIsHover] = useState(false);
-  const BootstrapIcon = icons[iconName];
-
-  const handleMouseEnter = () => {
-    setIsHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHover(false);
-  };
-
-  const iconStyle = {
-    background: "transparent",
-    width: width,
-    height: height,
-    fill: isHover ? hoverColor : color,
-    transition: "fill 0.2s ease-in-out",
-  };
-
-  return <BootstrapIcon style={iconStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />;
-};
-
-Icon.defaultProps = {
-  color: "#747474",
-  hoverColor: "#393939",
-  width: "16px",
-  height: "16px",
+const Icon = ({ iconName, width, height }: IconProps) => {
+  return <IconContainer className={`${iconName}`} $width={width || 16} $height={height || 16} />;
 };
 
 export default Icon;

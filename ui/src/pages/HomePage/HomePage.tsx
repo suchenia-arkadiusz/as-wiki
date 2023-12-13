@@ -1,5 +1,5 @@
 import Card from "../../components/Card/Card.tsx";
-import SignInOrSignUp from "../../components/SignInOrSignUp/SignInOrSignUp.tsx";
+import SignInOrSignUp from "./components/SignInOrSignUp/SignInOrSignUp.tsx";
 
 const HomePage = () => {
   return (

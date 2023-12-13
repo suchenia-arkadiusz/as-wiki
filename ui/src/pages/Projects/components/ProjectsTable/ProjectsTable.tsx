@@ -54,7 +54,7 @@ const ProjectsTable = () => {
       }));
       setData(data);
       setIsLoaded(true);
-    }, 10000);
+    }, 1000);
   }, []);
 
   return (

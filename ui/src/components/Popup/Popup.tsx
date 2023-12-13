@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import IconButton from "../IconButton/IconButton.tsx";
+import Button from "../Button/Button.tsx";
 import { Left, Right } from "../styles.ts";
 
 const PopupOverlay = styled.div`
@@ -55,7 +55,7 @@ const Popup = (props: PopupProps) => {
             <h1>{title.toUpperCase()}</h1>
           </Left>
           <Right>
-            <IconButton iconName="XLg" onClick={onClose} hoverColor={"#393939"} color={"#393939"} />
+            <Button iconName="bi-x-lg" onClick={onClose} />
           </Right>
         </PopupHeader>
         {children}

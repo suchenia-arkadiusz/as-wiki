@@ -1,20 +1,6 @@
-export type TSignInForm = {
-  username: string;
-  password: string;
-};
-
 export type TSignInFormValidated = {
   username: boolean;
   password: boolean;
-};
-
-export type TSignUpForm = {
-  username: string;
-  password: string;
-  confirmPassword: string;
-  email: string;
-  firstName: string;
-  lastName: string;
 };
 
 export type TSignUpFormValidated = {

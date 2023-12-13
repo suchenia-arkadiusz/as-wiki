@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ProjectsTable from "./components/ProjectsTable/ProjectsTable.tsx";
 import { Left, Right } from "../../components/styles.ts";
 import { useState } from "react";
-import IconButton from "../../components/IconButton/IconButton.tsx";
+import Button from "../../components/Button/Button.tsx";
 import CreatePagePopup from "./components/CreatePagePopup/CreatePagePopup.tsx";
 
 const ProjectsPageContainer = styled.div`
@@ -25,7 +25,7 @@ const ProjectsPage = () => {
           <h1>PROJECTS</h1>
         </Left>
         <Right>
-          <IconButton iconName="PlusLg" onClick={() => setIsPopupOpen(true)} color="#747474" hoverColor="#393939" text="Add Project" />
+          <Button iconName="bi-plus-lg" onClick={() => setIsPopupOpen(true)} text="Add Project" />
         </Right>
       </ProjectsPageHeader>
       {isPopupOpen ? <CreatePagePopup onClose={() => setIsPopupOpen(false)} /> : null}

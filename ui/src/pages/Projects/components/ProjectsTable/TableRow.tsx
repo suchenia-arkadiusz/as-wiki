@@ -1,7 +1,8 @@
 import Icon from "../../../../components/Icon/Icon.tsx";
 import { Project } from "../../types.ts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconsContainer, TableCell, TableRowContainer } from "../../../../components/styles.ts";
+import Button from "../../../../components/Button/Button.tsx";
 
 type TableRowProps = {
   project: Project;
@@ -9,6 +10,7 @@ type TableRowProps = {
 
 const TableRow = (props: TableRowProps) => {
   const { project } = props;
+  const navigate = useNavigate();
 
   return (
     <TableRowContainer key={project.id}>
@@ -21,11 +23,9 @@ const TableRow = (props: TableRowProps) => {
       <TableCell>{project.description}</TableCell>
       <TableCell>
         <IconsContainer>
-          <Link to={`/projects/${project.id}`} style={{ textDecoration: "none", color: "inherit", fontWeight: "inherit" }}>
-            <Icon iconName="InfoCircle" />
-          </Link>
-          <Icon iconName="Pen" />
-          <Icon iconName="Trash" />
+          <Button iconName="bi-info-circle" onClick={() => navigate(`/projects/${project.id}`)} />
+          <Icon iconName="bi-pen" />
+          <Icon iconName="bi-trash" />
         </IconsContainer>
       </TableCell>
     </TableRowContainer>

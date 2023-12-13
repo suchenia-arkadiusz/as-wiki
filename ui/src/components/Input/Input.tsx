@@ -1,5 +1,12 @@
 import "./Input.css";
 import { ForwardedRef, forwardRef, HTMLProps } from "react";
+import styled from "styled-components";
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
 type InputProps = HTMLProps<HTMLInputElement> & {
   label: string;
@@ -12,11 +19,10 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
   const { label, placeholder, isRequired, validated, type, onChange, inputKey } = props;
 
   return (
-    <div>
+    <InputContainer>
       <label htmlFor={inputKey}>
         {label} {isRequired ? "*" : null}
       </label>
-      <br />
       <input
         ref={ref}
         className={`app-text-input${!validated ? " app-input-not-validated" : ""}`}
@@ -26,7 +32,7 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
         placeholder={placeholder}
         onChange={onChange}
       />
-    </div>
+    </InputContainer>
   );
 });
 

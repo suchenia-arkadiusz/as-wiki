@@ -1,5 +1,12 @@
 import "./TextArea.css";
 import { ForwardedRef, forwardRef, HTMLProps } from "react";
+import styled from "styled-components";
+
+const TextAreaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
 type TextAreaProps = HTMLProps<HTMLTextAreaElement> & {
   label: string;
@@ -12,11 +19,10 @@ const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAre
   const { label, placeholder, isRequired, validated, onChange, inputKey } = props;
 
   return (
-    <div>
+    <TextAreaContainer>
       <label htmlFor={inputKey}>
         {label} {isRequired ? "*" : null}
       </label>
-      <br />
       <textarea
         ref={ref}
         className={`app-text-textarea${!validated ? " app-textarea-not-validated" : ""}`}
@@ -25,7 +31,7 @@ const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAre
         placeholder={placeholder}
         onChange={onChange}
       />
-    </div>
+    </TextAreaContainer>
   );
 });
 
