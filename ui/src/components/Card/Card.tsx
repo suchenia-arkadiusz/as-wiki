@@ -30,9 +30,13 @@ const Card = (props: CardProps) => {
   return (
     <>
       {isCenter ? (
-        <CardCenterContainer style={style}>{children}</CardCenterContainer>
+        <CardCenterContainer data-testid="CardContainer.center" style={style}>
+          {children}
+        </CardCenterContainer>
       ) : (
-        <CardContainer style={style}>{children}</CardContainer>
+        <CardContainer data-testid="CardContainer.normal" style={style}>
+          {children}
+        </CardContainer>
       )}
     </>
   );

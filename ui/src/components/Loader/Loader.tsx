@@ -1,7 +1,7 @@
 import "./Loader.css";
 
 const Loader = () => {
-  return <div className="loader"></div>;
+  return <div data-testid="LoaderContainer" className="loader"></div>;
 };
 
 export default Loader;

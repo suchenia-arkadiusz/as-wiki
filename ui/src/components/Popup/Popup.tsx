@@ -48,13 +48,13 @@ const Popup = (props: PopupProps) => {
   }
 
   return (
-    <PopupOverlay onClick={onClose}>
-      <PopupContainer style={popupStyle} onClick={(e) => e.stopPropagation()}>
+    <PopupOverlay data-testid="PopupOverlayContainer" onClick={onClose}>
+      <PopupContainer data-testid="PopupContainer" style={popupStyle} onClick={(e) => e.stopPropagation()}>
         <PopupHeader>
           <Left>
             <h1>{title.toUpperCase()}</h1>
           </Left>
-          <Right>
+          <Right data-testid="PopupCloseButtonContainer">
             <Button iconName="bi-x-lg" onClick={onClose} />
           </Right>
         </PopupHeader>

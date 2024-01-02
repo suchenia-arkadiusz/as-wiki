@@ -20,7 +20,7 @@ type IconProps = {
 };
 
 const Icon = ({ iconName, width, height }: IconProps) => {
-  return <IconContainer className={`${iconName}`} $width={width || 16} $height={height || 16} />;
+  return <IconContainer data-testid="IconContainer" className={`${iconName}`} $width={width || 16} $height={height || 16} />;
 };
 
 export default Icon;

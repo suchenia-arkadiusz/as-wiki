@@ -36,6 +36,7 @@ const Button = (props: IconButtonProps) => {
 
   return (
     <ButtonContainer
+      data-testid="ButtonContainer"
       onClick={onClick}
       $color={color || "#747474"}
       $hoverColor={hoverColor || "#393939"}
@@ -46,11 +47,11 @@ const Button = (props: IconButtonProps) => {
       {iconPosition === "right" ? (
         <>
           {text || ""}
-          <Icon iconName={iconName || ""} />
+          {iconName && iconName.length > 0 ? <Icon iconName={iconName || ""} /> : null}
         </>
       ) : (
         <>
-          <Icon iconName={iconName || ""} />
+          {iconName && iconName.length > 0 ? <Icon iconName={iconName || ""} /> : null}
           {text || ""}
         </>
       )}

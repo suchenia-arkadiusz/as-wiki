@@ -69,7 +69,7 @@ const ProjectsTable = () => {
           </HeaderRow>
         </thead>
         <tbody>
-          {isLoaded ? data.map((project: Project) => <TableRow key={project.id} project={project} />) : <TableLoader nomOfColumns={4} />}
+          {isLoaded ? data.map((project: Project) => <TableRow key={project.id} project={project} />) : <TableLoader numOfColumns={4} />}
         </tbody>
       </table>
     </ProjectsTableContainer>

@@ -19,11 +19,12 @@ const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAre
   const { label, placeholder, isRequired, validated, onChange, inputKey } = props;
 
   return (
-    <TextAreaContainer>
-      <label htmlFor={inputKey}>
+    <TextAreaContainer data-testid="TextAreaContainer">
+      <label data-testid="TextAreaContainer.label" htmlFor={inputKey}>
         {label} {isRequired ? "*" : null}
       </label>
       <textarea
+        data-testid="TextAreaContainer.textarea"
         ref={ref}
         className={`app-text-textarea${!validated ? " app-textarea-not-validated" : ""}`}
         key={inputKey}

@@ -7,7 +7,7 @@ export const NavBar = () => {
   const userContext = useContext(UserContext);
   const user = userContext?.getUser();
   return (
-    <div className="app-navbar">
+    <div className="app-navbar" data-testid="NavBarContainer">
       asWiki
       <div className="app-navbar-btn-container">
         <div>
