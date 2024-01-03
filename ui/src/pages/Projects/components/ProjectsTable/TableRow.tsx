@@ -13,7 +13,7 @@ const TableRow = (props: TableRowProps) => {
   const navigate = useNavigate();
 
   return (
-    <TableRowContainer key={project.id}>
+    <TableRowContainer key={project.id} data-testid="ProjectsTable.table.row">
       <TableCell>{project.logo}</TableCell>
       <TableCell>
         <Link to={`/projects/${project.id}`} style={{ textDecoration: "none", color: "inherit", fontWeight: "inherit" }}>

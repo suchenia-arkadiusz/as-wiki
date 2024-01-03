@@ -23,17 +23,17 @@ const RecentlyViewedPanel = () => {
   const recentlyViewedContext = useContext(RecentlyViewedContext);
 
   return (
-    <RecentlyViewedPanelContainer>
+    <RecentlyViewedPanelContainer data-testid="RecentlyViewedPanelContainer">
       <h1>Recently viewed</h1>
       {recentlyViewedContext?.getRecentlyViewed()?.map((page) => (
-        <RecentlyViewedPageContainer>
-          <div>
+        <RecentlyViewedPageContainer key={page.id} data-testid="RecentlyViewedPageContainer">
+          <div data-testid="RecentlyViewedPageContainer.name">
             <Link className="app-default-link" to={`/pages/${page.id}`}>
               {page.name}
             </Link>{" "}
             updated at {page.updatedAt.toLocaleString()}
           </div>
-          <div>
+          <div data-testid="RecentlyViewedPageContainer.modifiedBy">
             Last modified by{" "}
             <Link className="app-default-link" to={`/users/${page.username}`}>
               {page.updatedBy}

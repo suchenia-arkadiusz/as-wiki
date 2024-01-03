@@ -11,7 +11,7 @@ type TUserContext = {
   children?: ReactNode;
 };
 
-export const UserController = (props: UserContextProps) => {
+export const UserProvider = (props: UserContextProps) => {
   const [user, setUser] = useState<TUser | undefined>(undefined);
 
   const getUser = (): TUser | undefined => {

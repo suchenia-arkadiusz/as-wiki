@@ -1,130 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="36" failures="1" errors="0" time="4.191">
-  <testsuite name="Icon" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:48" time="2.956" tests="2">
-    <testcase classname="Icon should render IconContainer" name="Icon should render IconContainer" time="0.02">
+<testsuites name="jest tests" tests="36" failures="0" errors="0" time="7.038">
+  <testsuite name="&lt;TableLoader /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.136" tests="2">
+    <testcase classname="&lt;TableLoader /&gt; should render TableLoaderContainer" name="&lt;TableLoader /&gt; should render TableLoaderContainer" time="0.024">
     </testcase>
-    <testcase classname="Icon should render IconContainer with className" name="Icon should render IconContainer with className" time="0.003">
-    </testcase>
-  </testsuite>
-  <testsuite name="&lt;NavBar /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:48" time="2.937" tests="4">
-    <testcase classname="&lt;NavBar /&gt; should render NavBarContainer" name="&lt;NavBar /&gt; should render NavBarContainer" time="0.066">
-    </testcase>
-    <testcase classname="&lt;NavBar /&gt; should contain app name" name="&lt;NavBar /&gt; should contain app name" time="0.011">
-    </testcase>
-    <testcase classname="&lt;NavBar /&gt; should contain user name" name="&lt;NavBar /&gt; should contain user name" time="0.007">
-    </testcase>
-    <testcase classname="&lt;NavBar /&gt; should contain user avatar" name="&lt;NavBar /&gt; should contain user avatar" time="0.005">
+    <testcase classname="&lt;TableLoader /&gt; should render 10 elements of &lt;Loader /&gt;" name="&lt;TableLoader /&gt; should render 10 elements of &lt;Loader /&gt;" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="&lt;Button /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:48" time="2.918" tests="4">
-    <testcase classname="&lt;Button /&gt; should render button without Icon component" name="&lt;Button /&gt; should render button without Icon component" time="0.032">
+  <testsuite name="&lt;Card /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.148" tests="4">
+    <testcase classname="&lt;Card /&gt; should render CardContainer.center" name="&lt;Card /&gt; should render CardContainer.center" time="0.029">
     </testcase>
-    <testcase classname="&lt;Button /&gt; should render button with Icon component" name="&lt;Button /&gt; should render button with Icon component" time="0.019">
+    <testcase classname="&lt;Card /&gt; should render CardContainer.normal" name="&lt;Card /&gt; should render CardContainer.normal" time="0.005">
     </testcase>
-    <testcase classname="&lt;Button /&gt; should render button with Icon component and text" name="&lt;Button /&gt; should render button with Icon component and text" time="0.006">
+    <testcase classname="&lt;Card /&gt; should render CardContainer.normal with children" name="&lt;Card /&gt; should render CardContainer.normal with children" time="0.003">
     </testcase>
-    <testcase classname="&lt;Button /&gt; should render button with text" name="&lt;Button /&gt; should render button with text" time="0.006">
-    </testcase>
-  </testsuite>
-  <testsuite name="&lt;Card /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:48" time="2.945" tests="4">
-    <testcase classname="&lt;Card /&gt; should render CardContainer.center" name="&lt;Card /&gt; should render CardContainer.center" time="0.043">
-    </testcase>
-    <testcase classname="&lt;Card /&gt; should render CardContainer.normal" name="&lt;Card /&gt; should render CardContainer.normal" time="0.003">
-    </testcase>
-    <testcase classname="&lt;Card /&gt; should render CardContainer.normal with children" name="&lt;Card /&gt; should render CardContainer.normal with children" time="0.006">
-    </testcase>
-    <testcase classname="&lt;Card /&gt; should render CardContainer.center with children" name="&lt;Card /&gt; should render CardContainer.center with children" time="0.008">
+    <testcase classname="&lt;Card /&gt; should render CardContainer.center with children" name="&lt;Card /&gt; should render CardContainer.center with children" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="&lt;TextArea /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:48" time="3.024" tests="4">
-    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer" name="&lt;TextArea /&gt; should render TextAreaContainer" time="0.033">
-    </testcase>
-    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer not validated" name="&lt;TextArea /&gt; should render TextAreaContainer not validated" time="0.004">
-    </testcase>
-    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer with label" name="&lt;TextArea /&gt; should render TextAreaContainer with label" time="0.048">
-    </testcase>
-    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer and change the value" name="&lt;TextArea /&gt; should render TextAreaContainer and change the value" time="0.009">
-    </testcase>
-  </testsuite>
-  <testsuite name="&lt;TableLoader /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:48" time="3.09" tests="2">
-    <testcase classname="&lt;TableLoader /&gt; should render TableLoaderContainer" name="&lt;TableLoader /&gt; should render TableLoaderContainer" time="0.033">
-    </testcase>
-    <testcase classname="&lt;TableLoader /&gt; should render 10 elements of &lt;Loader /&gt;" name="&lt;TableLoader /&gt; should render 10 elements of &lt;Loader /&gt;" time="0.016">
-    </testcase>
-  </testsuite>
-  <testsuite name="&lt;Loader /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:51" time="0.223" tests="1">
-    <testcase classname="&lt;Loader /&gt; should render LoaderContainer" name="&lt;Loader /&gt; should render LoaderContainer" time="0.008">
-    </testcase>
-  </testsuite>
-  <testsuite name="&lt;Popup /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:51" time="0.255" tests="4">
-    <testcase classname="&lt;Popup /&gt; should render PopupContainer" name="&lt;Popup /&gt; should render PopupContainer" time="0.021">
-    </testcase>
-    <testcase classname="&lt;Popup /&gt; should render PopupContainer with children" name="&lt;Popup /&gt; should render PopupContainer with children" time="0.006">
-    </testcase>
-    <testcase classname="&lt;Popup /&gt; should close popup when close button is clicked" name="&lt;Popup /&gt; should close popup when close button is clicked" time="0.007">
-    </testcase>
-    <testcase classname="&lt;Popup /&gt; should close popup on click outside" name="&lt;Popup /&gt; should close popup on click outside" time="0.012">
-    </testcase>
-  </testsuite>
-  <testsuite name="&lt;Input /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-02T16:21:51" time="0.267" tests="10">
-    <testcase classname="&lt;Input /&gt; should render InputContainer" name="&lt;Input /&gt; should render InputContainer" time="0.013">
+  <testsuite name="&lt;Input /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.173" tests="10">
+    <testcase classname="&lt;Input /&gt; should render InputContainer" name="&lt;Input /&gt; should render InputContainer" time="0.034">
     </testcase>
     <testcase classname="&lt;Input /&gt; should render InputContainer with label" name="&lt;Input /&gt; should render InputContainer with label" time="0.003">
     </testcase>
-    <testcase classname="&lt;Input /&gt; should render InputContainer with input" name="&lt;Input /&gt; should render InputContainer with input" time="0.003">
+    <testcase classname="&lt;Input /&gt; should render InputContainer with input" name="&lt;Input /&gt; should render InputContainer with input" time="0.002">
     </testcase>
-    <testcase classname="&lt;Input /&gt; should render InputContainer with input and not validated" name="&lt;Input /&gt; should render InputContainer with input and not validated" time="0.003">
+    <testcase classname="&lt;Input /&gt; should render InputContainer with input and not validated" name="&lt;Input /&gt; should render InputContainer with input and not validated" time="0.002">
     </testcase>
-    <testcase classname="&lt;Input /&gt; should render InputContainer with input and validated" name="&lt;Input /&gt; should render InputContainer with input and validated" time="0.002">
+    <testcase classname="&lt;Input /&gt; should render InputContainer with input and validated" name="&lt;Input /&gt; should render InputContainer with input and validated" time="0.001">
     </testcase>
     <testcase classname="&lt;Input /&gt; should render InputContainer with input and type" name="&lt;Input /&gt; should render InputContainer with input and type" time="0.002">
     </testcase>
     <testcase classname="&lt;Input /&gt; should render InputContainer with input and isRequired" name="&lt;Input /&gt; should render InputContainer with input and isRequired" time="0.002">
     </testcase>
-    <testcase classname="&lt;Input /&gt; should render InputContainer with input and inputKey" name="&lt;Input /&gt; should render InputContainer with input and inputKey" time="0.005">
+    <testcase classname="&lt;Input /&gt; should render InputContainer with input and inputKey" name="&lt;Input /&gt; should render InputContainer with input and inputKey" time="0.001">
     </testcase>
-    <testcase classname="&lt;Input /&gt; should render InputContainer with input and placeholder" name="&lt;Input /&gt; should render InputContainer with input and placeholder" time="0.003">
+    <testcase classname="&lt;Input /&gt; should render InputContainer with input and placeholder" name="&lt;Input /&gt; should render InputContainer with input and placeholder" time="0.01">
     </testcase>
-    <testcase classname="&lt;Input /&gt; should render InputContainer and change the value" name="&lt;Input /&gt; should render InputContainer and change the value" time="0.013">
+    <testcase classname="&lt;Input /&gt; should render InputContainer and change the value" name="&lt;Input /&gt; should render InputContainer and change the value" time="0.008">
     </testcase>
   </testsuite>
-  <testsuite name="&lt;HomePage /&gt;" errors="0" failures="1" skipped="0" timestamp="2024-01-02T16:21:48" time="3.685" tests="1">
-    <testcase classname="&lt;HomePage /&gt; should render HomePageContainer" name="&lt;HomePage /&gt; should render HomePageContainer" time="0.152">
-      <failure>Error: useNavigate() may be used only in the context of a &lt;Router&gt; component.
-    at Object.invariant [as UNSAFE_invariant] (/Users/aru/dev/private/as-wiki/ui/node_modules/@remix-run/router/history.ts:494:11)
-    at invariant (/Users/aru/dev/private/as-wiki/ui/node_modules/react-router/lib/hooks.tsx:188:3)
-    at useNavigateUnstable (/Users/aru/dev/private/as-wiki/ui/node_modules/react-router/lib/hooks.tsx:184:46)
-    at SignInForm (/Users/aru/dev/private/as-wiki/ui/src/pages/HomePage/components/SignInOrSignUp/SignInForm/SignInForm.tsx:20:31)
-    at renderWithHooks (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:16305:18)
-    at mountIndeterminateComponent (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:20074:13)
-    at beginWork (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:21587:16)
-    at beginWork$1 (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:27426:14)
-    at performUnitOfWork (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:26560:12)
-    at workLoopSync (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:26466:5)
-    at renderRootSync (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:26434:7)
-    at recoverFromConcurrentError (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:25850:20)
-    at performConcurrentWorkOnRoot (/Users/aru/dev/private/as-wiki/ui/node_modules/react-dom/cjs/react-dom.development.js:25750:22)
-    at flushActQueue (/Users/aru/dev/private/as-wiki/ui/node_modules/react/cjs/react.development.js:2667:24)
-    at act (/Users/aru/dev/private/as-wiki/ui/node_modules/react/cjs/react.development.js:2582:11)
-    at /Users/aru/dev/private/as-wiki/ui/node_modules/@testing-library/react/dist/act-compat.js:46:25
-    at renderRoot (/Users/aru/dev/private/as-wiki/ui/node_modules/@testing-library/react/dist/pure.js:161:26)
-    at render (/Users/aru/dev/private/as-wiki/ui/node_modules/@testing-library/react/dist/pure.js:247:10)
-    at setupScreen (/Users/aru/dev/private/as-wiki/ui/test/pages/HomePage/HomePage.test.tsx:6:16)
-    at Object.&lt;anonymous&gt; (/Users/aru/dev/private/as-wiki/ui/test/pages/HomePage/HomePage.test.tsx:15:20)
-    at Promise.then.completed (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/utils.js:231:10)
-    at _callCircusTest (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at _runTest (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/run.js:252:3)
-    at _runTestsForDescribeBlock (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/run.js:126:9)
-    at _runTestsForDescribeBlock (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/run.js:121:9)
-    at run (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/run.js:71:3)
-    at runAndTransformResultsToJestFormat (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-    at jestAdapter (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-    at runTestInternal (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-runner/build/runTest.js:367:16)
-    at runTest (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-runner/build/runTest.js:444:34)
-    at Object.worker (/Users/aru/dev/private/as-wiki/ui/node_modules/jest-runner/build/testWorker.js:106:12)</failure>
+  <testsuite name="&lt;Popup /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.165" tests="4">
+    <testcase classname="&lt;Popup /&gt; should render PopupContainer" name="&lt;Popup /&gt; should render PopupContainer" time="0.036">
+    </testcase>
+    <testcase classname="&lt;Popup /&gt; should render PopupContainer with children" name="&lt;Popup /&gt; should render PopupContainer with children" time="0.005">
+    </testcase>
+    <testcase classname="&lt;Popup /&gt; should close popup when close button is clicked" name="&lt;Popup /&gt; should close popup when close button is clicked" time="0.013">
+    </testcase>
+    <testcase classname="&lt;Popup /&gt; should close popup on click outside" name="&lt;Popup /&gt; should close popup on click outside" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;Button /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.177" tests="4">
+    <testcase classname="&lt;Button /&gt; should render button without Icon component" name="&lt;Button /&gt; should render button without Icon component" time="0.023">
+    </testcase>
+    <testcase classname="&lt;Button /&gt; should render button with Icon component" name="&lt;Button /&gt; should render button with Icon component" time="0.004">
+    </testcase>
+    <testcase classname="&lt;Button /&gt; should render button with Icon component and text" name="&lt;Button /&gt; should render button with Icon component and text" time="0.006">
+    </testcase>
+    <testcase classname="&lt;Button /&gt; should render button with text" name="&lt;Button /&gt; should render button with text" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;NavBar /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.359" tests="4">
+    <testcase classname="&lt;NavBar /&gt; should render NavBarContainer" name="&lt;NavBar /&gt; should render NavBarContainer" time="0.024">
+    </testcase>
+    <testcase classname="&lt;NavBar /&gt; should contain app name" name="&lt;NavBar /&gt; should contain app name" time="0.005">
+    </testcase>
+    <testcase classname="&lt;NavBar /&gt; should contain user name" name="&lt;NavBar /&gt; should contain user name" time="0.009">
+    </testcase>
+    <testcase classname="&lt;NavBar /&gt; should contain user avatar" name="&lt;NavBar /&gt; should contain user avatar" time="0.015">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;TextArea /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:23" time="5.433" tests="4">
+    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer" name="&lt;TextArea /&gt; should render TextAreaContainer" time="0.021">
+    </testcase>
+    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer not validated" name="&lt;TextArea /&gt; should render TextAreaContainer not validated" time="0.005">
+    </testcase>
+    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer with label" name="&lt;TextArea /&gt; should render TextAreaContainer with label" time="0.003">
+    </testcase>
+    <testcase classname="&lt;TextArea /&gt; should render TextAreaContainer and change the value" name="&lt;TextArea /&gt; should render TextAreaContainer and change the value" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;Loader /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:28" time="0.401" tests="1">
+    <testcase classname="&lt;Loader /&gt; should render LoaderContainer" name="&lt;Loader /&gt; should render LoaderContainer" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="Icon" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:28" time="0.443" tests="2">
+    <testcase classname="Icon should render IconContainer" name="Icon should render IconContainer" time="0.012">
+    </testcase>
+    <testcase classname="Icon should render IconContainer with className" name="Icon should render IconContainer with className" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="&lt;HomePage /&gt;" errors="0" failures="0" skipped="0" timestamp="2024-01-03T13:12:28" time="0.678" tests="1">
+    <testcase classname="&lt;HomePage /&gt; should render HomePageContainer" name="&lt;HomePage /&gt; should render HomePageContainer" time="0.018">
     </testcase>
   </testsuite>
 </testsuites>

@@ -12,7 +12,7 @@ const SignInOrSignUpContainer = styled.div`
 
 const SignInOrSignUp = () => {
   return (
-    <SignInOrSignUpContainer>
+    <SignInOrSignUpContainer data-testid="SignInOrSignUpContainer">
       <SignUpForm />
       <SignInForm />
     </SignInOrSignUpContainer>

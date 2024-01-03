@@ -11,7 +11,7 @@ type TRecentlyViewedContext = {
   children?: ReactNode;
 };
 
-export const RecentlyViewedController = (props: RecentlyViewedContextProps) => {
+export const RecentlyViewedProvider = (props: RecentlyViewedContextProps) => {
   const [recentlyViewed, setRecentlyViewed] = useState<Array<TRecentlyViewPage>>([]);
 
   useEffect(() => {

@@ -14,5 +14,8 @@ describe("<HomePage />", () => {
   it("should render HomePageContainer", () => {
     const screen = setupScreen();
     expect(screen.getByTestId("HomePageContainer")).toBeInTheDocument();
+    expect(screen.getByTestId("SignInOrSignUpContainer")).toBeInTheDocument();
+    expect(screen.getByTestId("SignInFormContainer")).toBeInTheDocument();
+    expect(screen.getByTestId("SignUpFormContainer")).toBeInTheDocument();
   });
 });

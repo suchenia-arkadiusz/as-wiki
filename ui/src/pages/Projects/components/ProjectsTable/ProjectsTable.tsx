@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProjectLogo from "../ProjectLogo/ProjectLogo.tsx";
 import TableRow from "./TableRow.tsx";
 import { Project } from "../../types.ts";
 import TableLoader from "../../../../components/Loader/TableLoader/TableLoader.tsx";
+import { ProjectsContext } from "../../../../contexts/ProjectsContext.tsx";
 
 const ProjectsTableContainer = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const HeaderCell = styled.th`
 `;
 
 const ProjectsTable = () => {
+  const projectsContext = useContext(ProjectsContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState<Array<Project>>([]);
 
@@ -58,10 +60,10 @@ const ProjectsTable = () => {
   }, []);
 
   return (
-    <ProjectsTableContainer>
+    <ProjectsTableContainer data-testid="ProjectsTable.container">
       <table style={{ borderCollapse: "collapse" }}>
         <thead>
-          <HeaderRow>
+          <HeaderRow data-testid="ProjectsTable.table.header">
             <HeaderCell style={{ width: "50px" }}></HeaderCell>
             <HeaderCell style={{ width: "600px", textAlign: "left" }}>NAME</HeaderCell>
             <HeaderCell style={{ textAlign: "left" }}>DESCRIPTION</HeaderCell>
@@ -69,7 +71,11 @@ const ProjectsTable = () => {
           </HeaderRow>
         </thead>
         <tbody>
-          {isLoaded ? data.map((project: Project) => <TableRow key={project.id} project={project} />) : <TableLoader numOfColumns={4} />}
+          {projectsContext?.isLoaded ? (
+            projectsContext?.getProjects().map((project: Project) => <TableRow key={project.id} project={project} />)
+          ) : (
+            <TableLoader numOfColumns={4} />
+          )}
         </tbody>
       </table>
     </ProjectsTableContainer>

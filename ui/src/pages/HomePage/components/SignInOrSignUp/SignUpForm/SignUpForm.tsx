@@ -43,7 +43,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <SignUpFormContainer>
+    <SignUpFormContainer data-testid="SignUpFormContainer">
       <Input
         ref={usernameRef}
         label="Username"

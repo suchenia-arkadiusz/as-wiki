@@ -14,3 +14,11 @@ export type TRecentlyViewPage = {
   updatedBy: string;
   username: string;
 };
+
+export type TProject = {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  logoUrl?: string;
+};

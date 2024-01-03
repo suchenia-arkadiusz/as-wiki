@@ -19,12 +19,12 @@ const ProjectsPageHeader = styled.div`
 const ProjectsPage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   return (
-    <ProjectsPageContainer>
-      <ProjectsPageHeader>
-        <Left>
+    <ProjectsPageContainer data-testid="ProjectsPage.container">
+      <ProjectsPageHeader data-testid="ProjectsPage.container.header">
+        <Left data-testid="ProjectsPage.container.header.title">
           <h1>PROJECTS</h1>
         </Left>
-        <Right>
+        <Right data-testid="ProjectsPage.container.header.addProject">
           <Button iconName="bi-plus-lg" onClick={() => setIsPopupOpen(true)} text="Add Project" />
         </Right>
       </ProjectsPageHeader>

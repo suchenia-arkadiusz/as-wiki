@@ -18,7 +18,7 @@ const UserInfoPanel = () => {
   const userContext = useContext(UserContext);
   const user = userContext?.getUser();
   return (
-    <UserInfoPanelContainer>
+    <UserInfoPanelContainer data-testid="UserInfoPanelContainer">
       <h1>User info</h1>
       <img
         src={user?.avatarUrl || avatar}
