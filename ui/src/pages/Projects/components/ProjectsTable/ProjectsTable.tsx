@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import ProjectLogo from "../ProjectLogo/ProjectLogo.tsx";
 import TableRow from "./TableRow.tsx";
 import { Project } from "../../types.ts";
@@ -25,39 +25,6 @@ const HeaderCell = styled.th`
 
 const ProjectsTable = () => {
   const projectsContext = useContext(ProjectsContext);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState<Array<Project>>([]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      const data: Array<Project> = [
-        {
-          id: "1",
-          name: "asWiki",
-          description: "Description 1",
-          color: "#ffaeae",
-        },
-        {
-          id: "2",
-          name: "Some Interesting Project",
-          description: "Description 2",
-          color: "#ffffff",
-          logoUrl: "https://t4.ftcdn.net/jpg/02/16/28/19/360_F_216281970_6gotBzdxtFD6vjh7RGmcc4X2JpJz3pr0.jpg",
-        },
-        {
-          id: "3",
-          name: "Project 3",
-          description: "Description 3",
-          color: "#97ffa8",
-        },
-      ].map((item) => ({
-        ...item,
-        logo: <ProjectLogo projectName={item.name} projectColor={item.color} logoUrl={item.logoUrl} />,
-      }));
-      setData(data);
-      setIsLoaded(true);
-    }, 1000);
-  }, []);
 
   return (
     <ProjectsTableContainer data-testid="ProjectsTable.container">
@@ -72,7 +39,13 @@ const ProjectsTable = () => {
         </thead>
         <tbody>
           {projectsContext?.isLoaded ? (
-            projectsContext?.getProjects().map((project: Project) => <TableRow key={project.id} project={project} />)
+            projectsContext
+              ?.getProjects()
+              .map((item) => ({
+                ...item,
+                logo: <ProjectLogo projectName={item.name} projectColor={item.color} logoUrl={item.logoUrl} />,
+              }))
+              .map((project: Project) => <TableRow key={project.id} project={project} />)
           ) : (
             <TableLoader numOfColumns={4} />
           )}

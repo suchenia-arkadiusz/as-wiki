@@ -1,5 +1,6 @@
 import { TProject } from "./types.ts";
 import { createContext, useEffect, useState } from "react";
+import { Outlet } from "react-router";
 
 type ProjectsContextProps = {
   children: React.ReactNode;
@@ -31,6 +32,14 @@ export const ProjectsProvider = (props: ProjectsContextProps) => {
 };
 
 export const ProjectsContext = createContext<TProjectsContext | undefined>(undefined);
+
+export const ProjectsContextLayout = () => {
+  return (
+    <ProjectsProvider>
+      <Outlet />
+    </ProjectsProvider>
+  );
+};
 
 const mockProjects: Array<TProject> = [
   {

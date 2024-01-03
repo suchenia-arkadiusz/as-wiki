@@ -7,6 +7,7 @@ import { UserProvider } from "./contexts/UserContext.tsx";
 import { RecentlyViewedProvider } from "./contexts/RecentlyViewedContext.tsx";
 import ProjectsPage from "./pages/Projects/ProjectsPage.tsx";
 import ProjectPage from "./pages/Projects/ProjectPage.tsx";
+import { ProjectsContextLayout } from "./contexts/ProjectsContext.tsx";
 
 const App = () => {
   return (
@@ -17,8 +18,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:id" element={<ProjectPage />} />
+            <Route element={<ProjectsContextLayout />}>
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:id" element={<ProjectPage />} />
+            </Route>
             <Route path="*" element={<div>404</div>} />
           </Routes>
         </div>

@@ -1,1 +1,1 @@
-export const validateStringInput = (value: string): boolean => !!value && value.length > 0;
+export const validateStringInput = (value: string | null | undefined): boolean => !!value && value.length > 0;

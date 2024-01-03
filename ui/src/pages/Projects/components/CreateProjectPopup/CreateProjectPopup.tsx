@@ -6,13 +6,13 @@ import Button from "../../../../components/Button/Button.tsx";
 import styled from "styled-components";
 import { validateStringInput } from "../../../../utils/validators.ts";
 
-const CreatePopupContainer = styled.div`
+const CreateProjectContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
 
-const CreatePopupButtonContainer = styled.div`
+const CreateProjectButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -22,7 +22,7 @@ type CreatePagePopupProps = {
   onClose: () => void;
 };
 
-const CreatePagePopup = (props: CreatePagePopupProps) => {
+const CreateProjectPopup = (props: CreatePagePopupProps) => {
   const { onClose } = props;
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -34,7 +34,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
 
   return (
     <Popup title="Create project" width={600} onClose={onClose}>
-      <CreatePopupContainer>
+      <CreateProjectContainer data-testid="CreateProject.container">
         <Input
           ref={nameRef}
           isRequired
@@ -56,12 +56,12 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
           onChange={() => setValidatedForm({ ...validatedForm, description: validateStringInput(descriptionRef.current?.value || "") })}
         />
 
-        <CreatePopupButtonContainer>
+        <CreateProjectButtonContainer data-testid="CreateProject.button.container">
           <Button iconName="bi-floppy" onClick={() => console.log(descriptionRef)} text="Save" />
-        </CreatePopupButtonContainer>
-      </CreatePopupContainer>
+        </CreateProjectButtonContainer>
+      </CreateProjectContainer>
     </Popup>
   );
 };
 
-export default CreatePagePopup;
+export default CreateProjectPopup;

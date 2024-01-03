@@ -19,6 +19,7 @@ const ProjectLogo = (props: ProjectLogoProps) => {
 
   return (
     <div
+      data-testid="ProjectLogo.container"
       style={{
         width: "30px",
         height: "30px",

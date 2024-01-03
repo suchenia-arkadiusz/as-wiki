@@ -3,7 +3,7 @@ import ProjectsTable from "./components/ProjectsTable/ProjectsTable.tsx";
 import { Left, Right } from "../../components/styles.ts";
 import { useState } from "react";
 import Button from "../../components/Button/Button.tsx";
-import CreatePagePopup from "./components/CreatePagePopup/CreatePagePopup.tsx";
+import CreateProjectPopup from "./components/CreateProjectPopup/CreateProjectPopup.tsx";
 
 const ProjectsPageContainer = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ const ProjectsPage = () => {
           <Button iconName="bi-plus-lg" onClick={() => setIsPopupOpen(true)} text="Add Project" />
         </Right>
       </ProjectsPageHeader>
-      {isPopupOpen ? <CreatePagePopup onClose={() => setIsPopupOpen(false)} /> : null}
+      {isPopupOpen ? <CreateProjectPopup onClose={() => setIsPopupOpen(false)} /> : null}
       <ProjectsTable />
     </ProjectsPageContainer>
   );
