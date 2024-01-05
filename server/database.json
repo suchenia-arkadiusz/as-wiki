@@ -1,10 +1,18 @@
 {
-    "dev": {
-        "driver": "pg",
-        "user": "aswiki",
-        "password": "84H33r0xJz5XhCZBtuQLSW9IsGFrlGPS",
-        "host": "localhost",
-        "port": "5432",
-        "database": "aswiki"
-    }
+  "dev": {
+    "driver": "pg",
+    "user": "aswiki",
+    "password": "84H33r0xJz5XhCZBtuQLSW9IsGFrlGPS",
+    "host": "localhost",
+    "port": "5432",
+    "database": "aswiki"
+  },
+  "test": {
+    "driver": "pg",
+    "user": "aswiki",
+    "password": "84H33r0xJz5XhCZBtuQLSW9IsGFrlGPS",
+    "host": "localhost",
+    "port": "5432",
+    "database": "aswiki_test"
+  }
 }

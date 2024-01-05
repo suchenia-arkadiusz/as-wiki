@@ -8,6 +8,7 @@ var path = require("path");
 var Promise;
 var { v4: uuidv4 } = require("uuid");
 var bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.

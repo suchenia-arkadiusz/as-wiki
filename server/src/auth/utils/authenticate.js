@@ -25,7 +25,7 @@ export const authenticate = (req, res, next) => {
         .header("authorization", token);
       next();
     } catch (err) {
-      return res.status(400).send();
+      return res.status(401).send();
     }
   }
 };

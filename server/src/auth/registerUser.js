@@ -1,7 +1,6 @@
 import { createUser } from "./helpers/upsertUser";
 import bcrypt from "bcryptjs";
 import { generateJWT } from "./utils/generateJWT";
-import { refreshToken } from "./refreshToken";
 
 export const registerUser = async (req, res) => {
   const { username, password, email, firstName, lastName, avatarURL } = req.body;
@@ -10,7 +9,7 @@ export const registerUser = async (req, res) => {
 
   const savedUser = await createUser({ username, password: encryptedPassword, email, firstName, lastName, avatarURL });
 
-  const user = { userId: savedUser.id, username, email, firstName, lastName, avatarURL };
+  const user = { id: savedUser.id, username, email, firstName, lastName, avatarURL };
 
   const token = generateJWT(user);
   const refreshToken = generateJWT(user, "1d");

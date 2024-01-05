@@ -9,6 +9,15 @@ export const getUserByUsername = async (username) => {
   return res.rows.length > 0 ? mapUser(res.rows[0]) : undefined;
 };
 
+export const getUserByEmail = async (email) => {
+  const client = config.dbClient;
+  const query = `SELECT * FROM "USERS" WHERE e_mail = $1`;
+
+  const res = await client.query(query, [email]);
+
+  return res.rows.length > 0 ? mapUser(res.rows[0]) : undefined;
+};
+
 const mapUser = (user) => ({
   id: user.id,
   username: user.username,

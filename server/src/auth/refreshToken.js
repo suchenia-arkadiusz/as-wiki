@@ -10,8 +10,12 @@ export const refreshToken = (req, res) => {
     const decoded = jwt.verify(refreshToken, config.tokenSecret);
     const accessToken = generateJWT({ ...decoded.user });
 
-    res.header("authorization", accessToken).send(decoded.user);
+    res
+      .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict", secure: true })
+      .cookie("jwt", accessToken, { httpOnly: true, sameSite: "strict", secure: true })
+      .header("authorization", accessToken)
+      .send(decoded.user);
   } catch (err) {
-    return res.status(400).send();
+    return res.status(401).send();
   }
 };

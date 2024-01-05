@@ -10,14 +10,14 @@ export const validateCreateProjectInput = (req, res, next) => {
   });
 
   const validated = schema.validate(req.body);
-  if (validated.error) res.status(400).send({ message: validated.error.message });
+  if (validated.error) return res.status(400).send({ message: validated.error.message });
 
   next();
 };
 export const createProject = async (req, res) => {
   const user = req.user;
 
-  const savedProject = await createNewProject(req.body, user.userId);
+  const savedProject = await createNewProject(req.body, user.id);
   if (savedProject) {
     res.status(201).send();
     return;

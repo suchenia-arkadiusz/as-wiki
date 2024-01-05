@@ -10,7 +10,7 @@ export const validateUpdateProjectInput = (req, res, next) => {
   });
 
   const validated = schema.validate(req.body);
-  if (validated.error) res.status(400).send({ message: validated.error.message });
+  if (validated.error) return res.status(400).send({ message: validated.error.message });
 
   next();
 };
