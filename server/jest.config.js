@@ -7,7 +7,7 @@ const config = {
   testMatch: ["<rootDir>/test/**/*.test.js"],
   testPathIgnorePatterns: ["/node_modules/", "/dist/", "/migrations/"],
   coverageDirectory: "./coverage/",
-  coveragePathIgnorePatterns: ["/node_modules/", "/dist/", "/migrations/"],
+  coveragePathIgnorePatterns: ["/node_modules/", "/dist/", "/migrations/", "/src/app.js"],
   collectCoverageFrom: ["<rootDir>/src/**/*.js"],
   coverageReporters: ["json", "text", "clover", "html"],
   reporters: ["default", "jest-junit"],

@@ -2,6 +2,7 @@ import { getApp } from "../../src/getExpressApp";
 import request from "supertest";
 import { generateJWT } from "../../src/auth/utils/generateJWT";
 import { getUserByUsername } from "../../src/auth/helpers/getUser";
+import { deleteProjectById } from "../../src/projects/helpers/deleteProject";
 
 describe("API createProject", () => {
   let app;
@@ -78,20 +79,59 @@ describe("API createProject", () => {
     expect(response.body.message).toBe('"wrongParameter" is not allowed');
   });
 
-  it("POST should return 200 if name and description are provided", async () => {
+  it("POST should return 500 if there is a server error", async () => {
     const adminUser = await getUserByUsername("admin");
     const validToken = generateJWT(adminUser, "1d");
+    const projectName = `name-${Date.now()}`;
+
+    const createdProject = (
+      await request(app)
+        .post("/api/v1/projects")
+        .set("Cookie", [`refreshToken=${validToken}`])
+        .set("Header", [`authorization=${validToken}`])
+        .send({
+          name: projectName,
+          description: "description",
+        })
+    ).body;
 
     const response = await request(app)
       .post("/api/v1/projects")
       .set("Cookie", [`refreshToken=${validToken}`])
       .set("Header", [`authorization=${validToken}`])
       .send({
-        name: `name-${Date.now()}`,
+        name: projectName,
         description: "description",
         isPublic: false,
         logoUrl: "logoUrl",
       })
-      .expect(201);
+      .expect(500);
+
+    expect(response.body.message).toBe("Error creating project");
+
+    await deleteProjectById(createdProject.id);
+  });
+
+  it("POST should return 200 if name and description are provided", async () => {
+    const adminUser = await getUserByUsername("admin");
+    const validToken = generateJWT(adminUser, "1d");
+    const projectName = `name-${Date.now()}`;
+
+    const response = await request(app)
+      .post("/api/v1/projects")
+      .set("Cookie", [`refreshToken=${validToken}`])
+      .set("Header", [`authorization=${validToken}`])
+      .send({
+        name: projectName,
+        description: "description",
+        isPublic: false,
+        logoUrl: "logoUrl",
+      })
+      .expect(200);
+
+    expect(response.body.name).toBe(projectName);
+    expect(response.body.id).toBeDefined();
+
+    await deleteProjectById(response.body.id);
   });
 });

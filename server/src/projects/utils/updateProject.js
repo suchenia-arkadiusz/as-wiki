@@ -21,7 +21,7 @@ export const updateProject = async (req, res) => {
 
   const updatedProject = await updateExistingProject(req.body, projectId, user.userId);
   if (updatedProject) {
-    res.status(204).send();
+    res.status(200).send(updatedProject);
     return;
   }
 

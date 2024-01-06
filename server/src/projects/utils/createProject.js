@@ -19,7 +19,7 @@ export const createProject = async (req, res) => {
 
   const savedProject = await createNewProject(req.body, user.id);
   if (savedProject) {
-    res.status(201).send();
+    res.status(200).send(savedProject);
     return;
   }
 
