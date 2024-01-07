@@ -7,6 +7,10 @@ export const validateCreateProjectInput = (req, res, next) => {
     description: Joi.string().required(),
     isPublic: Joi.boolean(),
     logoUrl: Joi.string(),
+    permissions: Joi.object({
+      users: Joi.array().items(Joi.string()),
+      groups: Joi.array().items(Joi.string()),
+    }),
   });
 
   const validated = schema.validate(req.body);

@@ -3,6 +3,7 @@ import request from "supertest";
 import { getUserByUsername } from "../../src/auth/helpers/getUser";
 import { generateJWT } from "../../src/auth/utils/generateJWT";
 import { deleteProjectById } from "../../src/projects/helpers/deleteProject";
+import { getUserGroupByName } from "../../src/auth/helpers/getUserGroup";
 
 describe("API getProject", () => {
   let app;
@@ -67,6 +68,38 @@ describe("API getProject", () => {
       .expect(200);
 
     expect(response.body.name).toBe(projectName);
+
+    await deleteProjectById(createdProject.id);
+  });
+
+  it("GET should return 403 if project exists and user has no permissions", async () => {
+    const adminUser = await getUserByUsername("admin");
+    const validToken = generateJWT(adminUser, "1d");
+    const userGroup = await getUserGroupByName("USER");
+    const projectName = `name-${Date.now()}`;
+
+    const createdProject = (
+      await request(app)
+        .post("/api/v1/projects")
+        .set("Cookie", [`refreshToken=${validToken}`])
+        .set("Header", [`authorization=${validToken}`])
+        .send({
+          name: projectName,
+          description: "description",
+          isPublic: false,
+          logoUrl: "logoUrl",
+          permissions: {
+            users: [],
+            groups: [userGroup.id],
+          },
+        })
+    ).body;
+
+    await request(app)
+      .get(`/api/v1/projects/${createdProject.id}`)
+      .set("Cookie", [`refreshToken=${validToken}`])
+      .set("Header", [`authorization=${validToken}`])
+      .expect(403);
 
     await deleteProjectById(createdProject.id);
   });

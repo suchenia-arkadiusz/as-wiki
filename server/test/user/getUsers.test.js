@@ -48,17 +48,23 @@ describe("API getUsers", () => {
   it("GET should return 200 if cookie is valid and query is provided", async () => {
     const adminUser = await getUserByUsername("admin");
     const validToken = generateJWT(adminUser, "1d");
+    const firstUsername = `test-${Date.now()}`;
+    const secondUsername = `test-${Date.now()}-1`;
 
-    await request(app).post("/register").send({
-      password: "123456",
-      email: "a@a.com",
-      username: "test",
-    });
-    await request(app).post("/register").send({
-      password: "123456",
-      email: "a1@a.com",
-      username: "test-1",
-    });
+    await request(app)
+      .post("/register")
+      .send({
+        password: "123456",
+        email: `${firstUsername}@a.com`,
+        username: firstUsername,
+      });
+    await request(app)
+      .post("/register")
+      .send({
+        password: "123456",
+        email: `${secondUsername}@a.com`,
+        username: secondUsername,
+      });
 
     const response = await request(app)
       .get("/api/v1/users")
@@ -68,7 +74,7 @@ describe("API getUsers", () => {
 
     expect(response.body.length).toBe(3);
 
-    await deleteUserByUserName("test");
-    await deleteUserByUserName("test-1");
+    await deleteUserByUserName(firstUsername);
+    await deleteUserByUserName(secondUsername);
   });
 });

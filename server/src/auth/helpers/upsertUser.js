@@ -30,5 +30,5 @@ export const createUser = async (user, userGroup) => {
   const res = await client.query(query, values);
   await client.query(assignUserGroupQuery, assignUserGroupValues);
 
-  return { ...res.rows[0], userGroup: { id: foundUserGroup.id, name: foundUserGroup.name, permissions: foundUserGroup.permissions } };
+  return { ...res.rows[0], userGroups: [{ id: foundUserGroup.id, name: foundUserGroup.name, permissions: foundUserGroup.permissions }] };
 };
