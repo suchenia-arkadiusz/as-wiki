@@ -1,6 +1,7 @@
 import { NavBar } from "../../../src/components/NavBar/NavBar.tsx";
 import { render } from "@testing-library/react";
 import MockBrowser from "../../mocks/MockBrowser.tsx";
+import { expect } from "vitest";
 
 const setupScreen = () => {
   return render(

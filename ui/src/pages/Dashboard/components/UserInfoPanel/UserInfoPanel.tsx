@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import avatar from "../../../../assets/images/user-default-avatar.png";
-import { useContext } from "react";
-import { UserContext } from "../../../../contexts/UserContext.tsx";
+import { useUserContext } from "../../../../contexts/UserContext.tsx";
 
 const UserInfoPanelContainer = styled.div`
   display: flex;
@@ -15,8 +14,8 @@ const UserInfoPanelContainer = styled.div`
 `;
 
 const UserInfoPanel = () => {
-  const userContext = useContext(UserContext);
-  const user = userContext?.getUser();
+  const userContext = useUserContext();
+  const user = userContext.getUser();
   return (
     <UserInfoPanelContainer data-testid="UserInfoPanelContainer">
       <h1>User info</h1>

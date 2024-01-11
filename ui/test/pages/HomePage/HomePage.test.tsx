@@ -1,6 +1,7 @@
 import MockBrowser from "../../mocks/MockBrowser.tsx";
 import HomePage from "../../../src/pages/HomePage/HomePage.tsx";
 import { render } from "@testing-library/react";
+import { expect } from "vitest";
 
 const setupScreen = () => {
   return render(

@@ -1,11 +1,10 @@
 import "./NavBar.css";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext.tsx";
+import { useUserContext } from "../../contexts/UserContext.tsx";
 import avatar from "../../assets/images/user-default-avatar.png";
 
 export const NavBar = () => {
-  const userContext = useContext(UserContext);
-  const user = userContext?.getUser();
+  const userContext = useUserContext();
+  const user = userContext.getUser();
   return (
     <div className="app-navbar" data-testid="NavBarContainer">
       asWiki

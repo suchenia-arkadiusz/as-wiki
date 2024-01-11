@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import Button from "../../../src/components/Button/Button.tsx";
+import { expect } from "vitest";
 
 const setupScreen = (iconName: string = "", text: string = "") => {
   return render(<Button onClick={() => {}} iconName={iconName} text={text} />);

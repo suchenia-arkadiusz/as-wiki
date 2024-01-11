@@ -1,5 +1,6 @@
 import Icon from "../../../src/components/Icon/Icon.tsx";
 import { render } from "@testing-library/react";
+import { expect } from "vitest";
 
 const setupScreen = (iconName: string = "") => {
   return render(<Icon iconName={iconName} />);

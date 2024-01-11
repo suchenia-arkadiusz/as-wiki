@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import { RecentlyViewedContext } from "../../../../contexts/RecentlyViewedContext.tsx";
+import { useRecentlyViewedContext } from "../../../../contexts/RecentlyViewedContext.tsx";
 import { Link } from "react-router-dom";
 
 const RecentlyViewedPanelContainer = styled.div`
@@ -20,12 +19,12 @@ const RecentlyViewedPageContainer = styled.div`
 `;
 
 const RecentlyViewedPanel = () => {
-  const recentlyViewedContext = useContext(RecentlyViewedContext);
+  const recentlyViewedContext = useRecentlyViewedContext();
 
   return (
     <RecentlyViewedPanelContainer data-testid="RecentlyViewedPanelContainer">
       <h1>Recently viewed</h1>
-      {recentlyViewedContext?.getRecentlyViewed()?.map((page) => (
+      {recentlyViewedContext.getRecentlyViewed().map((page) => (
         <RecentlyViewedPageContainer key={page.id} data-testid="RecentlyViewedPageContainer">
           <div data-testid="RecentlyViewedPageContainer.name">
             <Link className="app-default-link" to={`/pages/${page.id}`}>

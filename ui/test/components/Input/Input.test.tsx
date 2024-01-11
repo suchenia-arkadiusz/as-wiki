@@ -1,5 +1,6 @@
 import Input from "../../../src/components/Input/Input";
 import { fireEvent, render } from "@testing-library/react";
+import { expect, vi } from "vitest";
 
 const setupScreen = (
   label: string = "input label",
@@ -77,7 +78,7 @@ describe("<Input />", () => {
   });
 
   it("should render InputContainer and change the value", () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const screen = setupScreen("input label", false, "inputKey", "password", true, onChange);
     expect(screen.getByTestId("InputContainer.input")).toBeInTheDocument();
     screen.getByTestId("InputContainer.input").focus();

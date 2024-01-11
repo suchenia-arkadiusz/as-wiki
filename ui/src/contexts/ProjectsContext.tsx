@@ -1,24 +1,24 @@
 import { TProject } from "./types.ts";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router";
 
-type ProjectsContextProps = {
+type Props = {
   children: React.ReactNode;
 };
 
-type TProjectsContext = {
+type ProjectsContextProps = {
   getProjects: () => Array<TProject>;
   addProject: (project: TProject) => void;
   isLoaded: boolean;
 };
 
-export const ProjectsProvider = (props: ProjectsContextProps) => {
+export const ProjectsProvider = (props: Props) => {
   const [projects, setProjects] = useState<Array<TProject>>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoaded(false);
-    setProjects(mockProjects);
+    // TODO: Fetch projects from API
     setIsLoaded(true);
   }, []);
 
@@ -27,11 +27,13 @@ export const ProjectsProvider = (props: ProjectsContextProps) => {
   const addProject = (project: TProject) => {
     setProjects([...projects, project]);
   };
+  
+  const contextValue = useMemo(() => ({ getProjects, addProject, isLoaded }), []);
 
-  return <ProjectsContext.Provider value={{ getProjects, addProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
+  return <ProjectsContext.Provider value={contextValue}>{props.children}</ProjectsContext.Provider>;
 };
 
-export const ProjectsContext = createContext<TProjectsContext | undefined>(undefined);
+export const ProjectsContext = createContext<ProjectsContextProps | undefined>(undefined);
 
 export const ProjectsContextLayout = () => {
   return (
@@ -41,24 +43,12 @@ export const ProjectsContextLayout = () => {
   );
 };
 
-const mockProjects: Array<TProject> = [
-  {
-    id: "1",
-    name: "asWiki",
-    description: "Description 1",
-    color: "#ffaeae",
-  },
-  {
-    id: "2",
-    name: "Some Interesting Project",
-    description: "Description 2",
-    color: "#ffffff",
-    logoUrl: "https://t4.ftcdn.net/jpg/02/16/28/19/360_F_216281970_6gotBzdxtFD6vjh7RGmcc4X2JpJz3pr0.jpg",
-  },
-  {
-    id: "3",
-    name: "Project 3",
-    description: "Description 3",
-    color: "#97ffa8",
-  },
-];
+export const useProjectsContext = () => {
+  const context = useContext(ProjectsContext);
+
+  if (context === undefined) {
+    throw new Error("useProjectsContext must be used within a ProjectsProvider");
+  }
+
+  return context;
+};

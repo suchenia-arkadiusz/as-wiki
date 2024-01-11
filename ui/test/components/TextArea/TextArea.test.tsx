@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import TextArea from "../../../src/components/TextArea/TextArea.tsx";
+import { expect, vi } from "vitest";
 
 const setupScreen = (
   onChange: () => void = () => {},
@@ -31,7 +32,7 @@ describe("<TextArea />", () => {
   });
 
   it("should render TextAreaContainer and change the value", () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const screen = setupScreen(onChange);
     const textArea = screen.getByTestId("TextAreaContainer.textarea");
     expect(screen.getByTestId("TextAreaContainer")).toBeInTheDocument();

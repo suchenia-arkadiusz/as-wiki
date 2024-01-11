@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import Input from "../../../../../components/Input/Input.tsx";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { TSignInFormValidated } from "../types.ts";
-import { UserContext } from "../../../../../contexts/UserContext.tsx";
+import { useUserContext } from "../../../../../contexts/UserContext.tsx";
 import { useNavigate } from "react-router-dom";
 import { validateStringInput } from "../../../../../utils/validators.ts";
 import Button from "../../../../../components/Button/Button.tsx";
+import { useRestApiContext } from "../../../../../contexts/RestApiContext.tsx";
+import { useToasterContext } from "../../../../../contexts/ToasterContext.tsx";
 
 const SignInFormContainer = styled.div`
   display: flex;
@@ -17,8 +19,10 @@ const SignInFormContainer = styled.div`
 `;
 
 const SignInForm = () => {
+  const api = useRestApiContext();
   const navigate = useNavigate();
-  const userContext = useContext(UserContext);
+  const userContext = useUserContext();
+  const toasterContext = useToasterContext();
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [validatedForm, setValidatedForm] = useState<TSignInFormValidated>({
@@ -26,16 +30,24 @@ const SignInForm = () => {
     password: false,
   });
 
-  const onSubmit = () => {
-    userContext?.setUser({
-      username: "aru",
-      password: "somePassword",
-      email: "a@a.com",
-      firstName: "Arek",
-      lastName: "Suchenia",
-      avatarUrl: undefined,
-    });
-    navigate("/dashboard", { replace: true });
+  const onSubmit = async () => {
+    const username = usernameRef.current?.value || "";
+    const password = passwordRef.current?.value || "";
+
+    const response = await api.post("/login", { username, password });
+
+    if (response.status === 401) {
+      toasterContext.addToast("Wrong username or password!", "ERROR");
+    }
+
+    if (response.status === 200) {
+      const data = await response.json();
+      userContext.setUser(data.user);
+      localStorage.setItem("token", data.jwt);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      toasterContext.addToast("Signed in successfully!", "SUCCESS");
+      navigate("/dashboard");
+    }
   };
 
   return (

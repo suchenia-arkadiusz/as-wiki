@@ -1,8 +1,14 @@
 import { render } from "@testing-library/react";
 import ProjectsPage from "../../../src/pages/Projects/ProjectsPage.tsx";
+import MockBrowser from "../../mocks/MockBrowser.tsx";
+import { expect } from "vitest";
 
 const setupScreen = () => {
-  return render(<ProjectsPage />);
+  return render(
+    <MockBrowser>
+      <ProjectsPage />
+    </MockBrowser>,
+  );
 };
 
 describe("<ProjectsPage />", () => {

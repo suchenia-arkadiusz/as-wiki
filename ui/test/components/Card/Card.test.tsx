@@ -1,6 +1,7 @@
 import Card from "../../../src/components/Card/Card.tsx";
 import { render } from "@testing-library/react";
 import { ReactNode } from "react";
+import { expect } from "vitest";
 
 const setupScreen = (isCenter: boolean = false, children: ReactNode | undefined = undefined) => {
   return render(<Card isCenter={isCenter}>{children}</Card>);

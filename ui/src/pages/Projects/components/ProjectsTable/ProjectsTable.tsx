@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { useContext } from "react";
 import ProjectLogo from "../ProjectLogo/ProjectLogo.tsx";
 import TableRow from "./TableRow.tsx";
 import { Project } from "../../types.ts";
 import TableLoader from "../../../../components/Loader/TableLoader/TableLoader.tsx";
-import { ProjectsContext } from "../../../../contexts/ProjectsContext.tsx";
+import { useProjectsContext } from "../../../../contexts/ProjectsContext.tsx";
 
 const ProjectsTableContainer = styled.div`
   display: flex;
@@ -24,7 +23,7 @@ const HeaderCell = styled.th`
 `;
 
 const ProjectsTable = () => {
-  const projectsContext = useContext(ProjectsContext);
+  const projectsContext = useProjectsContext();
 
   return (
     <ProjectsTableContainer data-testid="ProjectsTable.container">
@@ -38,9 +37,9 @@ const ProjectsTable = () => {
           </HeaderRow>
         </thead>
         <tbody>
-          {projectsContext?.isLoaded ? (
+          {projectsContext.isLoaded ? (
             projectsContext
-              ?.getProjects()
+              .getProjects()
               .map((item) => ({
                 ...item,
                 logo: <ProjectLogo projectName={item.name} projectColor={item.color} logoUrl={item.logoUrl} />,

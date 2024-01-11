@@ -1,7 +1,8 @@
 import { render, within } from "@testing-library/react";
 import CreateProjectPopup from "../../../../../src/pages/Projects/components/CreateProjectPopup/CreateProjectPopup.tsx";
+import { expect, vi } from "vitest";
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 const setupScreen = () => {
   return render(<CreateProjectPopup onClose={onClose} />);

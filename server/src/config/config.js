@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export const config = {
   db: {
     user: process.env.DB_USERNAME || "aswiki",

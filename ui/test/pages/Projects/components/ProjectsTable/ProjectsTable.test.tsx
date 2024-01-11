@@ -1,6 +1,7 @@
 import { render, waitFor, within } from "@testing-library/react";
 import ProjectsTable from "../../../../../src/pages/Projects/components/ProjectsTable/ProjectsTable.tsx";
 import MockBrowser from "../../../../mocks/MockBrowser.tsx";
+import { expect } from "vitest";
 
 const setupScreen = () => {
   return render(

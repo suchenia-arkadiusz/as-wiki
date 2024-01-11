@@ -1,6 +1,7 @@
 import { render, within } from "@testing-library/react";
 import MockBrowser from "../../../mocks/MockBrowser.tsx";
 import UserInfoPanel from "../../../../src/pages/Dashboard/components/UserInfoPanel/UserInfoPanel.tsx";
+import { expect } from "vitest";
 
 const setupScreen = () => {
   return render(

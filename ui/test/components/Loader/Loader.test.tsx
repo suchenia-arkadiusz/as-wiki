@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import Loader from "../../../src/components/Loader/Loader";
+import { expect } from "vitest";
 
 const setupScreen = () => {
   return render(<Loader />);

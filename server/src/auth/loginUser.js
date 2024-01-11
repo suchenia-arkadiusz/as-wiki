@@ -22,11 +22,7 @@ export const loginUser = async (req, res) => {
   const token = generateJWT({ userId: user.id, ...user });
   const refreshToken = generateJWT({ userId: user.id, ...user }, "1d");
 
-  res
-    .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict", secure: true })
-    .cookie("jwt", token, { httpOnly: true, sameSite: "strict", secure: true })
-    .header("authorization", token)
-    .send(responseUser);
+  res.send({ user: responseUser, jwt: token, refreshToken });
 };
 
 const isPasswordMatched = async (password, storedPassword) => await bcrypt.compare(password, storedPassword);

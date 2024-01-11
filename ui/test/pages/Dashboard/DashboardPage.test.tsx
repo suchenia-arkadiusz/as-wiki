@@ -1,8 +1,14 @@
 import { render } from "@testing-library/react";
 import DashboardPage from "../../../src/pages/Dashboard/DashboardPage.tsx";
+import MockBrowser from "../../mocks/MockBrowser.tsx";
+import { expect } from "vitest";
 
 const setupScreen = () => {
-  return render(<DashboardPage />);
+  return render(
+    <MockBrowser>
+      <DashboardPage />
+    </MockBrowser>,
+  );
 };
 
 describe("<DashboardPage />", () => {

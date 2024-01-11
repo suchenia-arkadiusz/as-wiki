@@ -1,6 +1,7 @@
 import { render, within } from "@testing-library/react";
 import RecentlyViewedPanel from "../../../../src/pages/Dashboard/components/RecentlyViewedPanel/RecentlyViewedPanel.tsx";
 import MockBrowser from "../../../mocks/MockBrowser.tsx";
+import { expect, vi } from "vitest";
 
 const setupScreen = () => {
   return render(
@@ -25,7 +26,7 @@ describe("<RecentlyViewedPanel />", () => {
   });
 
   it("should contain a page info", () => {
-    const localeDateStringMock = jest.spyOn(Date.prototype, "toLocaleString").mockReturnValue("2024-01-01 10:00:00");
+    const localeDateStringMock = vi.spyOn(Date.prototype, "toLocaleString").mockReturnValue("2024-01-01 10:00:00");
     const screen = setupScreen();
 
     const containers = screen.getAllByTestId("RecentlyViewedPageContainer");

@@ -1,21 +1,21 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 import { TRecentlyViewPage } from "./types.ts";
 
-type RecentlyViewedContextProps = {
+type Props = {
   children: ReactNode;
 };
 
-type TRecentlyViewedContext = {
+type RecentlyViewedContextProps = {
   getRecentlyViewed: () => Array<TRecentlyViewPage>;
   addRecentlyViewed: (page: TRecentlyViewPage) => void;
   children?: ReactNode;
 };
 
-export const RecentlyViewedProvider = (props: RecentlyViewedContextProps) => {
+export const RecentlyViewedProvider = (props: Props) => {
   const [recentlyViewed, setRecentlyViewed] = useState<Array<TRecentlyViewPage>>([]);
 
   useEffect(() => {
-    setRecentlyViewed(mockedRecentlyViewed);
+    // TODO Fetch recently viewed pages from API
   }, []);
 
   const getRecentlyViewed = (): Array<TRecentlyViewPage> => {
@@ -28,38 +28,19 @@ export const RecentlyViewedProvider = (props: RecentlyViewedContextProps) => {
     setRecentlyViewed(pages.slice(0, 10));
   };
 
-  return <RecentlyViewedContext.Provider value={{ getRecentlyViewed, addRecentlyViewed }}>{props.children}</RecentlyViewedContext.Provider>;
+  const contextValue = useMemo(() => ({ getRecentlyViewed, addRecentlyViewed }), []);
+  
+  return <RecentlyViewedContext.Provider value={contextValue}>{props.children}</RecentlyViewedContext.Provider>;
 };
 
-export const RecentlyViewedContext = createContext<TRecentlyViewedContext | undefined>(undefined);
+export const RecentlyViewedContext = createContext<RecentlyViewedContextProps | undefined>(undefined);
 
-const mockedRecentlyViewed: Array<TRecentlyViewPage> = [
-  {
-    id: "1",
-    name: "Page 1",
-    updatedAt: new Date(),
-    updatedBy: "Arkadiusz Suchenia",
-    username: "aru",
-  },
-  {
-    id: "2",
-    name: "Page 2",
-    updatedAt: new Date(),
-    updatedBy: "Zosia Wu",
-    username: "zosia",
-  },
-  {
-    id: "3",
-    name: "Page 3",
-    updatedAt: new Date(),
-    updatedBy: "Arkadiusz Suchenia",
-    username: "aru",
-  },
-  {
-    id: "4",
-    name: "Page 4",
-    updatedAt: new Date(),
-    updatedBy: "Zosia Wu",
-    username: "zosia",
-  },
-];
+export const useRecentlyViewedContext = () => {
+  const context = useContext(RecentlyViewedContext);
+
+  if (context === undefined) {
+    throw new Error("useRecentlyViewedContext must be used within a RecentlyViewedProvider");
+  }
+
+  return context;
+};

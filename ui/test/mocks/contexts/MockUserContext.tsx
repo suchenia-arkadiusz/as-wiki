@@ -1,16 +1,15 @@
 import { UserContext } from "../../../src/contexts/UserContext.tsx";
+import { useMemo } from "react";
 
 const MockUserContext = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <UserContext.Provider
-      value={{
-        setUser: () => {},
-        getUser: () => ({ username: "test", email: "test@test.com", firstName: "Test", lastName: "User", avatarUrl: "", password: "" }),
-      }}
-    >
-      {children}
-    </UserContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      setUser: () => {},
+      getUser: () => ({ username: "test", email: "test@test.com", firstName: "Test", lastName: "User", avatarUrl: "", password: "" }),
+    }),
+    [],
   );
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
 export default MockUserContext;

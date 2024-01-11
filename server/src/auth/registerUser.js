@@ -15,9 +15,5 @@ export const registerUser = async (req, res) => {
   const token = generateJWT(user);
   const refreshToken = generateJWT(user, "1d");
 
-  res
-    .cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "strict" })
-    .cookie("jwt", token, { httpOnly: true, sameSite: "strict", secure: true })
-    .header("authorization", token)
-    .send(user);
+  res.send({ user, jwt: token, refreshToken });
 };

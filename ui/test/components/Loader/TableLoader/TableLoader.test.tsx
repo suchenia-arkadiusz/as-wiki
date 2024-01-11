@@ -1,5 +1,6 @@
 import TableLoader from "../../../../src/components/Loader/TableLoader/TableLoader.tsx";
 import { render } from "@testing-library/react";
+import { expect } from "vitest";
 
 const setupScreen = () => {
   return render(
