@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode;
 };
 
-type ToasterContextProps = {
+export type ToasterContextType = {
   addToast: (message: string, type: "DANGER" | "ERROR" | "SUCCESS") => void;
   toasters: Array<ReactNode>;
 };
@@ -21,11 +21,11 @@ export const ToasterProvider = (props: Props) => {
   };
 
   const contestValue = useMemo(() => ({ addToast, toasters }), []);
-  
+
   return <ToasterContext.Provider value={contestValue}>{props.children}</ToasterContext.Provider>;
 };
 
-export const ToasterContext = createContext<ToasterContextProps | undefined>(undefined);
+export const ToasterContext = createContext<ToasterContextType | undefined>(undefined);
 
 export const useToasterContext = () => {
   const context = useContext(ToasterContext);
