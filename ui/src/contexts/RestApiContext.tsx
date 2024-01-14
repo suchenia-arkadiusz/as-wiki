@@ -4,54 +4,56 @@ type Props = {
   children: ReactNode;
 };
 
-type RestAPIContextProps = {
-  get: (url: string) => Promise<any>;
-  post: (url: string, body: any) => Promise<any>;
-  put: (url: string, body: any) => Promise<any>;
+type RestAPIContextType = {
+  get: (url: string, headers?: object) => Promise<any>;
+  post: (url: string, body: any, headers?: object) => Promise<any>;
+  put: (url: string, body: any, headers?: object) => Promise<any>;
 };
+
+export const RestApiContext = createContext<RestAPIContextType | undefined>(undefined);
 
 export const RestApiProvider = (props: Props) => {
   const baseUrl = import.meta.env.VITE_APP_API_URL;
 
-  const get = async (url: string) => {
+  const get = async (url: string, headers: object = {}) => {
     return await fetch(`${baseUrl}${url}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      mode: "cors",
+      headers: getHeaders(headers),
     });
   };
 
-  const post = async (url: string, body: any) => {
+  const post = async (url: string, body: any, headers: object = {}) => {
     return await fetch(`${baseUrl}${url}`, {
       method: "POST",
       mode: "cors",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        Cookie: `refreshToken=${localStorage.getItem("refreshToken")}`,
-        "Content-Type": "application/json",
-      },
+      headers: getHeaders(headers),
 
       body: JSON.stringify(body),
     });
   };
 
-  const put = async (url: string, body: any) => {
+  const put = async (url: string, body: any, headers: object = {}) => {
     return await fetch(`${baseUrl}${url}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: getHeaders(headers),
       body,
     });
   };
 
+  const getHeaders = (headers: object) => {
+    const basicHeaders = {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    };
+
+    return { ...basicHeaders, ...headers };
+  };
+
   const contextValue = useMemo(() => ({ get, post, put }), []);
-  
+
   return <RestApiContext.Provider value={contextValue}>{props.children}</RestApiContext.Provider>;
 };
-
-export const RestApiContext = createContext<RestAPIContextProps | undefined>(undefined);
 
 export const useRestApiContext = () => {
   const context = useContext(RestApiContext);

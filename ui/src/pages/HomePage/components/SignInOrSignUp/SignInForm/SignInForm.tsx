@@ -51,7 +51,14 @@ const SignInForm = () => {
   };
 
   return (
-    <SignInFormContainer data-testid="SignInFormContainer">
+    <SignInFormContainer
+      data-testid="SignInFormContainer"
+      onKeyDown={async (e) => {
+        if (e.key === "Enter") {
+          await onSubmit();
+        }
+      }}
+    >
       <Input
         ref={usernameRef}
         label="Username"

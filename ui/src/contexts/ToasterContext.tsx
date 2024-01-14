@@ -11,6 +11,8 @@ export type ToasterContextType = {
   toasters: Array<ReactNode>;
 };
 
+export const ToasterContext = createContext<ToasterContextType | undefined>(undefined);
+
 export const ToasterProvider = (props: Props) => {
   const [toasters, setToasters] = useState<Array<ReactNode>>([]);
   const addToast = (message: string, type: "DANGER" | "ERROR" | "SUCCESS") => {
@@ -20,12 +22,10 @@ export const ToasterProvider = (props: Props) => {
     }, 6000);
   };
 
-  const contestValue = useMemo(() => ({ addToast, toasters }), []);
+  const contestValue = useMemo(() => ({ addToast }), []);
 
-  return <ToasterContext.Provider value={contestValue}>{props.children}</ToasterContext.Provider>;
+  return <ToasterContext.Provider value={{ ...contestValue, toasters }}>{props.children}</ToasterContext.Provider>;
 };
-
-export const ToasterContext = createContext<ToasterContextType | undefined>(undefined);
 
 export const useToasterContext = () => {
   const context = useContext(ToasterContext);

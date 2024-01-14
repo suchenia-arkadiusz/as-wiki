@@ -5,11 +5,13 @@ type Props = {
   children: ReactNode;
 };
 
-type RecentlyViewedContextProps = {
+type RecentlyViewedContextType = {
   getRecentlyViewed: () => Array<TRecentlyViewPage>;
   addRecentlyViewed: (page: TRecentlyViewPage) => void;
   children?: ReactNode;
 };
+
+export const RecentlyViewedContext = createContext<RecentlyViewedContextType | undefined>(undefined);
 
 export const RecentlyViewedProvider = (props: Props) => {
   const [recentlyViewed, setRecentlyViewed] = useState<Array<TRecentlyViewPage>>([]);
@@ -29,11 +31,9 @@ export const RecentlyViewedProvider = (props: Props) => {
   };
 
   const contextValue = useMemo(() => ({ getRecentlyViewed, addRecentlyViewed }), []);
-  
+
   return <RecentlyViewedContext.Provider value={contextValue}>{props.children}</RecentlyViewedContext.Provider>;
 };
-
-export const RecentlyViewedContext = createContext<RecentlyViewedContextProps | undefined>(undefined);
 
 export const useRecentlyViewedContext = () => {
   const context = useContext(RecentlyViewedContext);

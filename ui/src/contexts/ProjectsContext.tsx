@@ -6,11 +6,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-type ProjectsContextProps = {
+type ProjectsContextType = {
   getProjects: () => Array<TProject>;
   addProject: (project: TProject) => void;
   isLoaded: boolean;
 };
+
+export const ProjectsContext = createContext<ProjectsContextType | undefined>(undefined);
 
 export const ProjectsProvider = (props: Props) => {
   const [projects, setProjects] = useState<Array<TProject>>([]);
@@ -27,13 +29,11 @@ export const ProjectsProvider = (props: Props) => {
   const addProject = (project: TProject) => {
     setProjects([...projects, project]);
   };
-  
+
   const contextValue = useMemo(() => ({ getProjects, addProject, isLoaded }), []);
 
   return <ProjectsContext.Provider value={contextValue}>{props.children}</ProjectsContext.Provider>;
 };
-
-export const ProjectsContext = createContext<ProjectsContextProps | undefined>(undefined);
 
 export const ProjectsContextLayout = () => {
   return (
