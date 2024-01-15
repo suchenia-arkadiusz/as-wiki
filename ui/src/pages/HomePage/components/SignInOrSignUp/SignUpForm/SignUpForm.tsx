@@ -5,6 +5,10 @@ import styled from "styled-components";
 import { TSignUpFormValidated } from "../types.ts";
 import { validateStringInput } from "../../../../../utils/validators.ts";
 import { getValueFromInputRef } from "../../../../../utils/input.ts";
+import { useRestApiContext } from "../../../../../contexts/RestApiContext.tsx";
+import { useUserContext } from "../../../../../contexts/UserContext.tsx";
+import { useToasterContext } from "../../../../../contexts/ToasterContext.tsx";
+import { useNavigate } from "react-router-dom";
 
 const SignUpFormContainer = styled.div`
   display: flex;
@@ -21,6 +25,10 @@ const SignUpForm = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const api = useRestApiContext();
+  const userContext = useUserContext();
+  const toasterContext = useToasterContext();
+  const navigate = useNavigate();
   const [validatedForm, setValidatedForm] = useState<TSignUpFormValidated>({
     username: false,
     password: false,
@@ -30,20 +38,40 @@ const SignUpForm = () => {
     lastName: true,
   });
 
-  const onSubmit = () => {
-    const formData = {
+  const onSubmit = async () => {
+    const body = {
       username: getValueFromInputRef(usernameRef),
       password: getValueFromInputRef(passwordRef),
-      confirmPassword: getValueFromInputRef(confirmPasswordRef),
       email: getValueFromInputRef(emailRef),
       firstName: getValueFromInputRef(firstNameRef),
       lastName: getValueFromInputRef(lastNameRef),
     };
-    console.log(formData);
+
+    const response = await api.post("/register", body);
+
+    if (response.status !== 200) {
+      toasterContext.addToast("Something went wrong!", "ERROR");
+      return;
+    }
+
+    const data = await response.json();
+    userContext.setUser(data.user);
+    localStorage.setItem("token", data.jwt);
+    localStorage.setItem("token", data.jwt);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    toasterContext.addToast("Signed up successfully!", "SUCCESS");
+    navigate("/dashboard");
   };
 
   return (
-    <SignUpFormContainer data-testid="SignUpFormContainer">
+    <SignUpFormContainer
+      data-testid="SignUpFormContainer"
+      onKeyDown={async (e) => {
+        if (e.key === "Enter") {
+          await onSubmit();
+        }
+      }}
+    >
       <Input
         ref={usernameRef}
         label="Username"

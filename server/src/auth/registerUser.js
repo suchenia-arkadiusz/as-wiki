@@ -15,5 +15,5 @@ export const registerUser = async (req, res) => {
   const token = generateJWT(user);
   const refreshToken = generateJWT(user, "1d");
 
-  res.send({ user, jwt: token, refreshToken });
+  res.status(200).send({ user, jwt: token, refreshToken });
 };

@@ -16,6 +16,7 @@ const UserInfoPanelContainer = styled.div`
 const UserInfoPanel = () => {
   const userContext = useUserContext();
   const user = userContext.getUser();
+
   return (
     <UserInfoPanelContainer data-testid="UserInfoPanelContainer">
       <h1>User info</h1>

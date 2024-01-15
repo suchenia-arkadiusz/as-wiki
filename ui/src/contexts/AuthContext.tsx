@@ -42,6 +42,11 @@ export const AuthProvider = (props: Props) => {
                 localStorage.setItem("refreshToken", data.refreshToken);
               });
             }
+            return;
+          });
+        } else if (response.status === 200) {
+          response.json().then((data: any) => {
+            userContext.setUser(data.user);
           });
         }
       });

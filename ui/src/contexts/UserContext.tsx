@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { TUser } from "./types.ts";
 
 type Props = {
@@ -20,9 +20,7 @@ export const UserProvider = (props: Props) => {
     return user;
   };
 
-  const contextValue = useMemo(() => ({ setUser, getUser }), []);
-
-  return <UserContext.Provider value={contextValue}>{props.children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ setUser, getUser }}>{props.children}</UserContext.Provider>;
 };
 
 export const useUserContext = () => {

@@ -1,10 +1,9 @@
 export type TUser = {
   username: string;
-  password: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  avatarUrl: string | undefined;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
 };
 
 export type TRecentlyViewPage = {
