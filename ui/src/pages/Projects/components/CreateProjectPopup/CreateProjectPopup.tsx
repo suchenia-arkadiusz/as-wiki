@@ -5,6 +5,9 @@ import { useRef, useState } from "react";
 import Button from "../../../../components/Button/Button.tsx";
 import styled from "styled-components";
 import { validateStringInput } from "../../../../utils/validators.ts";
+import { useRestApiContext } from "../../../../contexts/RestApiContext.tsx";
+import { useToasterContext } from "../../../../contexts/ToasterContext.tsx";
+import { useProjectsContext } from "../../../../contexts/ProjectsContext.tsx";
 
 const CreateProjectContainer = styled.div`
   display: flex;
@@ -26,15 +29,43 @@ const CreateProjectPopup = (props: CreatePagePopupProps) => {
   const { onClose } = props;
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const api = useRestApiContext();
+  const toasterContext = useToasterContext();
+  const projectsContext = useProjectsContext();
 
   const [validatedForm, setValidatedForm] = useState({
     name: false,
     description: false,
   });
 
+  const onSubmit = async () => {
+    const body = {
+      name: nameRef.current?.value || "",
+      description: descriptionRef.current?.value || "",
+    };
+
+    const response = await api.post("/api/v1/projects", body);
+
+    if (response.status !== 200) {
+      toasterContext.addToast("Something went wrong!", "ERROR");
+    }
+
+    if (response.status === 200) {
+      projectsContext.addProject(await response.json());
+      toasterContext.addToast("Project created successfully!", "SUCCESS");
+    }
+  };
+
   return (
     <Popup title="Create project" width={600} onClose={onClose}>
-      <CreateProjectContainer data-testid="CreateProject.container">
+      <CreateProjectContainer
+        data-testid="CreateProject.container"
+        onKeyDown={async (e) => {
+          if (e.key === "Enter") {
+            await onSubmit();
+          }
+        }}
+      >
         <Input
           ref={nameRef}
           isRequired
@@ -57,7 +88,7 @@ const CreateProjectPopup = (props: CreatePagePopupProps) => {
         />
 
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">
-          <Button iconName="bi-floppy" onClick={() => console.log(descriptionRef)} text="Save" />
+          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" />
         </CreateProjectButtonContainer>
       </CreateProjectContainer>
     </Popup>

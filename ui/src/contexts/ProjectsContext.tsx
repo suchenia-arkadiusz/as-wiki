@@ -1,6 +1,7 @@
 import { TProject } from "./types.ts";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router";
+import { useRestApiContext } from "./RestApiContext.tsx";
 
 type Props = {
   children: React.ReactNode;
@@ -15,13 +16,20 @@ type ProjectsContextType = {
 export const ProjectsContext = createContext<ProjectsContextType | undefined>(undefined);
 
 export const ProjectsProvider = (props: Props) => {
+  const api = useRestApiContext();
   const [projects, setProjects] = useState<Array<TProject>>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoaded(false);
-    // TODO: Fetch projects from API
-    setIsLoaded(true);
+    api.get("/api/v1/projects").then((response) => {
+      if (response.status === 200) {
+        response.json().then((data: Array<TProject>) => {
+          setProjects(data);
+          setIsLoaded(true);
+        });
+      }
+    });
   }, []);
 
   const getProjects = (): Array<TProject> => projects;
@@ -30,9 +38,7 @@ export const ProjectsProvider = (props: Props) => {
     setProjects([...projects, project]);
   };
 
-  const contextValue = useMemo(() => ({ getProjects, addProject, isLoaded }), []);
-
-  return <ProjectsContext.Provider value={contextValue}>{props.children}</ProjectsContext.Provider>;
+  return <ProjectsContext.Provider value={{ getProjects, addProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
 };
 
 export const ProjectsContextLayout = () => {
