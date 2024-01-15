@@ -11,41 +11,27 @@ describe("API getUsers", () => {
     app = getApp();
   });
 
-  it("GET should return 401 if no cookie is provided", async () => {
-    const adminUser = await getUserByUsername("admin");
-    const validToken = generateJWT(adminUser, "1d");
-
-    await request(app)
-      .get("/api/v1/users")
-      .set("Header", [`authorization=${validToken}`])
-      .expect(401);
+  it("GET should return 401 if no token is provided", async () => {
+    await request(app).get("/api/v1/users").expect(401);
   });
 
-  it("GET should return 401 if cookie is not valid", async () => {
-    const adminUser = await getUserByUsername("admin");
-    const validToken = generateJWT(adminUser, "1d");
-
-    await request(app)
-      .get("/api/v1/users")
-      .set("Cookie", ["refreshToken=invalid"])
-      .set("Header", [`authorization=${validToken}`])
-      .expect(401);
+  it("GET should return 401 if token is not valid", async () => {
+    await request(app).get("/api/v1/users").set({ Authorization: "invalid" }).expect(401);
   });
 
-  it("GET should return 200 if cookie is valid", async () => {
+  it("GET should return 200 if token is valid", async () => {
     const adminUser = await getUserByUsername("admin");
     const validToken = generateJWT(adminUser, "1d");
 
     const response = await request(app)
       .get("/api/v1/users")
-      .set("Cookie", [`refreshToken=${validToken}`])
-      .set("Header", [`authorization=${validToken}`])
+      .set({ Authorization: `Bearer ${validToken}` })
       .expect(200);
 
     expect(response.body.length).toBe(1);
   });
 
-  it("GET should return 200 if cookie is valid and query is provided", async () => {
+  it("GET should return 200 if token is valid and query is provided", async () => {
     const adminUser = await getUserByUsername("admin");
     const validToken = generateJWT(adminUser, "1d");
     const firstUsername = `test-${Date.now()}`;
@@ -68,8 +54,7 @@ describe("API getUsers", () => {
 
     const response = await request(app)
       .get("/api/v1/users")
-      .set("Cookie", [`refreshToken=${validToken}`])
-      .set("Header", [`authorization=${validToken}`])
+      .set({ Authorization: `Bearer ${validToken}` })
       .expect(200);
 
     expect(response.body.length).toBe(3);

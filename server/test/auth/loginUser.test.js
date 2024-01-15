@@ -53,20 +53,8 @@ describe("API loginUser", () => {
       })
       .expect(200);
 
-    expect(response.body.username).toBe("admin");
-    expect(response.body.email).toBe(process.env.APP_ADMIN_USER_EMAIL);
-    expect(response.body.id).toBeDefined();
-  });
-
-  it("POST should put a JWT token into a cookie", async () => {
-    const response = await request(app)
-      .post("/login")
-      .send({
-        username: "admin",
-        password: process.env.APP_ADMIN_USER_PASSWORD,
-      })
-      .expect(200);
-
-    expect(response.header["set-cookie"][1]).toMatch(/jwt=.*/);
+    expect(response.body.user.username).toBe("admin");
+    expect(response.body.user.email).toBe(process.env.APP_ADMIN_USER_EMAIL);
+    expect(response.body.user.id).toBeDefined();
   });
 });

@@ -7,7 +7,7 @@ export const acl = (permissions) => (req, res, next) => {
   }
 
   const userPermissions = userGroups.reduce((acc, group) => {
-    return acc.concat(group.permissions);
+    return acc.concat(...group.permissions.split(","));
   }, []);
 
   const hasPermission = permissions.some((permission) => {

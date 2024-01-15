@@ -96,9 +96,9 @@ describe("API registerUser", () => {
       })
       .expect(200);
 
-    expect(response.body.username).toBe("test");
-    expect(response.body.email).toBe("a@a.com");
-    expect(response.body.id).toBeDefined();
+    expect(response.body.user.username).toBe("test");
+    expect(response.body.user.email).toBe("a@a.com");
+    expect(response.body.user.id).toBeDefined();
 
     await deleteUserByUserName("test");
   });
@@ -114,10 +114,10 @@ describe("API registerUser", () => {
       })
       .expect(200);
 
-    expect(response.body.username).toBe("test");
-    expect(response.body.email).toBe("a@a.com");
-    expect(response.body.userGroups[0].name).toBe("ADMIN");
-    expect(response.body.id).toBeDefined();
+    expect(response.body.user.username).toBe("test");
+    expect(response.body.user.email).toBe("a@a.com");
+    expect(response.body.user.userGroups[0].name).toBe("ADMIN");
+    expect(response.body.user.id).toBeDefined();
 
     await deleteUserByUserName("test");
   });
@@ -132,10 +132,10 @@ describe("API registerUser", () => {
       })
       .expect(200);
 
-    expect(response.body.username).toBe("test");
-    expect(response.body.email).toBe("a@a.com");
-    expect(response.body.userGroups[0].name).toBe("USER");
-    expect(response.body.id).toBeDefined();
+    expect(response.body.user.username).toBe("test");
+    expect(response.body.user.email).toBe("a@a.com");
+    expect(response.body.user.userGroups[0].name).toBe("USER");
+    expect(response.body.user.id).toBeDefined();
 
     await deleteUserByUserName("test");
   });

@@ -9,15 +9,15 @@ describe("API refreshToken", () => {
     app = getApp();
   });
 
-  it("POST should return 401 if no cookie is provided", async () => {
-    await request(app).post("/refresh").expect(401);
+  it("POST should return 401 if no refresh token is provided", async () => {
+    await request(app).get("/refresh").expect(401);
   });
 
-  it("POST should return 401 if cookie is not valid", async () => {
-    await request(app).post("/refresh").set("Cookie", ["refreshToken=invalid"]).expect(401);
+  it("POST should return 401 if refresh token is not valid", async () => {
+    await request(app).get("/refresh").set({ "Refresh-Token": "invalid" }).expect(401);
   });
 
-  it("POST should return 200 if cookie is valid", async () => {
+  it("POST should return 200 if token is valid", async () => {
     const validToken = generateJWT(
       {
         id: "id",
@@ -30,8 +30,8 @@ describe("API refreshToken", () => {
     );
 
     await request(app)
-      .post("/refresh")
-      .set("Cookie", [`refreshToken=${validToken}`])
+      .get("/refresh")
+      .set({ "Refresh-Token": `${validToken}` })
       .expect(200);
   });
 });

@@ -10,34 +10,21 @@ describe("API getUserGroups", () => {
     app = getApp();
   });
 
-  it("GET should return 401 if no cookie is provided", async () => {
-    const adminUser = await getUserByUsername("admin");
-    const validToken = generateJWT(adminUser, "1d");
-
-    await request(app)
-      .get("/api/v1/user-groups")
-      .set("Header", [`authorization=${validToken}`])
-      .expect(401);
+  it("GET should return 401 if no token is provided", async () => {
+    await request(app).get("/api/v1/user-groups").expect(401);
   });
 
-  it("GET should return 401 if cookie is not valid", async () => {
-    const adminUser = await getUserByUsername("admin");
-    const validToken = generateJWT(adminUser, "1d");
-    await request(app)
-      .get("/api/v1/user-groups")
-      .set("Cookie", ["refreshToken=invalid"])
-      .set("Header", [`authorization=${validToken}`])
-      .expect(401);
+  it("GET should return 401 if token is not valid", async () => {
+    await request(app).get("/api/v1/user-groups").set({ Authorization: "invalid" }).expect(401);
   });
 
-  it("GET should return 200 if cookie is valid", async () => {
+  it("GET should return 200 if token is valid", async () => {
     const adminUser = await getUserByUsername("admin");
     const validToken = generateJWT(adminUser, "1d");
 
     const response = await request(app)
       .get("/api/v1/user-groups")
-      .set("Cookie", [`refreshToken=${validToken}`])
-      .set("Header", [`authorization=${validToken}`])
+      .set({ Authorization: `Bearer ${validToken}` })
       .expect(200);
 
     expect(response.body.length).toBe(2);

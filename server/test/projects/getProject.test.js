@@ -12,25 +12,12 @@ describe("API getProject", () => {
     app = getApp();
   });
 
-  it("GET should return 401 if no cookie is provided", async () => {
-    const adminUser = await getUserByUsername("admin");
-    const validToken = generateJWT(adminUser, "1d");
-
-    await request(app)
-      .get("/api/v1/projects/1")
-      .set("Header", [`authorization=${validToken}`])
-      .expect(401);
+  it("GET should return 401 if no token is provided", async () => {
+    await request(app).get("/api/v1/projects/1").expect(401);
   });
 
-  it("GET should return 401 if cookie is not valid", async () => {
-    const adminUser = await getUserByUsername("admin");
-    const validToken = generateJWT(adminUser, "1d");
-
-    await request(app)
-      .get("/api/v1/projects/1")
-      .set("Cookie", ["refreshToken=invalid"])
-      .set("Header", [`authorization=${validToken}`])
-      .expect(401);
+  it("GET should return 401 if token is not valid", async () => {
+    await request(app).get("/api/v1/projects/1").set({ Authorization: "invalid" }).expect(401);
   });
 
   it("GET should return 404 if project does not exist", async () => {
@@ -39,8 +26,7 @@ describe("API getProject", () => {
 
     await request(app)
       .get("/api/v1/projects/1")
-      .set("Cookie", [`refreshToken=${validToken}`])
-      .set("Header", [`authorization=${validToken}`])
+      .set({ Authorization: `Bearer ${validToken}` })
       .expect(404);
   });
 
@@ -52,8 +38,7 @@ describe("API getProject", () => {
     const createdProject = (
       await request(app)
         .post("/api/v1/projects")
-        .set("Cookie", [`refreshToken=${validToken}`])
-        .set("Header", [`authorization=${validToken}`])
+        .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: projectName,
           description: "description",
@@ -63,8 +48,7 @@ describe("API getProject", () => {
     ).body;
     const response = await request(app)
       .get(`/api/v1/projects/${createdProject.id}`)
-      .set("Cookie", [`refreshToken=${validToken}`])
-      .set("Header", [`authorization=${validToken}`])
+      .set({ Authorization: `Bearer ${validToken}` })
       .expect(200);
 
     expect(response.body.name).toBe(projectName);
@@ -81,8 +65,7 @@ describe("API getProject", () => {
     const createdProject = (
       await request(app)
         .post("/api/v1/projects")
-        .set("Cookie", [`refreshToken=${validToken}`])
-        .set("Header", [`authorization=${validToken}`])
+        .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: projectName,
           description: "description",
@@ -97,8 +80,7 @@ describe("API getProject", () => {
 
     await request(app)
       .get(`/api/v1/projects/${createdProject.id}`)
-      .set("Cookie", [`refreshToken=${validToken}`])
-      .set("Header", [`authorization=${validToken}`])
+      .set({ Authorization: `Bearer ${validToken}` })
       .expect(403);
 
     await deleteProjectById(createdProject.id);

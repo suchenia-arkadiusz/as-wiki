@@ -11,7 +11,7 @@ export const projectRoute = () => {
   const router = express.Router();
   router.use(authenticate);
 
-  router.post("/projects", validateCreateProjectInput, createProject);
+  router.post("/projects", acl(["project:write"]), validateCreateProjectInput, createProject);
   router.put("/projects/:id", validateUpdateProjectInput, updateProject);
   router.get("/projects", acl(["project:read"]), getProjects);
   router.get("/projects/:id", checkProjectPermissions, acl(["project:read"]), getProject);
