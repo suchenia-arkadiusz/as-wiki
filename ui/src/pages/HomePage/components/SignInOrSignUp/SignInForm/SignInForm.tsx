@@ -3,7 +3,7 @@ import Input from "../../../../../components/Input/Input.tsx";
 import { useRef, useState } from "react";
 import { TSignInFormValidated } from "../types.ts";
 import { useUserContext } from "../../../../../contexts/UserContext.tsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { validateStringInput } from "../../../../../utils/validators.ts";
 import Button from "../../../../../components/Button/Button.tsx";
 import { useRestApiContext } from "../../../../../contexts/RestApiContext.tsx";
@@ -23,6 +23,7 @@ const SignInForm = () => {
   const navigate = useNavigate();
   const userContext = useUserContext();
   const toasterContext = useToasterContext();
+  const location = useLocation();
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [validatedForm, setValidatedForm] = useState<TSignInFormValidated>({
@@ -46,6 +47,10 @@ const SignInForm = () => {
       localStorage.setItem("token", data.jwt);
       localStorage.setItem("refreshToken", data.refreshToken);
       toasterContext.addToast("Signed in successfully!", "SUCCESS");
+      if (location.state?.from) {
+        navigate(location.state.from);
+        return;
+      }
       navigate("/dashboard");
     }
   };

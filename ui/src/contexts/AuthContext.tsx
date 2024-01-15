@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useToasterContext } from "./ToasterContext.tsx";
 import { useRestApiContext } from "./RestApiContext.tsx";
 import { useUserContext } from "./UserContext.tsx";
@@ -16,6 +16,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = (props: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const api = useRestApiContext();
   const toasterContext = useToasterContext();
   const userContext = useUserContext();
@@ -51,7 +52,7 @@ export const AuthProvider = (props: Props) => {
 
   const navigateToLogin = () => {
     toasterContext.addToast("You need to login to access this page", "DANGER");
-    navigate("/");
+    navigate("/", { state: { from: location.pathname } });
   };
 
   const contextValue = useMemo(() => ({ checkAuth }), []);
