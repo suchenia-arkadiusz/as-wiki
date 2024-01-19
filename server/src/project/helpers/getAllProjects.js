@@ -3,7 +3,7 @@ import { config } from "../../config/config";
 
 export const getAllProjects = async () => {
   const client = config.dbClient;
-  const query = `SELECT * FROM "PROJECTS"`;
+  const query = "SELECT * FROM \"PROJECTS\"";
 
   try {
     const res = await client.query(query);

@@ -18,7 +18,7 @@ export const loginUser = async (req, res) => {
     return res.status(401).json({ message: "Invalid username or password" });
   }
 
-  const { password, ...responseUser } = user;
+  const { password: _pass, ...responseUser } = user;
   const token = generateJWT({ userId: user.id, ...user });
   const refreshToken = generateJWT({ userId: user.id, ...user }, "1d");
 

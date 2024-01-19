@@ -2,7 +2,7 @@ import { getApp } from "../../src/getExpressApp";
 import request from "supertest";
 import { getUserByUsername } from "../../src/auth/helpers/getUser";
 import { generateJWT } from "../../src/auth/utils/generateJWT";
-import { deleteProjectById } from "../../src/projects/helpers/deleteProject";
+import { deleteProjectById } from "../../src/project/helpers/deleteProject";
 import { getUserGroupByName } from "../../src/auth/helpers/getUserGroup";
 
 describe("API getProject", () => {
@@ -46,6 +46,7 @@ describe("API getProject", () => {
           logoUrl: "logoUrl",
         })
     ).body;
+
     const response = await request(app)
       .get(`/api/v1/projects/${createdProject.id}`)
       .set({ Authorization: `Bearer ${validToken}` })

@@ -19,8 +19,8 @@ export const updateExistingProject = async (project, projectId, userId) => {
     new Date().toISOString(),
     userId,
     updatedProject.version + 1,
-    updatedProject.isPublic == null ? false : updatedProject.isPublic,
-    updatedProject.logoUrl == null ? null : updatedProject.logoUrl,
+    updatedProject.isPublic === null ? false : updatedProject.isPublic,
+    updatedProject.logoUrl === null ? null : updatedProject.logoUrl,
     projectId,
   ];
 

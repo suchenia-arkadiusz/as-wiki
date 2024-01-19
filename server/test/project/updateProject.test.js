@@ -2,7 +2,7 @@ import { getApp } from "../../src/getExpressApp";
 import { getUserByUsername } from "../../src/auth/helpers/getUser";
 import { generateJWT } from "../../src/auth/utils/generateJWT";
 import request from "supertest";
-import { deleteProjectById } from "../../src/projects/helpers/deleteProject";
+import { deleteProjectById } from "../../src/project/helpers/deleteProject";
 
 describe("API updateProject", () => {
   let app;
@@ -51,7 +51,7 @@ describe("API updateProject", () => {
       })
       .expect(400);
 
-    expect(response.body.message).toBe('"wrongParameter" is not allowed');
+    expect(response.body.message).toBe("\"wrongParameter\" is not allowed");
 
     await deleteProjectById(createdProject.id);
   });
@@ -85,7 +85,7 @@ describe("API updateProject", () => {
       .expect(200);
 
     expect(response.body.name).toBe(updatedProjectName);
-    expect(response.body.id).toBeDefined();
+    expect(response.body.id).toBe(createdProject.id);
 
     await deleteProjectById(createdProject.id);
   });

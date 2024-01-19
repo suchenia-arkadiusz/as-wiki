@@ -7,7 +7,7 @@ const INSERT_PROJECT_QUERY = `INSERT INTO "PROJECTS"
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING *`;
 
-const INSERT_PROJECT_PERMISSIONS_QUERY = `INSERT INTO "PROJECT_PERMISSIONS" (project_id, user_id, group_id) VALUES ($1, $2, $3)`;
+const INSERT_PROJECT_PERMISSIONS_QUERY = "INSERT INTO \"PROJECT_PERMISSIONS\" (project_id, user_id, group_id) VALUES ($1, $2, $3)";
 
 export const createNewProject = async (project, userId) => {
   const client = config.dbClient;
@@ -20,8 +20,8 @@ export const createNewProject = async (project, userId) => {
     new Date().toISOString(),
     userId,
     1,
-    project.isPublic == null ? false : project.isPublic,
-    project.logoUrl == null ? null : project.logoUrl,
+    project.isPublic === null ? false : project.isPublic,
+    project.logoUrl === null ? null : project.logoUrl,
   ];
 
   try {
@@ -43,6 +43,5 @@ const createNewProjectPermissions = async (permissions, client, projectId) => {
 
   if (users && users.length > 0) for (const user of users) await client.query(INSERT_PROJECT_PERMISSIONS_QUERY, [projectId, user, null]);
 
-  if (groups && groups.length > 0)
-    for (const group of groups) await client.query(INSERT_PROJECT_PERMISSIONS_QUERY, [projectId, null, group]);
+  if (groups && groups.length > 0) for (const group of groups) await client.query(INSERT_PROJECT_PERMISSIONS_QUERY, [projectId, null, group]);
 };

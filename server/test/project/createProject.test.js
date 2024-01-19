@@ -2,7 +2,7 @@ import { getApp } from "../../src/getExpressApp";
 import request from "supertest";
 import { generateJWT } from "../../src/auth/utils/generateJWT";
 import { getUserByUsername } from "../../src/auth/helpers/getUser";
-import { deleteProjectById } from "../../src/projects/helpers/deleteProject";
+import { deleteProjectById } from "../../src/project/helpers/deleteProject";
 
 describe("API createProject", () => {
   let app;
@@ -31,7 +31,7 @@ describe("API createProject", () => {
       })
       .expect(400);
 
-    expect(response.body.message).toBe('"name" is required');
+    expect(response.body.message).toBe("\"name\" is required");
   });
 
   it("POST should return 400 if no description is provided", async () => {
@@ -46,7 +46,7 @@ describe("API createProject", () => {
       })
       .expect(400);
 
-    expect(response.body.message).toBe('"description" is required');
+    expect(response.body.message).toBe("\"description\" is required");
   });
 
   it("POST should return 400 if there is a wrong parameter", async () => {
@@ -63,7 +63,7 @@ describe("API createProject", () => {
       })
       .expect(400);
 
-    expect(response.body.message).toBe('"wrongParameter" is not allowed');
+    expect(response.body.message).toBe("\"wrongParameter\" is not allowed");
   });
 
   it("POST should return 500 if there is a server error", async () => {

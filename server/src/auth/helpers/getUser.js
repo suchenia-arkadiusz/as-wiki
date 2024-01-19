@@ -1,10 +1,10 @@
 import { config } from "../../config/config";
 
-const SELECT_USER_GROUPS = `SELECT * FROM "GROUPS" WHERE id in (SELECT group_id from "USER_GROUPS" WHERE user_id = $1)`;
+const SELECT_USER_GROUPS = "SELECT * FROM \"GROUPS\" WHERE id in (SELECT group_id from \"USER_GROUPS\" WHERE user_id = $1)";
 
 export const getUserByUsername = async (username) => {
   const client = config.dbClient;
-  const query = `SELECT * FROM "USERS" WHERE username = $1`;
+  const query = "SELECT * FROM \"USERS\" WHERE username = $1";
 
   const res = await client.query(query, [username]);
   const userGroups = res.rows.length > 0 ? await client.query(SELECT_USER_GROUPS, [res.rows[0].id]) : {};
@@ -14,7 +14,7 @@ export const getUserByUsername = async (username) => {
 
 export const getUserByEmail = async (email) => {
   const client = config.dbClient;
-  const query = `SELECT * FROM "USERS" WHERE e_mail = $1`;
+  const query = "SELECT * FROM \"USERS\" WHERE e_mail = $1";
 
   const res = await client.query(query, [email]);
 

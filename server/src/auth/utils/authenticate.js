@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { config } from "../../config/config";
-import { generateJWT } from "./generateJWT";
 import { log } from "../../config/logger";
 
 export const authenticate = (req, res, next) => {

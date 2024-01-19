@@ -5,7 +5,7 @@ import { log } from "../../config/logger";
 
 export const createUser = async (user, userGroup) => {
   const client = config.dbClient;
-  const query = `INSERT INTO "USERS"(id, username, password, e_mail, first_name, last_name, created_at, avatar_url) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+  const query = "INSERT INTO \"USERS\"(id, username, password, e_mail, first_name, last_name, created_at, avatar_url) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
   const values = [
     uuidv4(),
     user.username,
@@ -24,7 +24,7 @@ export const createUser = async (user, userGroup) => {
     return undefined;
   }
 
-  const assignUserGroupQuery = `INSERT INTO "USER_GROUPS"(user_id, group_id) VALUES($1, $2)`;
+  const assignUserGroupQuery = "INSERT INTO \"USER_GROUPS\" (user_id, group_id) VALUES($1, $2)";
   const assignUserGroupValues = [values[0], foundUserGroup.id];
 
   const res = await client.query(query, values);

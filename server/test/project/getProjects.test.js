@@ -2,7 +2,7 @@ import { getUserByUsername } from "../../src/auth/helpers/getUser";
 import { generateJWT } from "../../src/auth/utils/generateJWT";
 import request from "supertest";
 import { getApp } from "../../src/getExpressApp";
-import { deleteProjectById } from "../../src/projects/helpers/deleteProject";
+import { deleteProjectById } from "../../src/project/helpers/deleteProject";
 
 describe("API getProjects", () => {
   let app;
