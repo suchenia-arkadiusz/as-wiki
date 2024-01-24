@@ -38,8 +38,7 @@ const ProjectsTable = () => {
         </thead>
         <tbody>
           {projectsContext.isLoaded ? (
-            projectsContext
-              .getProjects()
+            projectsContext.projects
               .map((item) => ({
                 ...item,
                 logo: <ProjectLogo projectName={item.name} projectColor={item.color} logoUrl={item.logoUrl} />,

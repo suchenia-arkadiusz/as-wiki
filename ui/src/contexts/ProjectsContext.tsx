@@ -8,7 +8,7 @@ type Props = {
 };
 
 type ProjectsContextType = {
-  getProjects: () => Array<TProject>;
+  projects: Array<TProject>;
   addProject: (project: TProject) => void;
   isLoaded: boolean;
 };
@@ -32,13 +32,11 @@ export const ProjectsProvider = (props: Props) => {
     });
   }, []);
 
-  const getProjects = (): Array<TProject> => projects;
-
   const addProject = (project: TProject) => {
     setProjects([...projects, project]);
   };
 
-  return <ProjectsContext.Provider value={{ getProjects, addProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
+  return <ProjectsContext.Provider value={{ projects, addProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
 };
 
 export const ProjectsContextLayout = () => {

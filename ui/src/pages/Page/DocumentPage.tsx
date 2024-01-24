@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import PageListPanel from "./components/PageListPanel/PageListPanel.tsx";
+import { useProjectsContext } from "../../contexts/ProjectsContext.tsx";
+import { useLocation } from "react-router-dom";
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -9,9 +11,13 @@ const DocumentPageContainer = styled.section`
 `;
 
 const DocumentPage = () => {
+  const { projects } = useProjectsContext();
+  const location = useLocation();
+  const projectId = location.pathname.split("/")[2];
+
   return (
     <DocumentPageContainer data-testid="DocumentPageContainer">
-      <PageListPanel />
+      <PageListPanel projectName={projects.find((project) => project.id === projectId)?.name || "No Project"} />
       <h1>DocumentPage</h1>
     </DocumentPageContainer>
   );
