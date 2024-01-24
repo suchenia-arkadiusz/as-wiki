@@ -1,3 +1,3 @@
-import bunyan from "bunyan";
+import bunyan from 'bunyan';
 
-export const log = bunyan.createLogger({ name: "asWiki" });
+export const log = bunyan.createLogger({ name: 'asWiki' });

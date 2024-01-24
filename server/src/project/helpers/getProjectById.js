@@ -1,9 +1,9 @@
-import { log } from "../../config/logger";
-import { config } from "../../config/config";
+import { log } from '../../config/logger';
+import { config } from '../../config/config';
 
 export const getProjectById = async (id) => {
   const client = config.dbClient;
-  const query = "SELECT * FROM \"PROJECTS\" WHERE id = $1";
+  const query = 'SELECT * FROM "PROJECTS" WHERE id = $1';
   const values = [id];
 
   try {
@@ -11,7 +11,7 @@ export const getProjectById = async (id) => {
 
     return res.rows[0];
   } catch (error) {
-    log.error({ error }, "Cannot get project");
+    log.error({ error }, 'Cannot get project');
     return undefined;
   }
 };

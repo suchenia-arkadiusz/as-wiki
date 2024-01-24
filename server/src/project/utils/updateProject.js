@@ -1,6 +1,6 @@
-import Joi from "joi";
-import { updateExistingProject } from "../helpers/updateExistingProject";
-import {log} from "../../config/logger";
+import Joi from 'joi';
+import { updateExistingProject } from '../helpers/updateExistingProject';
+import {log} from '../../config/logger';
 
 export const validateUpdateProjectInput = (req, res, next) => {
   const schema = Joi.object({
@@ -12,7 +12,7 @@ export const validateUpdateProjectInput = (req, res, next) => {
 
   const validated = schema.validate(req.body);
   if (validated.error) {
-    log.warn({error: validated.error}, "Error during page validation");
+    log.warn({error: validated.error}, 'Error during page validation');
     return res.status(400).send({ message: validated.error.message });
   }
 
@@ -29,5 +29,5 @@ export const updateProject = async (req, res) => {
     return;
   }
 
-  res.status(500).send({ message: "Error updating project" });
+  res.status(500).send({ message: 'Error updating project' });
 };

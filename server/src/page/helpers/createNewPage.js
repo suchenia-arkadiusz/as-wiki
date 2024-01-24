@@ -1,6 +1,6 @@
-import {config} from "../../config/config";
-import { v4 as uuidv4} from "uuid";
-import {log} from "../../config/logger";
+import {config} from '../../config/config';
+import { v4 as uuidv4} from 'uuid';
+import {log} from '../../config/logger';
 
 const INSERT_PAGE_QUERY = `INSERT INTO "PAGES" (id, name, content, created_at, created_by, updated_at, updated_by, version, is_public, project_id, parent_id)
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`;
@@ -25,7 +25,7 @@ export const createNewPage = async (page, userId) => {
     const res = await client.query(INSERT_PAGE_QUERY, values);
     return mapPage(res.rows[0]);
   } catch (error) {
-    log.error({error}, "Cannot create page");
+    log.error({error}, 'Cannot create page');
     return undefined;
   }
 };

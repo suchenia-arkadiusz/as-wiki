@@ -1,4 +1,4 @@
-import { getAllProjects } from "../helpers/getAllProjects";
+import { getAllProjects } from '../helpers/getAllProjects';
 
 export const getProjects = async (req, res) => {
   const projects = await getAllProjects();

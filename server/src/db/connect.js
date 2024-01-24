@@ -1,4 +1,4 @@
-import pg from "pg";
+import pg from 'pg';
 
 export const dbConnect = (config) => {
   const client = new pg.Client({ ...config });

@@ -1,9 +1,9 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import { config } from "./config/config";
-import { dbConnect } from "./db/connect";
-import { routes } from "./routes";
-import cors from "cors";
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import { config } from './config/config';
+import { dbConnect } from './db/connect';
+import { routes } from './routes';
+import cors from 'cors';
 
 export const getApp = () => {
   const app = express();

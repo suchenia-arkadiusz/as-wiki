@@ -1,4 +1,4 @@
-import { getPageList } from "./helpers/getPageList";
+import { getPageList } from './helpers/getPageList';
 
 export const getPages = async (req, res) => {
   const { projectId } = req.params;

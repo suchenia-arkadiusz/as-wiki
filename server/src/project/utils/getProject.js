@@ -1,4 +1,4 @@
-import { getProjectById } from "../helpers/getProjectById";
+import { getProjectById } from '../helpers/getProjectById';
 
 export const getProject = async (req, res) => {
   const { id } = req.params;

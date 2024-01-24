@@ -1,4 +1,4 @@
-import { getProjectPermissions } from "./helpers/getProjectPermissions";
+import { getProjectPermissions } from './helpers/getProjectPermissions';
 
 export const checkProjectPermissions = async (req, res, next) => {
   const { id } = req.params;
@@ -14,13 +14,13 @@ export const checkProjectPermissions = async (req, res, next) => {
         const userGroupsPermissions = permissions.find((permission) => userGroups.includes(permission.group_id));
 
         if (!userGroupsPermissions) {
-          return res.status(403).send({ message: "You don't have permission" });
+          return res.status(403).send({ message: 'You don\'t have permission' });
         }
       }
     }
 
     next();
   } catch (err) {
-    return res.status(404).send({ message: "Cannot get project permissions" });
+    return res.status(404).send({ message: 'Cannot get project permissions' });
   }
 };

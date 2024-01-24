@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
-import { config } from "../config/config";
-import { generateJWT } from "./utils/generateJWT";
+import jwt from 'jsonwebtoken';
+import { config } from '../config/config';
+import { generateJWT } from './utils/generateJWT';
 
 export const refreshToken = (req, res) => {
-  const refreshToken = req.headers["refresh-token"];
+  const refreshToken = req.headers['refresh-token'];
   if (!refreshToken) return res.status(401).send();
 
   try {

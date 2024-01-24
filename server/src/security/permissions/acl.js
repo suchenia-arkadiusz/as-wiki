@@ -1,13 +1,13 @@
 export const acl = (permissions) => (req, res, next) => {
   const user = req.user;
   const userGroups = user.userGroups;
-  if (userGroups.find((userGroup) => userGroup.name === "ADMIN")) {
+  if (userGroups.find((userGroup) => userGroup.name === 'ADMIN')) {
     next();
     return;
   }
 
   const userPermissions = userGroups.reduce((acc, group) => {
-    return acc.concat(...group.permissions.split(","));
+    return acc.concat(...group.permissions.split(','));
   }, []);
 
   const hasPermission = permissions.some((permission) => {
@@ -17,6 +17,6 @@ export const acl = (permissions) => (req, res, next) => {
   if (hasPermission) {
     next();
   } else {
-    return res.status(403).send({ message: "You don't have permission" });
+    return res.status(403).send({ message: 'You don\'t have permission' });
   }
 };

@@ -1,5 +1,5 @@
-import Joi from "joi";
-import { createNewProject } from "../helpers/createNewProject";
+import Joi from 'joi';
+import { createNewProject } from '../helpers/createNewProject';
 
 export const validateCreateProjectInput = (req, res, next) => {
   const schema = Joi.object({
@@ -27,5 +27,5 @@ export const createProject = async (req, res) => {
     return;
   }
 
-  res.status(500).send({ message: "Error creating project" });
+  res.status(500).send({ message: 'Error creating project' });
 };

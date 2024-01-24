@@ -1,4 +1,4 @@
-import {createNewPage} from "./helpers/createNewPage";
+import {createNewPage} from './helpers/createNewPage';
 
 export const createPage = async (req, res) => {
   const user = req.user;

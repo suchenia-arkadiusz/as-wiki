@@ -1,6 +1,6 @@
-import { log } from "../../config/logger";
-import { config } from "../../config/config";
-import { getProjectById } from "./getProjectById";
+import { log } from '../../config/logger';
+import { config } from '../../config/config';
+import { getProjectById } from './getProjectById';
 
 export const updateExistingProject = async (project, projectId, userId) => {
   const client = config.dbClient;
@@ -29,7 +29,7 @@ export const updateExistingProject = async (project, projectId, userId) => {
 
     return res.rows[0];
   } catch (error) {
-    log.error({ error }, "Cannot update project");
+    log.error({ error }, 'Cannot update project');
     return undefined;
   }
 };

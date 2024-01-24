@@ -1,13 +1,13 @@
-import { config } from "../../config/config";
-import { v4 as uuidv4 } from "uuid";
-import { log } from "../../config/logger";
+import { config } from '../../config/config';
+import { v4 as uuidv4 } from 'uuid';
+import { log } from '../../config/logger';
 
 const INSERT_PROJECT_QUERY = `INSERT INTO "PROJECTS"
     (id, name, description, created_at, created_by, updated_at, updated_by, version, is_public, logo_url)
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING *`;
 
-const INSERT_PROJECT_PERMISSIONS_QUERY = "INSERT INTO \"PROJECT_PERMISSIONS\" (project_id, user_id, group_id) VALUES ($1, $2, $3)";
+const INSERT_PROJECT_PERMISSIONS_QUERY = 'INSERT INTO "PROJECT_PERMISSIONS" (project_id, user_id, group_id) VALUES ($1, $2, $3)';
 
 export const createNewProject = async (project, userId) => {
   const client = config.dbClient;
@@ -30,7 +30,7 @@ export const createNewProject = async (project, userId) => {
 
     return res.rows[0];
   } catch (error) {
-    log.error({ error }, "Cannot create project");
+    log.error({ error }, 'Cannot create project');
     return undefined;
   }
 };
