@@ -26,12 +26,3 @@ export type PageListElementChild = {
   id: string;
   name: string;
 };
-
-export type PageListElement = {
-  id: string;
-  name: string;
-  projectId: string;
-  isExpanded: boolean;
-  parentId?: string;
-  children: Array<PageListElementChild>;
-};
