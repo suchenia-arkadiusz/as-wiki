@@ -15,7 +15,7 @@ const TableRow = (props: TableRowProps) => {
     <TableRowContainer key={project.id} data-testid="ProjectsTable.table.row">
       <TableCell data-testid="ProjectsTable.table.row.logo">{project.logo}</TableCell>
       <TableCell data-testid="ProjectsTable.table.row.name">
-        <Link to={`/projects/${project.id}`} style={{ textDecoration: "none", color: "inherit", fontWeight: "inherit" }}>
+        <Link to={`/projects/${project.id}/pages`} style={{ textDecoration: "none", color: "inherit", fontWeight: "inherit" }}>
           {project.name}
         </Link>
       </TableCell>

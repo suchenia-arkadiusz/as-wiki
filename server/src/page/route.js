@@ -8,8 +8,8 @@ export const pageRoute = () => {
   const router = express.Router();
   router.use(authenticate);
 
-  router.post("/pages", validateCreatePageInput, createPage);
-  router.get("/pages", getPages);
+  router.post("/projects/:projectId/pages", validateCreatePageInput, createPage);
+  router.get("/projects/:projectId/pages", getPages);
 
   return router;
 };

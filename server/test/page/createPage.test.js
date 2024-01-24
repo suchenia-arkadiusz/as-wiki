@@ -13,11 +13,11 @@ describe("API createPage", () => {
   });
 
   it("POST should return 401 if no token is provided", async () => {
-    await request(app).post("/api/v1/pages").expect(401);
+    await request(app).post("/api/v1/projects/projectId/pages").expect(401);
   });
 
   it("POST should return 401 if token is not valid", async () => {
-    await request(app).post("/api/v1/pages").set({ Authorization: "invalid" }).expect(401);
+    await request(app).post("/api/v1/projects/projectId/pages").set({ Authorization: "invalid" }).expect(401);
   });
 
   it("POST should return 400 if no name is provided", async () => {
@@ -25,7 +25,7 @@ describe("API createPage", () => {
     const validToken = generateJWT(adminUser, "1d");
 
     const response = await request(app)
-      .post("/api/v1/pages")
+      .post("/api/v1/projects/projectId/pages")
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         content: "content",
@@ -41,7 +41,7 @@ describe("API createPage", () => {
     const validToken = generateJWT(adminUser, "1d");
 
     const response = await request(app)
-      .post("/api/v1/pages")
+      .post("/api/v1/projects/projectId/pages")
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: "test page",
@@ -57,7 +57,7 @@ describe("API createPage", () => {
     const validToken = generateJWT(adminUser, "1d");
 
     const response = await request(app)
-      .post("/api/v1/pages")
+      .post("/api/v1/projects/projectId/pages")
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: "test page",
@@ -88,7 +88,7 @@ describe("API createPage", () => {
     ).body;
 
     const response = await request(app)
-      .post("/api/v1/pages")
+      .post(`/api/v1/projects/${project.id}/pages`)
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: pageName,

@@ -1,8 +1,8 @@
 import { config } from "../../config/config";
 
-export const getPageList = async (projectId, pages) => {
+export const getPageList = async (projectId, parents) => {
   const client = config.dbClient;
-  const parentIdQuery = pages && pages.length > 0 ? "parent_id in $2" : "parent_id is null";
+  const parentIdQuery = parents && parents.length > 0 ? "parent_id in $2" : "parent_id is null";
   const query = `SELECT * FROM PAGE_LIST WHERE project_id = $1 and ${parentIdQuery}`;
   const values = [projectId];
 

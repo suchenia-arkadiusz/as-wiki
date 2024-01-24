@@ -11,6 +11,8 @@ import { ProjectsContextLayout } from "./contexts/ProjectsContext.tsx";
 import { useToasterContext } from "./contexts/ToasterContext.tsx";
 import { RestApiProvider } from "./contexts/RestApiContext.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
+import DocumentPage from "./pages/Page/DocumentPage.tsx";
+import { PageListContextLayout } from "./contexts/PageListContext.tsx";
 
 const App = () => {
   const { toasters } = useToasterContext();
@@ -29,6 +31,10 @@ const App = () => {
                 <Route element={<ProjectsContextLayout />}>
                   <Route path="/projects" element={<ProjectsPage />} />
                   <Route path="/projects/:id" element={<ProjectPage />} />
+                  <Route element={<PageListContextLayout />}>
+                    <Route path="/projects/:id/pages" element={<DocumentPage />} />
+                    <Route path="/projects/:id/pages/:pageId" element={<DocumentPage />} />
+                  </Route>
                 </Route>
                 <Route path="*" element={<div>404</div>} />
               </Routes>

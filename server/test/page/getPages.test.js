@@ -13,11 +13,11 @@ describe("API getPages", () => {
   });
 
   it("GET should return 401 if no token is provided", async () => {
-    await request(app).get("/api/v1/pages").expect(401);
+    await request(app).get("/api/v1/projects/projectId/pages").expect(401);
   });
 
   it("GET should return 401 if token is not valid", async () => {
-    await request(app).get("/api/v1/pages").set({ Authorization: "invalid" }).expect(401);
+    await request(app).get("/api/v1/projects/projectId/pages").set({ Authorization: "invalid" }).expect(401);
   });
 
   it("GET should return 200 if token is valid", async () => {
@@ -40,7 +40,7 @@ describe("API getPages", () => {
 
     const firstPage = (
       await request(app)
-        .post("/api/v1/pages")
+        .post(`/api/v1/projects/${project.id}/pages`)
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: firstPageName,
@@ -51,7 +51,7 @@ describe("API getPages", () => {
 
     const secondPage = (
       await request(app)
-        .post("/api/v1/pages")
+        .post(`/api/v1/projects/${project.id}/pages`)
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: secondPageName,
@@ -61,7 +61,7 @@ describe("API getPages", () => {
     ).body;
 
     const response = await request(app)
-      .get(`/api/v1/pages?projectId=${  project.id}`)
+      .get(`/api/v1/projects/${project.id}/pages`)
       .set({ Authorization: `Bearer ${validToken}` })
       .expect(200);
 
