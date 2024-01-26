@@ -39,7 +39,7 @@ const TreeList = (props: TreeListProps) => {
     <>
       {listData.map((item) => (
         <div key={item.id}>
-          <TreeListItemContainer $margin={hasChildren(item) ? `${level * 20}px` : `${level * 20 + 26}px`}>
+          <TreeListItemContainer $margin={hasChildren(item) ? `${level * 25}px` : `${level * 25 + 26}px`}>
             {hasChildren(item) ? (
               <>
                 <Button iconName={item.isExpanded ? "bi-chevron-up" : "bi-chevron-down"} onClick={() => toggleItem(item.id)} />
