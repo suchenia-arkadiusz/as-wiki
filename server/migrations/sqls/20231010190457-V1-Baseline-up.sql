@@ -95,22 +95,9 @@ CREATE TABLE "PAGE_ATTACHMENTS" (
     CONSTRAINT fk_page_attachment_attachment_id FOREIGN KEY(attachment_id) REFERENCES "ATTACHMENTS"(id)
 );
 
-CREATE TYPE PAGE_CHILD AS (
-    "id" uuid,
-    "name" varchar(255)
-);
-
-CREATE OR REPLACE FUNCTION get_page_children (p_parent_id uuid) RETURNS page_child[] AS $$
-    WITH child AS (
-        SELECT id, name FROM "PAGES" WHERE parent_id = p_parent_id
-    )
-    SELECT array_agg(ROW(id, name)::PAGE_CHILD) FROM child;
-$$
-    LANGUAGE SQL;
-
-CREATE VIEW PAGE_LIST AS
-    SELECT page.id, page.name, page.parent_id, page.project_id, get_page_children(page.id)
-FROM "PAGES" AS page;
+CREATE VIEW PAGE_CONTENT AS
+    SELECT p.id, p.name, p.content, p.created_by, c.first_name AS c_first_name, c.last_name AS c_last_name, c.username AS c_username, p.updated_at, p.updated_by, u.first_name AS u_first_name, u.last_name AS u_last_name, u.username AS u_username
+FROM "PAGES" AS p JOIN "USERS" AS u ON p.updated_by = u.id JOIN "USERS" AS c ON p.created_by = c.id;
 
 INSERT INTO "GROUPS" (id, name, permissions, created_at, created_by, updated_at, updated_by) SELECT gen_random_uuid(), 'ADMIN', 'admin',
  now(), "USERS".id, now(), "USERS".id FROM "USERS" WHERE "username" = 'admin';

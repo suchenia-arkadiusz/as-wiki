@@ -3,6 +3,7 @@ import { authenticate } from '../auth/utils/authenticate';
 import { getPages } from './getPages';
 import {validateCreatePageInput} from './utils/validators';
 import {createPage} from './createPage';
+import {getPage} from './getPage';
 
 export const pageRoute = () => {
   const router = express.Router();
@@ -10,6 +11,7 @@ export const pageRoute = () => {
 
   router.post('/projects/:projectId/pages', validateCreatePageInput, createPage);
   router.get('/projects/:projectId/pages', getPages);
+  router.get('/projects/:projectId/pages/:pageId', getPage);
 
   return router;
 };
