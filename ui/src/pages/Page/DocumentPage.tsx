@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRestApiContext } from "../../contexts/RestApiContext.tsx";
 import { CreatedByUser, Page } from "../../types.ts";
 import { formatDate } from "../../utils/date.ts";
+import Button from "../../components/Button/Button.tsx";
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -18,7 +19,15 @@ const PageContentContainer = styled.section`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 30px 230px;
+  max-width: 1000px;
+  margin: 30px auto;
+`;
+
+const PageIconsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 35px 30px;
 `;
 
 const DocumentPage = () => {
@@ -60,6 +69,12 @@ const DocumentPage = () => {
         </section>
         <article style={{ marginTop: "30px", color: "#747474" }}>{page?.content}</article>
       </PageContentContainer>
+      <PageIconsContainer>
+        <Button onClick={() => alert("Edit Permissions")} iconName="bi-lock" />
+        <Button onClick={() => alert("Edit")} iconName="bi-pen" />
+        <Button onClick={() => alert("Delete")} iconName="bi-trash3" />
+        <Button onClick={() => alert("More")} iconName="bi-three-dots" />
+      </PageIconsContainer>
     </DocumentPageContainer>
   );
 };

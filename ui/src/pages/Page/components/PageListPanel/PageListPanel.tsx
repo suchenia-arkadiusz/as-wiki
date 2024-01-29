@@ -8,7 +8,7 @@ const PageListPanelContainer = styled.div`
   width: 300px;
   height: 100%;
   border-right: 1px solid #d9d9d9;
-  padding: 20px;
+  padding: 30px;
   flex-basis: 300px;
   flex-direction: column;
   overflow: hidden;
@@ -24,8 +24,8 @@ const PageListPanelContainer = styled.div`
     top: 100px;
     left: 0;
     width: 300px;
-    margin-top: 30px;
-    margin-left: 19px;
+    margin-top: 10px;
+    margin-left: 59px;
     height: 100%;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0) 85%, #ffffff 98%);
     z-index: 1;
