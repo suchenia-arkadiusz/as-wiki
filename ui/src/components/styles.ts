@@ -8,7 +8,7 @@ export const Left = styled.div`
 
 export const Right = styled.div`
   display: flex;
-  right: 0;
+  justify-content: flex-end;
   padding: 0;
 `;
 

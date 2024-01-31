@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { usePageListContext } from "../../../../contexts/PageListContext.tsx";
 import TreeList from "../../../../components/TreeList/TreeList.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Right } from "../../../../components/styles.ts";
+import Button from "../../../../components/Button/Button.tsx";
 
 const PageListPanelContainer = styled.div`
   display: flex;
@@ -35,23 +37,27 @@ const PageListPanelContainer = styled.div`
 
 type PageListPanelProps = {
   projectName: string;
-  setSelectedPage: (id: string) => void;
+  onSelectedPage: (id: string) => void;
+  onAddPage: (isOpened: boolean) => void;
 };
 
 const PageListPanel = (props: PageListPanelProps) => {
-  const { projectName, setSelectedPage } = props;
+  const { projectName, onSelectedPage, onAddPage } = props;
   const { pages } = usePageListContext();
   const location = useLocation();
   const navigate = useNavigate();
 
   const onSelect = (id: string) => {
     const projectId = location.pathname.split("/")[2];
-    setSelectedPage(id);
+    onSelectedPage(id);
     navigate(`/projects/${projectId}/pages/${id}`);
   };
 
   return (
-    <PageListPanelContainer data-testid="PageListPanelContainer">
+    <PageListPanelContainer data-testid="PageListPanel.container">
+      <Right>
+        <Button iconName="bi-plus-lg" onClick={() => onAddPage(true)} text="Add Page" />
+      </Right>
       <h1>{projectName}</h1>
       <TreeList data={pages} onSelect={onSelect} />
     </PageListPanelContainer>

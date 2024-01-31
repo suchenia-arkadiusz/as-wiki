@@ -10,7 +10,7 @@ type Props = {
 
 type PageListContextType = {
   pages: Array<TreeListElement>;
-  addPage: (page: TreeListElement) => void;
+  fetchPages: () => void;
   isLoaded: boolean;
 };
 
@@ -23,6 +23,10 @@ export const PageListProvider = (props: Props) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
+    fetchPages();
+  }, []);
+
+  const fetchPages = () => {
     setIsLoaded(false);
     const projectId = location.pathname.split("/")[2];
     api.get(`/api/v1/projects/${projectId}/pages`).then((response) => {
@@ -33,13 +37,9 @@ export const PageListProvider = (props: Props) => {
         });
       }
     });
-  }, []);
-
-  const addPage = (page: TreeListElement) => {
-    setPages([...pages, page]);
   };
 
-  return <PageListContext.Provider value={{ pages, addPage, isLoaded }}>{props.children}</PageListContext.Provider>;
+  return <PageListContext.Provider value={{ pages, fetchPages, isLoaded }}>{props.children}</PageListContext.Provider>;
 };
 
 export const PageListContextLayout = () => {

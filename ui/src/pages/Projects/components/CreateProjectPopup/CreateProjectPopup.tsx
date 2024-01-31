@@ -54,6 +54,8 @@ const CreateProjectPopup = (props: CreatePagePopupProps) => {
       projectsContext.addProject(await response.json());
       toasterContext.addToast("Project created successfully!", "SUCCESS");
     }
+
+    onClose();
   };
 
   return (
