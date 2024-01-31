@@ -45,7 +45,6 @@ describe('API getPages', () => {
         .send({
           name: firstPageName,
           content: 'content',
-          projectId: project.id,
         })
     ).body;
 
@@ -56,7 +55,6 @@ describe('API getPages', () => {
         .send({
           name: secondPageName,
           content: 'content',
-          projectId: project.id,
         })
     ).body;
 

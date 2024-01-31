@@ -5,7 +5,7 @@ import {log} from '../../config/logger';
 const INSERT_PAGE_QUERY = `INSERT INTO "PAGES" (id, name, content, created_at, created_by, updated_at, updated_by, version, is_public, project_id, parent_id)
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`;
 
-export const createNewPage = async (page, userId) => {
+export const createNewPage = async (page, userId, projectId) => {
   const client = config.dbClient;
   const values = [
     uuidv4(),
@@ -17,7 +17,7 @@ export const createNewPage = async (page, userId) => {
     userId,
     1,
     page.isPublic === null ? false : page.isPublic,
-    page.projectId,
+    projectId,
     page.parentId === null ? null : page.parentId,
   ];
 

@@ -4,7 +4,6 @@ import Joi from 'joi';
 export const validateCreatePageInput = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    projectId: Joi.string().required(),
     content: Joi.string(),
     isPublic: Joi.boolean(),
     parentId: Joi.string(),

@@ -36,22 +36,6 @@ describe('API createPage', () => {
     expect(response.body.message).toBe('"name" is required');
   });
 
-  it('POST should return 400 if no name is provided', async () => {
-    const adminUser = await getUserByUsername('admin');
-    const validToken = generateJWT(adminUser, '1d');
-
-    const response = await request(app)
-      .post('/api/v1/projects/projectId/pages')
-      .set({ Authorization: `Bearer ${validToken}` })
-      .send({
-        name: 'test page',
-        content: 'content',
-      })
-      .expect(400);
-
-    expect(response.body.message).toBe('"projectId" is required');
-  });
-
   it('POST should return 400 if there is a wrong parameter', async () => {
     const adminUser = await getUserByUsername('admin');
     const validToken = generateJWT(adminUser, '1d');
@@ -62,7 +46,6 @@ describe('API createPage', () => {
       .send({
         name: 'test page',
         content: 'content',
-        projectId: '1',
         wrongParameter: 'wrong',
       })
       .expect(400);
@@ -93,7 +76,6 @@ describe('API createPage', () => {
       .send({
         name: pageName,
         content: 'content',
-        projectId: project.id,
       })
       .expect(200);
 
