@@ -23,7 +23,7 @@ export const updateProject = async (req, res) => {
   const user = req.user;
   const projectId = req.params.id;
 
-  const updatedProject = await updateExistingProject(req.body, projectId, user.userId);
+  const updatedProject = await updateExistingProject(req.body, projectId, user.id);
   if (updatedProject) {
     res.status(200).send(updatedProject);
     return;
