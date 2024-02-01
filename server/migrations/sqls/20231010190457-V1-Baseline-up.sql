@@ -96,7 +96,8 @@ CREATE TABLE "PAGE_ATTACHMENTS" (
 );
 
 CREATE VIEW PAGE_CONTENT AS
-    SELECT p.id, p.name, p.content, p.created_by, c.first_name AS c_first_name, c.last_name AS c_last_name, c.username AS c_username, p.updated_at, p.updated_by, u.first_name AS u_first_name, u.last_name AS u_last_name, u.username AS u_username
+    SELECT p.id, p.name, p.content, p.parent_id, p.created_by, c.first_name AS c_first_name, c.last_name AS c_last_name, c.username AS c_username, p.updated_at, p.updated_by, u.first_name AS
+    u_first_name, u.last_name AS u_last_name, u.username AS u_username
 FROM "PAGES" AS p JOIN "USERS" AS u ON p.updated_by = u.id JOIN "USERS" AS c ON p.created_by = c.id;
 
 INSERT INTO "GROUPS" (id, name, permissions, created_at, created_by, updated_at, updated_by) SELECT gen_random_uuid(), 'ADMIN', 'admin',

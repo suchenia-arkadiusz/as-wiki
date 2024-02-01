@@ -17,6 +17,7 @@ const mapPage = (page) => ({
   id: page.id,
   name: page.name,
   content: page.content,
+  parentId: page.parent_id,
   updatedAt: page.updated_at,
   updatedBy: {
     id: page.updated_by,
