@@ -17,9 +17,14 @@ const ButtonContainer = styled.button<{ $color?: string; $hoverColor?: string; $
   &:hover {
     color: ${(props) => props.$hoverColor};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: #b8b8b8;
+  }
 `;
 
-type IconButtonProps = {
+type Props = {
   onClick: () => void;
   iconName?: string;
   height?: number;
@@ -29,10 +34,11 @@ type IconButtonProps = {
   iconPosition?: "left" | "right";
   className?: string;
   padding?: any;
+  disabled?: boolean;
 };
 
-const Button = (props: IconButtonProps) => {
-  const { iconName, onClick, text, color, hoverColor, height, iconPosition, className, padding } = props;
+const Button = (props: Props) => {
+  const { iconName, onClick, text, color, hoverColor, height, iconPosition, className, padding, disabled } = props;
 
   return (
     <ButtonContainer
@@ -43,6 +49,7 @@ const Button = (props: IconButtonProps) => {
       $height={height || 16}
       $padding={padding || "0"}
       className={className}
+      disabled={disabled == null ? false : disabled}
     >
       {iconPosition === "right" ? (
         <>

@@ -6,6 +6,7 @@ const TextAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  height: 100%;
 `;
 
 type TextAreaProps = HTMLProps<HTMLTextAreaElement> & {
@@ -16,7 +17,7 @@ type TextAreaProps = HTMLProps<HTMLTextAreaElement> & {
 };
 
 const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
-  const { label, placeholder, isRequired, validated, onChange, inputKey } = props;
+  const { label, placeholder, isRequired, validated, onChange, inputKey, rows, defaultValue } = props;
 
   return (
     <TextAreaContainer data-testid="TextAreaContainer">
@@ -31,6 +32,8 @@ const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAre
         id={inputKey}
         placeholder={placeholder}
         onChange={onChange}
+        rows={rows}
+        defaultValue={defaultValue}
       />
     </TextAreaContainer>
   );

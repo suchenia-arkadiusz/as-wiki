@@ -37,7 +37,7 @@ const DocumentPage = () => {
   const location = useLocation();
   const [selectedPage, setSelectedPage] = useState<string>(location.pathname.split("/")[4]);
   const [page, setPage] = useState<Page | undefined>(undefined);
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [popupProps, setPopupProps] = useState<{ isPopupOpen: boolean; isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
   const projectId = location.pathname.split("/")[2];
 
   useEffect(() => {
@@ -52,6 +52,14 @@ const DocumentPage = () => {
       });
   }, [selectedPage]);
 
+  const openPopup = (isEdit: boolean) => {
+    setPopupProps({ isEdit, isPopupOpen: true });
+  };
+
+  const closePopup = () => {
+    setPopupProps({ ...popupProps, isPopupOpen: false });
+  };
+
   const getUserDetails = (data?: CreatedByUser): string =>
     data ? (data.firstName && data.lastName ? `${data.firstName} ${data.lastName}` : data.username) : "";
 
@@ -60,7 +68,7 @@ const DocumentPage = () => {
       <PageListPanel
         projectName={projects.find((project) => project.id === projectId)?.name || "No Project"}
         onSelectedPage={setSelectedPage}
-        onAddPage={setIsPopupOpen}
+        onAddPage={openPopup}
       />
       {page ? (
         <>
@@ -72,17 +80,17 @@ const DocumentPage = () => {
                 {getUserDetails(page?.updatedBy)}
               </p>
             </section>
-            <article style={{ marginTop: "30px", color: "#747474" }}>{page?.content}</article>
+            <article dangerouslySetInnerHTML={{ __html: page?.content ? page.content : "" }} />
           </PageContentContainer>
           <PageIconsContainer>
             <Button onClick={() => alert("Edit Permissions")} iconName="bi-lock" />
-            <Button onClick={() => alert("Edit")} iconName="bi-pen" />
+            <Button onClick={() => openPopup(true)} iconName="bi-pen" />
             <Button onClick={() => alert("Delete")} iconName="bi-trash3" />
             <Button onClick={() => alert("More")} iconName="bi-three-dots" />
           </PageIconsContainer>
         </>
       ) : null}
-      {isPopupOpen ? <CreatePagePopup onClose={() => setIsPopupOpen(false)} selectedPage={page} /> : null}
+      {popupProps.isPopupOpen ? <CreatePagePopup onClose={() => closePopup()} selectedPage={page} isEdit={popupProps.isEdit} /> : null}
     </DocumentPageContainer>
   );
 };

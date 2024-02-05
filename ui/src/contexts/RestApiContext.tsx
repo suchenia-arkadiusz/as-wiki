@@ -37,7 +37,7 @@ export const RestApiProvider = (props: Props) => {
     return await fetch(`${baseUrl}${url}`, {
       method: "PUT",
       headers: getHeaders(headers),
-      body,
+      body: JSON.stringify(body),
     });
   };
 

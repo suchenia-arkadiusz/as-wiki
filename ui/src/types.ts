@@ -12,6 +12,7 @@ export type Page = {
   updatedAt: Date;
   updatedBy: CreatedByUser;
   createdBy: CreatedByUser;
+  parentId?: string;
 };
 
 export type CreatedByUser = {
