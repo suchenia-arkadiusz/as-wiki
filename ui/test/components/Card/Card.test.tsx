@@ -1,32 +1,32 @@
-import Card from "../../../src/components/Card/Card.tsx";
-import { render } from "@testing-library/react";
-import { ReactNode } from "react";
-import { expect } from "vitest";
+import Card from '../../../src/components/Card/Card.tsx';
+import { render } from '@testing-library/react';
+import { type ReactNode } from 'react';
+import { expect } from 'vitest';
 
 const setupScreen = (isCenter: boolean = false, children: ReactNode | undefined = undefined) => {
   return render(<Card isCenter={isCenter}>{children}</Card>);
 };
 
-describe("<Card />", () => {
-  it("should render CardContainer.center", () => {
+describe('<Card />', () => {
+  it('should render CardContainer.center', () => {
     const screen = setupScreen(true);
-    expect(screen.getByTestId("CardContainer.center")).toBeInTheDocument();
+    expect(screen.getByTestId('CardContainer.center')).toBeInTheDocument();
   });
 
-  it("should render CardContainer.normal", () => {
+  it('should render CardContainer.normal', () => {
     const screen = setupScreen();
-    expect(screen.getByTestId("CardContainer.normal")).toBeInTheDocument();
+    expect(screen.getByTestId('CardContainer.normal')).toBeInTheDocument();
   });
 
-  it("should render CardContainer.normal with children", () => {
+  it('should render CardContainer.normal with children', () => {
     const screen = setupScreen(false, <div>Some children</div>);
-    expect(screen.getByTestId("CardContainer.normal")).toBeInTheDocument();
-    expect(screen.queryByText("Some children")).toBeInTheDocument();
+    expect(screen.getByTestId('CardContainer.normal')).toBeInTheDocument();
+    expect(screen.queryByText('Some children')).toBeInTheDocument();
   });
 
-  it("should render CardContainer.center with children", () => {
+  it('should render CardContainer.center with children', () => {
     const screen = setupScreen(true, <div>Some children</div>);
-    expect(screen.getByTestId("CardContainer.center")).toBeInTheDocument();
-    expect(screen.queryByText("Some children")).toBeInTheDocument();
+    expect(screen.getByTestId('CardContainer.center')).toBeInTheDocument();
+    expect(screen.queryByText('Some children')).toBeInTheDocument();
   });
 });

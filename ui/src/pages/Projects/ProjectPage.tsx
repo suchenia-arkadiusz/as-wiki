@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { Project } from "./types.ts";
-import Loader from "../../components/Loader/Loader.tsx";
-import { useRestApiContext } from "../../contexts/RestApiContext.tsx";
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { type Project } from './types.ts';
+import Loader from '../../components/Loader/Loader.tsx';
+import { useRestApiContext } from '../../contexts/RestApiContext.tsx';
 
 const ProjectPageContainer = styled.div`
   display: flex;
@@ -33,18 +33,20 @@ const ProjectPage = () => {
 
   return (
     <>
-      {isLoaded ? (
-        <ProjectPageContainer>
-          <h1>{project?.name.toUpperCase()}</h1>
-          <p>{project?.description}</p>
-          <p>
-            <strong>Total number of pages: </strong>
-            {project?.numberOfPages}
-          </p>
-        </ProjectPageContainer>
-      ) : (
-        <Loader />
-      )}
+      {isLoaded
+        ? (
+          <ProjectPageContainer>
+            <h1>{project?.name.toUpperCase()}</h1>
+            <p>{project?.description}</p>
+            <p>
+              <strong>Total number of pages: </strong>
+              {project?.numberOfPages}
+            </p>
+          </ProjectPageContainer>
+        )
+        : (
+          <Loader />
+        )}
     </>
   );
 };

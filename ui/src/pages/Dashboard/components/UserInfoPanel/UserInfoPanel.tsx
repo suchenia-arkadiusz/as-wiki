@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import avatar from "../../../../assets/images/user-default-avatar.png";
-import { useUserContext } from "../../../../contexts/UserContext.tsx";
+import styled from 'styled-components';
+import avatar from '../../../../assets/images/user-default-avatar.png';
+import { useUserContext } from '../../../../contexts/UserContext.tsx';
 
 const UserInfoPanelContainer = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const UserInfoPanel = () => {
       <h1>User info</h1>
       <img
         src={user?.avatarUrl || avatar}
-        style={{ width: "300px", height: "300px", marginBottom: "20px", borderRadius: "50%" }}
+        style={{ width: '300px', height: '300px', marginBottom: '20px', borderRadius: '50%' }}
         alt="User's avatar"
       />
       <h2>

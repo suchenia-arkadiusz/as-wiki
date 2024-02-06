@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { usePageListContext } from "../../../../contexts/PageListContext.tsx";
-import TreeList from "../../../../components/TreeList/TreeList.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Right } from "../../../../components/styles.ts";
-import Button from "../../../../components/Button/Button.tsx";
+import styled from 'styled-components';
+import { usePageListContext } from '../../../../contexts/PageListContext.tsx';
+import TreeList from '../../../../components/TreeList/TreeList.tsx';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Right } from '../../../../components/styles.ts';
+import Button from '../../../../components/Button/Button.tsx';
 
 const PageListPanelContainer = styled.div`
   display: flex;
@@ -34,11 +34,11 @@ const PageListPanelContainer = styled.div`
   }
 `;
 
-type PageListPanelProps = {
-  projectName: string;
-  onSelectedPage: (id: string) => void;
-  onAddPage: (isEdit: boolean) => void;
-};
+interface PageListPanelProps {
+  projectName: string
+  onSelectedPage: (_id: string) => void
+  onAddPage: (_isEdit: boolean) => void
+}
 
 const PageListPanel = (props: PageListPanelProps) => {
   const { projectName, onSelectedPage, onAddPage } = props;
@@ -47,7 +47,7 @@ const PageListPanel = (props: PageListPanelProps) => {
   const navigate = useNavigate();
 
   const onSelect = (id: string) => {
-    const projectId = location.pathname.split("/")[2];
+    const projectId = location.pathname.split('/')[2];
     onSelectedPage(id);
     navigate(`/projects/${projectId}/pages/${id}`);
   };
@@ -55,7 +55,7 @@ const PageListPanel = (props: PageListPanelProps) => {
   return (
     <PageListPanelContainer data-testid="PageListPanel.container">
       <Right>
-        <Button iconName="bi-plus-lg" onClick={() => onAddPage(false)} text="Add Page" />
+        <Button iconName="bi-plus-lg" onClick={() => { onAddPage(false); }} text="Add Page" />
       </Right>
       <h1>{projectName}</h1>
       <TreeList data={pages} onSelect={onSelect} />

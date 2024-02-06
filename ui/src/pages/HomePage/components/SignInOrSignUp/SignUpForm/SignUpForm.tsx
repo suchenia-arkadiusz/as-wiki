@@ -1,14 +1,14 @@
-import Input from "../../../../../components/Input/Input.tsx";
-import { useRef, useState } from "react";
-import { validateEmail, validatePasswords } from "../formValidation.ts";
-import styled from "styled-components";
-import { TSignUpFormValidated } from "../types.ts";
-import { validateStringInput } from "../../../../../utils/validators.ts";
-import { getValueFromInputRef } from "../../../../../utils/input.ts";
-import { useRestApiContext } from "../../../../../contexts/RestApiContext.tsx";
-import { useUserContext } from "../../../../../contexts/UserContext.tsx";
-import { useToasterContext } from "../../../../../contexts/ToasterContext.tsx";
-import { useNavigate } from "react-router-dom";
+import Input from '../../../../../components/Input/Input.tsx';
+import { useRef, useState } from 'react';
+import { validateEmail, validatePasswords } from '../formValidation.ts';
+import styled from 'styled-components';
+import { type TSignUpFormValidated } from '../types.ts';
+import { validateStringInput } from '../../../../../utils/validators.ts';
+import { getValueFromInputRef } from '../../../../../utils/input.ts';
+import { useRestApiContext } from '../../../../../contexts/RestApiContext.tsx';
+import { useUserContext } from '../../../../../contexts/UserContext.tsx';
+import { useToasterContext } from '../../../../../contexts/ToasterContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpFormContainer = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const SignUpForm = () => {
     confirmPassword: false,
     email: false,
     firstName: true,
-    lastName: true,
+    lastName: true
   });
 
   const onSubmit = async () => {
@@ -44,30 +44,30 @@ const SignUpForm = () => {
       password: getValueFromInputRef(passwordRef),
       email: getValueFromInputRef(emailRef),
       firstName: getValueFromInputRef(firstNameRef),
-      lastName: getValueFromInputRef(lastNameRef),
+      lastName: getValueFromInputRef(lastNameRef)
     };
 
-    const response = await api.post("/register", body);
+    const response = await api.post('/register', body);
 
     if (response.status !== 200) {
-      toasterContext.addToast("Something went wrong!", "ERROR");
+      toasterContext.addToast('Something went wrong!', 'ERROR');
       return;
     }
 
     const data = await response.json();
     userContext.setUser(data.user);
-    localStorage.setItem("token", data.jwt);
-    localStorage.setItem("token", data.jwt);
-    localStorage.setItem("refreshToken", data.refreshToken);
-    toasterContext.addToast("Signed up successfully!", "SUCCESS");
-    navigate("/dashboard");
+    localStorage.setItem('token', data.jwt);
+    localStorage.setItem('token', data.jwt);
+    localStorage.setItem('refreshToken', data.refreshToken);
+    toasterContext.addToast('Signed up successfully!', 'SUCCESS');
+    navigate('/dashboard');
   };
 
   return (
     <SignUpFormContainer
       data-testid="SignUpFormContainer"
       onKeyDown={async (e) => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
           await onSubmit();
         }
       }}
@@ -79,7 +79,7 @@ const SignUpForm = () => {
         placeholder="Username"
         isRequired
         validated={validatedForm.username}
-        onChange={() => setValidatedForm({ ...validatedForm, username: validateStringInput(getValueFromInputRef(usernameRef)) })}
+        onChange={() => { setValidatedForm({ ...validatedForm, username: validateStringInput(getValueFromInputRef(usernameRef)) }); }}
         inputKey="sign-up-username"
       />
       <Input
@@ -89,7 +89,7 @@ const SignUpForm = () => {
         placeholder="Password"
         isRequired
         validated={validatedForm.password && validatePasswords(getValueFromInputRef(passwordRef), getValueFromInputRef(confirmPasswordRef))}
-        onChange={() => setValidatedForm({ ...validatedForm, password: validateStringInput(getValueFromInputRef(passwordRef)) })}
+        onChange={() => { setValidatedForm({ ...validatedForm, password: validateStringInput(getValueFromInputRef(passwordRef)) }); }}
         inputKey="sign-up-password"
       />
       <Input
@@ -101,8 +101,7 @@ const SignUpForm = () => {
         validated={
           validatedForm.confirmPassword && validatePasswords(getValueFromInputRef(passwordRef), getValueFromInputRef(confirmPasswordRef))
         }
-        onChange={() =>
-          setValidatedForm({ ...validatedForm, confirmPassword: validateStringInput(getValueFromInputRef(confirmPasswordRef)) })
+        onChange={() => { setValidatedForm({ ...validatedForm, confirmPassword: validateStringInput(getValueFromInputRef(confirmPasswordRef)) }); }
         }
         inputKey="sign-up-confirmPassword"
       />
@@ -113,7 +112,7 @@ const SignUpForm = () => {
         placeholder="name@company.com"
         isRequired
         validated={validatedForm.email && validateEmail(getValueFromInputRef(emailRef))}
-        onChange={() => setValidatedForm({ ...validatedForm, email: validateStringInput(getValueFromInputRef(emailRef)) })}
+        onChange={() => { setValidatedForm({ ...validatedForm, email: validateStringInput(getValueFromInputRef(emailRef)) }); }}
         inputKey="sign-up-email"
       />
       <Input
@@ -122,7 +121,7 @@ const SignUpForm = () => {
         type="text"
         placeholder="First Name"
         validated
-        onChange={() => setValidatedForm({ ...validatedForm, firstName: validateStringInput(getValueFromInputRef(firstNameRef)) })}
+        onChange={() => { setValidatedForm({ ...validatedForm, firstName: validateStringInput(getValueFromInputRef(firstNameRef)) }); }}
         inputKey="sign-up-firstName"
       />
       <Input
@@ -131,7 +130,7 @@ const SignUpForm = () => {
         type="text"
         placeholder="Last Name"
         validated
-        onChange={() => setValidatedForm({ ...validatedForm, lastName: validateStringInput(getValueFromInputRef(lastNameRef)) })}
+        onChange={() => { setValidatedForm({ ...validatedForm, lastName: validateStringInput(getValueFromInputRef(lastNameRef)) }); }}
         inputKey="sign-up-lastName"
       />
       <button className="primary-btn" onClick={onSubmit}>

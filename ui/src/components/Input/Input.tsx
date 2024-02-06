@@ -1,6 +1,6 @@
-import "./Input.css";
-import { ForwardedRef, forwardRef, HTMLProps } from "react";
-import styled from "styled-components";
+import './Input.css';
+import { type ForwardedRef, forwardRef, type HTMLProps } from 'react';
+import styled from 'styled-components';
 
 const InputContainer = styled.div`
   display: flex;
@@ -9,11 +9,11 @@ const InputContainer = styled.div`
 `;
 
 type InputProps = HTMLProps<HTMLInputElement> & {
-  label: string;
-  isRequired?: boolean;
-  validated: boolean;
-  inputKey: string | undefined;
-};
+  label: string
+  isRequired?: boolean
+  validated: boolean
+  inputKey: string | undefined
+}
 
 const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const { label, placeholder, isRequired, validated, type, onChange, inputKey, defaultValue } = props;
@@ -21,12 +21,12 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
   return (
     <InputContainer data-testid="InputContainer">
       <label htmlFor={inputKey} data-testid="InputContainer.label">
-        {label} {isRequired ? "*" : null}
+        {label} {isRequired ? '*' : null}
       </label>
       <input
         data-testid="InputContainer.input"
         ref={ref}
-        className={`app-text-input${!validated ? " app-input-not-validated" : ""}`}
+        className={`app-text-input${!validated ? ' app-input-not-validated' : ''}`}
         type={type}
         key={inputKey}
         id={inputKey}
@@ -37,5 +37,7 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
     </InputContainer>
   );
 });
+
+Input.displayName = 'Input';
 
 export default Input;

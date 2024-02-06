@@ -1,18 +1,18 @@
-import "./App.css";
-import { NavBar } from "./components/NavBar/NavBar.tsx";
-import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage.tsx";
-import DashboardPage from "./pages/Dashboard/DashboardPage.tsx";
-import { UserProvider } from "./contexts/UserContext.tsx";
-import { RecentlyViewedProvider } from "./contexts/RecentlyViewedContext.tsx";
-import ProjectsPage from "./pages/Projects/ProjectsPage.tsx";
-import ProjectPage from "./pages/Projects/ProjectPage.tsx";
-import { ProjectsContextLayout } from "./contexts/ProjectsContext.tsx";
-import { useToasterContext } from "./contexts/ToasterContext.tsx";
-import { RestApiProvider } from "./contexts/RestApiContext.tsx";
-import { AuthProvider } from "./contexts/AuthContext.tsx";
-import DocumentPage from "./pages/Page/DocumentPage.tsx";
-import { PageListContextLayout } from "./contexts/PageListContext.tsx";
+import './App.css';
+import { NavBar } from './components/NavBar/NavBar.tsx';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage/HomePage.tsx';
+import DashboardPage from './pages/Dashboard/DashboardPage.tsx';
+import { UserProvider } from './contexts/UserContext.tsx';
+import { RecentlyViewedProvider } from './contexts/RecentlyViewedContext.tsx';
+import ProjectsPage from './pages/Projects/ProjectsPage.tsx';
+import ProjectPage from './pages/Projects/ProjectPage.tsx';
+import { ProjectsContextLayout } from './contexts/ProjectsContext.tsx';
+import { useToasterContext } from './contexts/ToasterContext.tsx';
+import { RestApiProvider } from './contexts/RestApiContext.tsx';
+import { AuthProvider } from './contexts/AuthContext.tsx';
+import DocumentPage from './pages/Page/DocumentPage.tsx';
+import { PageListContextLayout } from './contexts/PageListContext.tsx';
 
 const App = () => {
   const { toasters } = useToasterContext();

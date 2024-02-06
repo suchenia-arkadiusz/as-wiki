@@ -1,7 +1,7 @@
-import { TreeListElement } from "../../types.ts";
-import Button from "../Button/Button.tsx";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { type TreeListElement } from '../../types.ts';
+import Button from '../Button/Button.tsx';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const TreeListItemContainer = styled.div<{ $margin: string }>`
   display: flex;
@@ -13,14 +13,14 @@ const TreeListItemContainer = styled.div<{ $margin: string }>`
 `;
 
 type TreeListProps = {
-  data: Array<TreeListElement>;
-  onSelect: (id: string) => void;
-  level?: number;
-};
+  data: TreeListElement[]
+  onSelect: (_id: string) => void
+  level?: number
+}
 
 const TreeList = (props: TreeListProps) => {
   const { data, level = 0, onSelect } = props;
-  const [listData, setListData] = useState<Array<TreeListElement>>([]);
+  const [listData, setListData] = useState<TreeListElement[]>([]);
 
   useEffect(() => {
     setListData(data);
@@ -39,15 +39,17 @@ const TreeList = (props: TreeListProps) => {
     <>
       {listData.map((item) => (
         <div key={item.id}>
-          <TreeListItemContainer $margin={hasChildren(item) ? `${level * 25}px` : `${level * 25 + 26}px`}>
-            {hasChildren(item) ? (
-              <>
-                <Button iconName={item.isExpanded ? "bi-chevron-up" : "bi-chevron-down"} onClick={() => toggleItem(item.id)} />
-                <Button onClick={() => onSelect(item.id)} text={item.name} />
-              </>
-            ) : (
-              <Button onClick={() => onSelect(item.id)} text={item.name} />
-            )}
+          <TreeListItemContainer $margin={hasChildren(item) ? `${level * 25}px` : `${(level * 25) + 26}px`}>
+            {hasChildren(item)
+              ? (
+                <>
+                  <Button iconName={item.isExpanded ? 'bi-chevron-up' : 'bi-chevron-down'} onClick={() => { toggleItem(item.id); }} />
+                  <Button onClick={() => { onSelect(item.id); }} text={item.name} />
+                </>
+              )
+              : (
+                <Button onClick={() => { onSelect(item.id); }} text={item.name} />
+              )}
           </TreeListItemContainer>
           {item.isExpanded ? <TreeList data={item.children} level={level + 1} onSelect={onSelect} /> : null}
         </div>

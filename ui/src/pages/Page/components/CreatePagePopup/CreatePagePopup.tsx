@@ -1,25 +1,25 @@
-import Popup from "../../../../components/Popup/Popup.tsx";
-import { Page } from "../../../../types.ts";
-import styled from "styled-components";
-import Button from "../../../../components/Button/Button.tsx";
-import { useRestApiContext } from "../../../../contexts/RestApiContext.tsx";
-import { useCallback, useRef, useState } from "react";
-import { useToasterContext } from "../../../../contexts/ToasterContext.tsx";
-import { usePageListContext } from "../../../../contexts/PageListContext.tsx";
-import Input from "../../../../components/Input/Input.tsx";
-import { validateStringInput } from "../../../../utils/validators.ts";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
+import Popup from '../../../../components/Popup/Popup.tsx';
+import { type Page } from '../../../../types.ts';
+import styled from 'styled-components';
+import Button from '../../../../components/Button/Button.tsx';
+import { useRestApiContext } from '../../../../contexts/RestApiContext.tsx';
+import { useCallback, useRef, useState } from 'react';
+import { useToasterContext } from '../../../../contexts/ToasterContext.tsx';
+import { usePageListContext } from '../../../../contexts/PageListContext.tsx';
+import Input from '../../../../components/Input/Input.tsx';
+import { validateStringInput } from '../../../../utils/validators.ts';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ list: "ordered" }, { list: "bullet" }],
-  ["bold", "italic", "underline"],
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  ['bold', 'italic', 'underline'],
   [{ color: [] }, { background: [] }],
-  [{ script: "sub" }, { script: "super" }],
+  [{ script: 'sub' }, { script: 'super' }],
   [{ align: [] }],
-  ["image", "blockquote", "code-block"],
-  ["clean"],
+  ['image', 'blockquote', 'code-block'],
+  ['clean']
 ];
 
 const CreatePageContainer = styled.div`
@@ -34,11 +34,11 @@ const CreatePageButtonContainer = styled.div`
   width: 100%;
 `;
 
-type CreatePagePopupProps = {
-  onClose: () => void;
-  selectedPage: Page | undefined;
-  isEdit?: boolean;
-};
+interface CreatePagePopupProps {
+  onClose: () => void
+  selectedPage: Page | undefined
+  isEdit?: boolean
+}
 
 const CreatePagePopup = (props: CreatePagePopupProps) => {
   const { onClose, selectedPage, isEdit = false } = props;
@@ -51,27 +51,27 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
   const [validatedName, setValidatedName] = useState<boolean>(isEdit);
 
   const articleRef = useCallback((article: HTMLElement | null) => {
-    if (article == null) return;
+    if (!article) return;
 
-    article.innerHTML = "";
-    const editor = document.createElement("div");
+    article.innerHTML = '';
+    const editor = document.createElement('div');
     article.append(editor);
     const q = new Quill(editor, {
-      theme: "snow",
+      theme: 'snow',
       modules: {
-        toolbar: TOOLBAR_OPTIONS,
-      },
+        toolbar: TOOLBAR_OPTIONS
+      }
     });
-    if (isEdit) q.root.innerHTML = selectedPage?.content || "";
+    if (isEdit) q.root.innerHTML = selectedPage?.content || '';
     setQuill(q);
   }, []);
 
   const onSubmit = async () => {
-    const projectId = location.pathname.split("/")[2];
+    const projectId = location.pathname.split('/')[2];
     const body = {
-      name: nameRef.current?.value || "",
+      name: nameRef.current?.value || '',
       content: quill?.root.innerHTML || undefined,
-      parentId: isEdit ? selectedPage?.parentId : selectedPage?.id || undefined,
+      parentId: isEdit ? selectedPage?.parentId : selectedPage?.id || undefined
     };
 
     let response;
@@ -82,19 +82,19 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
     }
 
     if (response.status !== 200) {
-      toasterContext.addToast("Something went wrong!", "ERROR");
+      toasterContext.addToast('Something went wrong!', 'ERROR');
     }
 
     if (response.status === 200) {
       pageListContext.fetchPages();
-      toasterContext.addToast("Page created successfully!", "SUCCESS");
+      toasterContext.addToast('Page created successfully!', 'SUCCESS');
     }
 
     onClose();
   };
 
   return (
-    <Popup title={isEdit ? "Edit Page" : "Create Page"} width={1400} height={1000} onClose={onClose}>
+    <Popup title={isEdit ? 'Edit Page' : 'Create Page'} width={1400} height={1000} onClose={onClose}>
       <CreatePageContainer data-testid="CreatePage.container">
         <Input
           ref={nameRef}
@@ -104,7 +104,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
           placeholder="Page name"
           type="text"
           validated={validatedName}
-          onChange={() => setValidatedName(nameRef.current ? validateStringInput(nameRef.current.value) : false)}
+          onChange={() => { setValidatedName(nameRef.current ? validateStringInput(nameRef.current.value) : false); }}
           defaultValue={isEdit ? selectedPage?.name : undefined}
         />
         <div ref={articleRef} />

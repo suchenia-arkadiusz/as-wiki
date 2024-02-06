@@ -1,12 +1,12 @@
-import { HTMLProps, ReactNode } from "react";
-import "./Card.css";
-import styled from "styled-components";
+import { type HTMLProps, type ReactNode } from 'react';
+import './Card.css';
+import styled from 'styled-components';
 
 type CardProps = HTMLProps<HTMLDivElement> & {
-  isCenter?: boolean;
-  withShadow?: boolean;
-  children?: ReactNode;
-};
+  isCenter?: boolean
+  withShadow?: boolean
+  children?: ReactNode
+}
 
 const CardCenterContainer = styled.div`
   position: absolute;
@@ -29,15 +29,17 @@ const Card = (props: CardProps) => {
 
   return (
     <>
-      {isCenter ? (
-        <CardCenterContainer data-testid="CardContainer.center" style={style}>
-          {children}
-        </CardCenterContainer>
-      ) : (
-        <CardContainer data-testid="CardContainer.normal" style={style}>
-          {children}
-        </CardContainer>
-      )}
+      {isCenter
+        ? (
+          <CardCenterContainer data-testid="CardContainer.center" style={style}>
+            {children}
+          </CardCenterContainer>
+        )
+        : (
+          <CardContainer data-testid="CardContainer.normal" style={style}>
+            {children}
+          </CardContainer>
+        )}
     </>
   );
 };

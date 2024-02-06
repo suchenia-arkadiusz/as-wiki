@@ -1,6 +1,6 @@
-import SignUpForm from "./SignUpForm/SignUpForm.tsx";
-import SignInForm from "./SignInForm/SignInForm.tsx";
-import styled from "styled-components";
+import SignUpForm from './SignUpForm/SignUpForm.tsx';
+import SignInForm from './SignInForm/SignInForm.tsx';
+import styled from 'styled-components';
 
 const SignInOrSignUpContainer = styled.div`
   display: flex;

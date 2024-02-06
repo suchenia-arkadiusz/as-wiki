@@ -1,6 +1,7 @@
-import styled from "styled-components";
-import Button from "../Button/Button.tsx";
-import { Left, Right } from "../styles.ts";
+import styled from 'styled-components';
+import Button from '../Button/Button.tsx';
+import { Left, Right } from '../styles.ts';
+import React from 'react';
 
 const PopupOverlay = styled.div`
   position: fixed;
@@ -29,27 +30,32 @@ const PopupHeader = styled.div`
   justify-content: space-between;
 `;
 
-type PopupProps = {
-  title: string;
-  width: number;
-  onClose: () => void;
-  children: React.ReactNode;
-  height?: number;
-};
+type Props = {
+  title: string
+  width: number
+  onClose: () => void
+  children: React.ReactNode
+  height?: number
+}
 
-const Popup = (props: PopupProps) => {
+type PopupStyle = {
+  width: string,
+  height?: string
+}
+
+const Popup = (props: Props) => {
   const { title, width, height, onClose, children } = props;
 
-  const popupStyle: any = {
+  const popupStyle: PopupStyle = {
     width: `${width}px`,
   };
   if (height && height > 0) {
-    popupStyle["height"] = `${height}px`;
+    popupStyle.height = `${height}px`;
   }
 
   return (
     <PopupOverlay data-testid="PopupOverlayContainer" onClick={onClose}>
-      <PopupContainer data-testid="PopupContainer" style={popupStyle} onClick={(e) => e.stopPropagation()}>
+      <PopupContainer data-testid="PopupContainer" style={popupStyle} onClick={(e) => { e.stopPropagation(); }}>
         <PopupHeader>
           <Left>
             <h1>{title.toUpperCase()}</h1>

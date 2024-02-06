@@ -1,11 +1,11 @@
-import styled, { keyframes } from "styled-components";
-import { ReactNode } from "react";
-import Icon from "../Icon/Icon.tsx";
+import styled, { keyframes } from 'styled-components';
+import { type ReactNode } from 'react';
+import Icon from '../Icon/Icon.tsx';
 
-type ToasterProps = {
-  message: string;
-  type: "DANGER" | "SUCCESS" | "ERROR";
-};
+interface ToasterProps {
+  message: string
+  type: 'DANGER' | 'SUCCESS' | 'ERROR'
+}
 
 const ToasterAnimation = keyframes`
   0% {
@@ -25,7 +25,7 @@ const ToasterAnimation = keyframes`
     transform: translate(-50%, -100px);
   }`;
 
-const ToasterContainer = styled.div<{ $bgColor: string; $color: string }>`
+const ToasterContainer = styled.div<{ $bgColor: string, $color: string }>`
   position: absolute;
   left: 50%;
   width: 50%;
@@ -45,14 +45,14 @@ const ToasterContainer = styled.div<{ $bgColor: string; $color: string }>`
 export const Toaster = (props: ToasterProps): ReactNode => {
   const { message, type } = props;
   const colors = {
-    DANGER: { bgColor: "#ff7826", color: "#000000" },
-    SUCCESS: { bgColor: "#61ff61", color: "#000000" },
-    ERROR: { bgColor: "#ff4a4a", color: "#FFFFFF" },
+    DANGER: { bgColor: '#ff7826', color: '#000000' },
+    SUCCESS: { bgColor: '#61ff61', color: '#000000' },
+    ERROR: { bgColor: '#ff4a4a', color: '#FFFFFF' }
   };
   const icons = {
-    DANGER: "bi-exclamation-triangle",
-    SUCCESS: "bi-check-circle",
-    ERROR: "bi-exclamation-circle",
+    DANGER: 'bi-exclamation-triangle',
+    SUCCESS: 'bi-check-circle',
+    ERROR: 'bi-exclamation-circle'
   };
 
   return (
@@ -60,12 +60,12 @@ export const Toaster = (props: ToasterProps): ReactNode => {
       <Icon iconName={icons[type]} />
       <div
         style={{
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          maxWidth: "100%",
-          background: "none",
-          color: "inherit",
-          whiteSpace: "nowrap",
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          maxWidth: '100%',
+          background: 'none',
+          color: 'inherit',
+          whiteSpace: 'nowrap'
         }}
       >
         {message}

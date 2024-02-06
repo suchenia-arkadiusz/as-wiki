@@ -1,6 +1,6 @@
-import "./NavBar.css";
-import { useUserContext } from "../../contexts/UserContext.tsx";
-import avatar from "../../assets/images/user-default-avatar.png";
+import './NavBar.css';
+import { useUserContext } from '../../contexts/UserContext.tsx';
+import avatar from '../../assets/images/user-default-avatar.png';
 
 export const NavBar = () => {
   const userContext = useUserContext();
@@ -13,7 +13,7 @@ export const NavBar = () => {
           {user?.firstName} {user?.lastName}
         </div>
         <div>
-          <img src={user?.avatarUrl || avatar} style={{ width: "50px", height: "50px", borderRadius: "50%" }} alt="User's avatar" />
+          <img src={user?.avatarUrl || avatar} style={{ width: '50px', height: '50px', borderRadius: '50%' }} alt="User's avatar" />
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import Input from "../../../../../components/Input/Input.tsx";
-import { useRef, useState } from "react";
-import { TSignInFormValidated } from "../types.ts";
-import { useUserContext } from "../../../../../contexts/UserContext.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
-import { validateStringInput } from "../../../../../utils/validators.ts";
-import Button from "../../../../../components/Button/Button.tsx";
-import { useRestApiContext } from "../../../../../contexts/RestApiContext.tsx";
-import { useToasterContext } from "../../../../../contexts/ToasterContext.tsx";
+import styled from 'styled-components';
+import Input from '../../../../../components/Input/Input.tsx';
+import { useRef, useState } from 'react';
+import { type TSignInFormValidated } from '../types.ts';
+import { useUserContext } from '../../../../../contexts/UserContext.tsx';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { validateStringInput } from '../../../../../utils/validators.ts';
+import Button from '../../../../../components/Button/Button.tsx';
+import { useRestApiContext } from '../../../../../contexts/RestApiContext.tsx';
+import { useToasterContext } from '../../../../../contexts/ToasterContext.tsx';
 
 const SignInFormContainer = styled.div`
   display: flex;
@@ -28,30 +28,30 @@ const SignInForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [validatedForm, setValidatedForm] = useState<TSignInFormValidated>({
     username: false,
-    password: false,
+    password: false
   });
 
   const onSubmit = async () => {
-    const username = usernameRef.current?.value || "";
-    const password = passwordRef.current?.value || "";
+    const username = usernameRef.current?.value || '';
+    const password = passwordRef.current?.value || '';
 
-    const response = await api.post("/login", { username, password });
+    const response = await api.post('/login', { username, password });
 
     if (response.status === 401) {
-      toasterContext.addToast("Wrong username or password!", "ERROR");
+      toasterContext.addToast('Wrong username or password!', 'ERROR');
     }
 
     if (response.status === 200) {
       const data = await response.json();
       userContext.setUser(data.user);
-      localStorage.setItem("token", data.jwt);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      toasterContext.addToast("Signed in successfully!", "SUCCESS");
+      localStorage.setItem('token', data.jwt);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      toasterContext.addToast('Signed in successfully!', 'SUCCESS');
       if (location.state?.from) {
         navigate(location.state.from);
         return;
       }
-      navigate("/dashboard");
+      navigate('/dashboard');
     }
   };
 
@@ -59,7 +59,7 @@ const SignInForm = () => {
     <SignInFormContainer
       data-testid="SignInFormContainer"
       onKeyDown={async (e) => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
           await onSubmit();
         }
       }}
@@ -71,11 +71,12 @@ const SignInForm = () => {
         placeholder="Username"
         isRequired
         validated={validatedForm.username}
-        onChange={() =>
+        onChange={() => {
           setValidatedForm({
             ...validatedForm,
-            username: validateStringInput(usernameRef.current?.value || ""),
-          })
+            username: validateStringInput(usernameRef.current?.value || '')
+          });
+        }
         }
         inputKey="sign-in-username"
       />
@@ -86,11 +87,12 @@ const SignInForm = () => {
         placeholder="Password"
         isRequired
         validated={validatedForm.password}
-        onChange={() =>
+        onChange={() => {
           setValidatedForm({
             ...validatedForm,
-            password: validateStringInput(passwordRef.current?.value || ""),
-          })
+            password: validateStringInput(passwordRef.current?.value || '')
+          });
+        }
         }
         inputKey="sign-in-password"
       />

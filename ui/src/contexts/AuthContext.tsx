@@ -1,16 +1,16 @@
-import { createContext, ReactNode, useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useToasterContext } from "./ToasterContext.tsx";
-import { useRestApiContext } from "./RestApiContext.tsx";
-import { useUserContext } from "./UserContext.tsx";
+import { createContext, type ReactNode, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useToasterContext } from './ToasterContext.tsx';
+import { useRestApiContext } from './RestApiContext.tsx';
+import { useUserContext } from './UserContext.tsx';
 
-type Props = {
-  children: ReactNode;
-};
+interface Props {
+  children: ReactNode
+}
 
-export type AuthContextType = {
-  checkAuth: () => void;
-};
+export interface AuthContextType {
+  checkAuth: () => void
+}
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -26,23 +26,22 @@ export const AuthProvider = (props: Props) => {
   }, []);
 
   const checkAuth = () => {
-    const token = localStorage.getItem("token");
-    const refreshToken = localStorage.getItem("refreshToken");
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     if (token || refreshToken) {
-      api.get("/token").then((response) => {
+      api.get('/token').then((response) => {
         if (response.status === 401) {
-          api.get("/refresh", { "Refresh-Token": refreshToken }).then((res) => {
+          api.get('/refresh', { 'Refresh-Token': refreshToken }).then((res) => {
             if (res.status === 401) {
               navigateToLogin();
             } else {
               res.json().then((data: any) => {
                 userContext.setUser(data.user);
-                localStorage.setItem("token", data.jwt);
-                localStorage.setItem("refreshToken", data.refreshToken);
+                localStorage.setItem('token', data.jwt);
+                localStorage.setItem('refreshToken', data.refreshToken);
               });
             }
-            return;
           });
         } else if (response.status === 200) {
           response.json().then((data: any) => {
@@ -56,8 +55,8 @@ export const AuthProvider = (props: Props) => {
   };
 
   const navigateToLogin = () => {
-    toasterContext.addToast("You need to login to access this page", "DANGER");
-    navigate("/", { state: { from: location.pathname } });
+    toasterContext.addToast('You need to login to access this page', 'DANGER');
+    navigate('/', { state: { from: location.pathname } });
   };
 
   const contextValue = useMemo(() => ({ checkAuth }), []);

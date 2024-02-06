@@ -1,26 +1,26 @@
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
-import { TRecentlyViewPage } from "./types.ts";
+import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { type TRecentlyViewPage } from './types.ts';
 
-type Props = {
-  children: ReactNode;
-};
+interface Props {
+  children: ReactNode
+}
 
-type RecentlyViewedContextType = {
-  getRecentlyViewed: () => Array<TRecentlyViewPage>;
-  addRecentlyViewed: (page: TRecentlyViewPage) => void;
-  children?: ReactNode;
-};
+interface RecentlyViewedContextType {
+  getRecentlyViewed: () => TRecentlyViewPage[]
+  addRecentlyViewed: (_page: TRecentlyViewPage) => void
+  children?: ReactNode
+}
 
 export const RecentlyViewedContext = createContext<RecentlyViewedContextType | undefined>(undefined);
 
 export const RecentlyViewedProvider = (props: Props) => {
-  const [recentlyViewed, setRecentlyViewed] = useState<Array<TRecentlyViewPage>>([]);
+  const [recentlyViewed, setRecentlyViewed] = useState<TRecentlyViewPage[]>([]);
 
   useEffect(() => {
     // TODO Fetch recently viewed pages from API
   }, []);
 
-  const getRecentlyViewed = (): Array<TRecentlyViewPage> => {
+  const getRecentlyViewed = (): TRecentlyViewPage[] => {
     return recentlyViewed;
   };
 
@@ -39,7 +39,7 @@ export const useRecentlyViewedContext = () => {
   const context = useContext(RecentlyViewedContext);
 
   if (context === undefined) {
-    throw new Error("useRecentlyViewedContext must be used within a RecentlyViewedProvider");
+    throw new Error('useRecentlyViewedContext must be used within a RecentlyViewedProvider');
   }
 
   return context;

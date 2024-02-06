@@ -1,34 +1,34 @@
-import { NavBar } from "../../../src/components/NavBar/NavBar.tsx";
-import { render } from "@testing-library/react";
-import MockBrowser from "../../mocks/MockBrowser.tsx";
-import { expect } from "vitest";
+import { NavBar } from '../../../src/components/NavBar/NavBar.tsx';
+import { render } from '@testing-library/react';
+import MockBrowser from '../../mocks/MockBrowser.tsx';
+import { expect } from 'vitest';
 
 const setupScreen = () => {
   return render(
     <MockBrowser>
       <NavBar />
-    </MockBrowser>,
+    </MockBrowser>
   );
 };
 
-describe("<NavBar />", () => {
-  it("should render NavBarContainer", () => {
+describe('<NavBar />', () => {
+  it('should render NavBarContainer', () => {
     const screen = setupScreen();
-    expect(screen.getByTestId("NavBarContainer")).toBeInTheDocument();
+    expect(screen.getByTestId('NavBarContainer')).toBeInTheDocument();
   });
 
-  it("should contain app name", () => {
+  it('should contain app name', () => {
     const screen = setupScreen();
-    expect(screen.getByText("asWiki")).toBeInTheDocument();
+    expect(screen.getByText('asWiki')).toBeInTheDocument();
   });
 
-  it("should contain user name", () => {
+  it('should contain user name', () => {
     const screen = setupScreen();
-    expect(screen.getByText("Test User")).toBeInTheDocument();
+    expect(screen.getByText('Test User')).toBeInTheDocument();
   });
 
-  it("should contain user avatar", () => {
+  it('should contain user avatar', () => {
     const screen = setupScreen();
-    expect(screen.getByAltText("User's avatar")).toBeInTheDocument();
+    expect(screen.getByAltText('User\'s avatar')).toBeInTheDocument();
   });
 });

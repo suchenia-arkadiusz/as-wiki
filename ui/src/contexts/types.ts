@@ -1,28 +1,28 @@
-export type TUser = {
-  username: string;
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
-};
+export interface TUser {
+  username: string
+  email: string
+  firstName?: string
+  lastName?: string
+  avatarUrl?: string
+}
 
-export type TRecentlyViewPage = {
-  id: string;
-  name: string;
-  updatedAt: Date;
-  updatedBy: string;
-  username: string;
-};
+export interface TRecentlyViewPage {
+  id: string
+  name: string
+  updatedAt: Date
+  updatedBy: string
+  username: string
+}
 
-export type TProject = {
-  id: string;
-  name: string;
-  description: string;
-  color: string;
-  logoUrl?: string;
-};
+export interface TProject {
+  id: string
+  name: string
+  description: string
+  color: string
+  logoUrl?: string
+}
 
-export type PageListElementChild = {
-  id: string;
-  name: string;
-};
+export interface PageListElementChild {
+  id: string
+  name: string
+}
