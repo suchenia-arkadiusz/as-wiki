@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 const MockProjectsContext = ({ children }: { children: React.ReactNode }) => {
   const contextValue = useMemo(
     () => ({
-      getProjects: () => [
+      projects: [
         {
           id: '1',
           name: 'asWiki',
