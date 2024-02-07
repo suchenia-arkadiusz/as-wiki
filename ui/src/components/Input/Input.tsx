@@ -9,11 +9,11 @@ const InputContainer = styled.div`
 `;
 
 type InputProps = HTMLProps<HTMLInputElement> & {
-  label: string
-  isRequired?: boolean
-  validated: boolean
-  inputKey: string | undefined
-}
+  label: string;
+  isRequired?: boolean;
+  validated: boolean;
+  inputKey: string | undefined;
+};
 
 const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
   const { label, placeholder, isRequired, validated, type, onChange, inputKey, defaultValue } = props;

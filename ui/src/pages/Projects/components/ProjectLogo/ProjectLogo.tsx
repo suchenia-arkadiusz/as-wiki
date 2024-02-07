@@ -1,11 +1,11 @@
 import { generateProjectLogo, getImageFromUrl } from './utils.tsx';
 import { type ReactNode, useEffect, useState } from 'react';
 
-interface ProjectLogoProps {
-  projectName: string
-  projectColor: string
-  logoUrl?: string
-}
+type ProjectLogoProps = {
+  projectName: string;
+  projectColor: string;
+  logoUrl?: string;
+};
 
 const ProjectLogo = (props: ProjectLogoProps) => {
   const { projectName, logoUrl, projectColor } = props;

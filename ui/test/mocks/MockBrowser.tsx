@@ -6,9 +6,9 @@ import MockProjectsContext from './contexts/MockProjectsContext.tsx';
 import { RestApiProvider } from '../../src/contexts/RestApiContext.tsx';
 import { ToasterProvider } from '../../src/contexts/ToasterContext.tsx';
 
-interface MockBrowserProps {
-  children: ReactNode
-}
+type MockBrowserProps = {
+  children: ReactNode;
+};
 
 const MockBrowser = (props: MockBrowserProps) => {
   const { children } = props;

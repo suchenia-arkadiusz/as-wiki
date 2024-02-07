@@ -7,7 +7,7 @@
     "dev": "vite --host",
     "build": "tsc && vite build",
     "eslint": "eslint src/ test/ --ext=ts,tsx",
-    "eslint:fix": "eslint src/ test/ --fix",
+    "eslint:fix": "eslint src/ test/ --ext=ts,tsx --fix",
     "preview": "vite preview",
     "test": "vitest --run",
     "test:coverage": "vitest --run --coverage"

@@ -34,11 +34,11 @@ const PageListPanelContainer = styled.div`
   }
 `;
 
-interface PageListPanelProps {
-  projectName: string
-  onSelectedPage: (_id: string) => void
-  onAddPage: (_isEdit: boolean) => void
-}
+type PageListPanelProps = {
+  projectName: string;
+  onSelectedPage: (_id: string) => void;
+  onAddPage: (_isEdit: boolean) => void;
+};
 
 const PageListPanel = (props: PageListPanelProps) => {
   const { projectName, onSelectedPage, onAddPage } = props;

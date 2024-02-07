@@ -34,11 +34,11 @@ const CreatePageButtonContainer = styled.div`
   width: 100%;
 `;
 
-interface CreatePagePopupProps {
-  onClose: () => void
-  selectedPage: Page | undefined
-  isEdit?: boolean
-}
+type CreatePagePopupProps = {
+  onClose: () => void;
+  selectedPage: Page | undefined;
+  isEdit?: boolean;
+};
 
 const CreatePagePopup = (props: CreatePagePopupProps) => {
   const { onClose, selectedPage, isEdit = false } = props;

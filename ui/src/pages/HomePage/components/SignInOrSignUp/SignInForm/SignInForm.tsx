@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../../../../../components/Input/Input.tsx';
 import { useRef, useState } from 'react';
-import { type TSignInFormValidated } from '../types.ts';
+import { type SignInFormValidated } from '../types.ts';
 import { useUserContext } from '../../../../../contexts/UserContext.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { validateStringInput } from '../../../../../utils/validators.ts';
@@ -26,9 +26,9 @@ const SignInForm = () => {
   const location = useLocation();
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const [validatedForm, setValidatedForm] = useState<TSignInFormValidated>({
+  const [validatedForm, setValidatedForm] = useState<SignInFormValidated>({
     username: false,
-    password: false
+    password: false,
   });
 
   const onSubmit = async () => {
@@ -74,10 +74,9 @@ const SignInForm = () => {
         onChange={() => {
           setValidatedForm({
             ...validatedForm,
-            username: validateStringInput(usernameRef.current?.value || '')
+            username: validateStringInput(usernameRef.current?.value || ''),
           });
-        }
-        }
+        }}
         inputKey="sign-in-username"
       />
       <Input
@@ -90,10 +89,9 @@ const SignInForm = () => {
         onChange={() => {
           setValidatedForm({
             ...validatedForm,
-            password: validateStringInput(passwordRef.current?.value || '')
+            password: validateStringInput(passwordRef.current?.value || ''),
           });
-        }
-        }
+        }}
         inputKey="sign-in-password"
       />
       <Button onClick={onSubmit} text="Sign in" />

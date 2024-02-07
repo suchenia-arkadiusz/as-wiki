@@ -1,10 +1,10 @@
 import { TableCell, TableRowContainer } from '../../styles.ts';
 import Loader from '../Loader.tsx';
 
-interface TableLoaderProps {
-  numOfColumns: number
-  numOfRows?: number
-}
+type TableLoaderProps = {
+  numOfColumns: number;
+  numOfRows?: number;
+};
 
 const TableLoader = (props: TableLoaderProps) => {
   const { numOfColumns } = props;

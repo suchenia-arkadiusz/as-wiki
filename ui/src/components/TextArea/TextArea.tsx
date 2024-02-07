@@ -10,11 +10,11 @@ const TextAreaContainer = styled.div`
 `;
 
 type TextAreaProps = HTMLProps<HTMLTextAreaElement> & {
-  label: string
-  isRequired?: boolean
-  validated: boolean
-  inputKey: string | undefined
-}
+  label: string;
+  isRequired?: boolean;
+  validated: boolean;
+  inputKey: string | undefined;
+};
 
 const TextArea = forwardRef((props: TextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
   const { label, placeholder, isRequired, validated, onChange, inputKey, rows, defaultValue } = props;

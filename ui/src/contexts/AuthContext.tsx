@@ -3,14 +3,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useToasterContext } from './ToasterContext.tsx';
 import { useRestApiContext } from './RestApiContext.tsx';
 import { useUserContext } from './UserContext.tsx';
+import { User } from './types.ts';
 
-interface Props {
-  children: ReactNode
-}
+type ResponseData = {
+  user: User;
+  jwt: string;
+  refreshToken: string;
+};
 
-export interface AuthContextType {
-  checkAuth: () => void
-}
+type Props = {
+  children: ReactNode;
+};
+
+export type AuthContextType = {
+  checkAuth: () => void;
+};
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -36,7 +43,7 @@ export const AuthProvider = (props: Props) => {
             if (res.status === 401) {
               navigateToLogin();
             } else {
-              res.json().then((data: any) => {
+              res.json().then((data: ResponseData) => {
                 userContext.setUser(data.user);
                 localStorage.setItem('token', data.jwt);
                 localStorage.setItem('refreshToken', data.refreshToken);
@@ -44,7 +51,7 @@ export const AuthProvider = (props: Props) => {
             }
           });
         } else if (response.status === 200) {
-          response.json().then((data: any) => {
+          response.json().then((data: ResponseData) => {
             userContext.setUser(data.user);
           });
         }

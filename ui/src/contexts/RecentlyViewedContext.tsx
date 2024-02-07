@@ -1,30 +1,30 @@
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
-import { type TRecentlyViewPage } from './types.ts';
+import { type RecentlyViewPage } from './types.ts';
 
-interface Props {
-  children: ReactNode
-}
+type Props = {
+  children: ReactNode;
+};
 
-interface RecentlyViewedContextType {
-  getRecentlyViewed: () => TRecentlyViewPage[]
-  addRecentlyViewed: (_page: TRecentlyViewPage) => void
-  children?: ReactNode
-}
+type RecentlyViewedContextType = {
+  getRecentlyViewed: () => RecentlyViewPage[];
+  addRecentlyViewed: (_page: RecentlyViewPage) => void;
+  children?: ReactNode;
+};
 
 export const RecentlyViewedContext = createContext<RecentlyViewedContextType | undefined>(undefined);
 
 export const RecentlyViewedProvider = (props: Props) => {
-  const [recentlyViewed, setRecentlyViewed] = useState<TRecentlyViewPage[]>([]);
+  const [recentlyViewed, setRecentlyViewed] = useState<RecentlyViewPage[]>([]);
 
   useEffect(() => {
     // TODO Fetch recently viewed pages from API
   }, []);
 
-  const getRecentlyViewed = (): TRecentlyViewPage[] => {
+  const getRecentlyViewed = (): RecentlyViewPage[] => {
     return recentlyViewed;
   };
 
-  const addRecentlyViewed = (page: TRecentlyViewPage): void => {
+  const addRecentlyViewed = (page: RecentlyViewPage): void => {
     const pages = [page];
     pages.push(...recentlyViewed);
     setRecentlyViewed(pages.slice(0, 10));

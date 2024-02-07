@@ -2,14 +2,14 @@ import { createContext, type ReactNode, useContext, useMemo, useState } from 're
 import { Toaster } from '../components/Toaster/Toaster.tsx';
 import { v4 as uuidv4 } from 'uuid';
 
-interface Props {
-  children: ReactNode
-}
+type Props = {
+  children: ReactNode;
+};
 
-export interface ToasterContextType {
-  addToast: (_message: string, _type: 'DANGER' | 'ERROR' | 'SUCCESS') => void
-  toasters: ReactNode[]
-}
+export type ToasterContextType = {
+  addToast: (_message: string, _type: 'DANGER' | 'ERROR' | 'SUCCESS') => void;
+  toasters: ReactNode[];
+};
 
 export const ToasterContext = createContext<ToasterContextType | undefined>(undefined);
 

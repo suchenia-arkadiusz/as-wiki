@@ -13,10 +13,10 @@ const TreeListItemContainer = styled.div<{ $margin: string }>`
 `;
 
 type TreeListProps = {
-  data: TreeListElement[]
-  onSelect: (_id: string) => void
-  level?: number
-}
+  data: TreeListElement[];
+  onSelect: (_id: string) => void;
+  level?: number;
+};
 
 const TreeList = (props: TreeListProps) => {
   const { data, level = 0, onSelect } = props;

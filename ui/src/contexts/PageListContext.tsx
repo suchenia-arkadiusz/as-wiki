@@ -4,15 +4,15 @@ import { useRestApiContext } from './RestApiContext.tsx';
 import { useLocation } from 'react-router-dom';
 import { type TreeListElement } from '../types.ts';
 
-interface Props {
-  children: React.ReactNode
-}
+type Props = {
+  children: React.ReactNode;
+};
 
-interface PageListContextType {
-  pages: TreeListElement[]
-  fetchPages: () => void
-  isLoaded: boolean
-}
+type PageListContextType = {
+  pages: TreeListElement[];
+  fetchPages: () => void;
+  isLoaded: boolean;
+};
 
 export const PageListContext = createContext<PageListContextType | undefined>(undefined);
 

@@ -2,10 +2,10 @@ import styled, { keyframes } from 'styled-components';
 import { type ReactNode } from 'react';
 import Icon from '../Icon/Icon.tsx';
 
-interface ToasterProps {
-  message: string
-  type: 'DANGER' | 'SUCCESS' | 'ERROR'
-}
+type ToasterProps = {
+  message: string;
+  type: 'DANGER' | 'SUCCESS' | 'ERROR';
+};
 
 const ToasterAnimation = keyframes`
   0% {
@@ -25,7 +25,7 @@ const ToasterAnimation = keyframes`
     transform: translate(-50%, -100px);
   }`;
 
-const ToasterContainer = styled.div<{ $bgColor: string, $color: string }>`
+const ToasterContainer = styled.div<{ $bgColor: string; $color: string }>`
   position: absolute;
   left: 50%;
   width: 50%;

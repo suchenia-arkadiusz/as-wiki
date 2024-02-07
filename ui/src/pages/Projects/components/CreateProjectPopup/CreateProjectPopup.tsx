@@ -21,9 +21,9 @@ const CreateProjectButtonContainer = styled.div`
   width: 100%;
 `;
 
-interface CreatePagePopupProps {
-  onClose: () => void
-}
+type CreatePagePopupProps = {
+  onClose: () => void;
+};
 
 const CreateProjectPopup = (props: CreatePagePopupProps) => {
   const { onClose } = props;

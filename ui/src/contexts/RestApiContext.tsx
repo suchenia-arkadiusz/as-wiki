@@ -1,21 +1,21 @@
 import { createContext, type ReactNode, useContext, useMemo } from 'react';
 
-interface Props {
-  children: ReactNode
-}
+type Props = {
+  children: ReactNode;
+};
 
-interface RestAPIContextType {
-  get: (_url: string, _headers?: object) => Promise<any>
-  post: (_url: string, _body: any, _headers?: object) => Promise<any>
-  put: (_url: string, _body: any, _headers?: object) => Promise<any>
-}
+type RestAPIContextType = {
+  get: (_url: string, _headers?: object) => Promise<Response>;
+  post: (_url: string, _body: object, _headers?: object) => Promise<Response>;
+  put: (_url: string, _body: object, _headers?: object) => Promise<Response>;
+};
 
 export const RestApiContext = createContext<RestAPIContextType | undefined>(undefined);
 
 export const RestApiProvider = (props: Props) => {
   const baseUrl = import.meta.env.VITE_APP_API_URL;
 
-  const get = async (url: string, headers: object = {}) => {
+  const get = async (url: string, headers: object = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'GET',
       mode: 'cors',
@@ -23,17 +23,16 @@ export const RestApiProvider = (props: Props) => {
     });
   };
 
-  const post = async (url: string, body: any, headers: object = {}) => {
+  const post = async (url: string, body: object, headers: object = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'POST',
       mode: 'cors',
       headers: getHeaders(headers),
-
       body: JSON.stringify(body)
     });
   };
 
-  const put = async (url: string, body: any, headers: object = {}) => {
+  const put = async (url: string, body: object, headers: object = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'PUT',
       headers: getHeaders(headers),

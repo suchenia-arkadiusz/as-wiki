@@ -31,17 +31,17 @@ const PopupHeader = styled.div`
 `;
 
 type Props = {
-  title: string
-  width: number
-  onClose: () => void
-  children: React.ReactNode
-  height?: number
-}
+  title: string;
+  width: number;
+  onClose: () => void;
+  children: React.ReactNode;
+  height?: number;
+};
 
 type PopupStyle = {
-  width: string,
-  height?: string
-}
+  width: string;
+  height?: string;
+};
 
 const Popup = (props: Props) => {
   const { title, width, height, onClose, children } = props;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Icon from '../Icon/Icon.tsx';
 
-const ButtonContainer = styled.button<{ $color: string, $hoverColor: string, $height: number, $padding?: string }>`
+const ButtonContainer = styled.button<{ $color: string; $hoverColor: string; $height: number; $padding?: string }>`
   height: ${(props) => props.$height}px;
   display: flex;
   align-items: center;
@@ -25,17 +25,17 @@ const ButtonContainer = styled.button<{ $color: string, $hoverColor: string, $he
 `;
 
 type Props = {
-  onClick: () => void
-  iconName?: string
-  height?: number
-  text?: string
-  color?: string
-  hoverColor?: string
-  iconPosition?: 'left' | 'right'
-  className?: string
-  padding?: string
-  disabled?: boolean
-}
+  onClick: () => void;
+  iconName?: string;
+  height?: number;
+  text?: string;
+  color?: string;
+  hoverColor?: string;
+  iconPosition?: 'left' | 'right';
+  className?: string;
+  padding?: string;
+  disabled?: boolean;
+};
 
 const Button = (props: Props) => {
   const { iconName, onClick, text, color, hoverColor, height, iconPosition, className, padding, disabled } = props;
@@ -51,19 +51,17 @@ const Button = (props: Props) => {
       className={className}
       disabled={!disabled ? false : disabled}
     >
-      {iconPosition === 'right'
-        ? (
-          <>
-            {text || ''}
-            {iconName && iconName.length > 0 ? <Icon iconName={iconName || ''} /> : null}
-          </>
-        )
-        : (
-          <>
-            {iconName && iconName.length > 0 ? <Icon iconName={iconName || ''} /> : null}
-            {text || ''}
-          </>
-        )}
+      {iconPosition === 'right' ? (
+        <>
+          {text || ''}
+          {iconName && iconName.length > 0 ? <Icon iconName={iconName || ''} /> : null}
+        </>
+      ) : (
+        <>
+          {iconName && iconName.length > 0 ? <Icon iconName={iconName || ''} /> : null}
+          {text || ''}
+        </>
+      )}
     </ButtonContainer>
   );
 };

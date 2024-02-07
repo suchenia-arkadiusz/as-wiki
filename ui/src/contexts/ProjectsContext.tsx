@@ -1,30 +1,30 @@
-import { type TProject } from './types.ts';
+import { type Project } from './types.ts';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { useRestApiContext } from './RestApiContext.tsx';
 
-interface Props {
-  children: React.ReactNode
-}
+type Props = {
+  children: React.ReactNode;
+};
 
-interface ProjectsContextType {
-  projects: TProject[]
-  addProject: (_project: TProject) => void
-  isLoaded: boolean
-}
+type ProjectsContextType = {
+  projects: Project[];
+  addProject: (_project: Project) => void;
+  isLoaded: boolean;
+};
 
 export const ProjectsContext = createContext<ProjectsContextType | undefined>(undefined);
 
 export const ProjectsProvider = (props: Props) => {
   const api = useRestApiContext();
-  const [projects, setProjects] = useState<TProject[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoaded(false);
     api.get('/api/v1/projects').then((response) => {
       if (response.status === 200) {
-        response.json().then((data: TProject[]) => {
+        response.json().then((data: Project[]) => {
           setProjects(data);
           setIsLoaded(true);
         });
@@ -32,7 +32,7 @@ export const ProjectsProvider = (props: Props) => {
     });
   }, []);
 
-  const addProject = (project: TProject) => {
+  const addProject = (project: Project) => {
     setProjects([...projects, project]);
   };
 

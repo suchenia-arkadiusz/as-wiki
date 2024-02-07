@@ -16,9 +16,13 @@ module.exports = {
   settings: {
     'import/resolver': {
       'typescript': {}
+    },
+    react: {
+      version: 'detect'
     }
   },
   extends: [
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended'
   ],
@@ -51,7 +55,7 @@ module.exports = {
     'no-return-assign': 'error',
     'no-unused-expressions': 'error',
     'no-unused-labels': 'error',
-    'no-unused-vars': ['error', { argsIgnorePattern: 'req|res|next|^_', varsIgnorePattern: '^_' }],
+    'no-unused-vars': ['error', {argsIgnorePattern: 'req|res|next|^_', varsIgnorePattern: '^_'}],
     'no-useless-concat': 'error',
     'no-useless-return': 'error',
     'no-constant-condition': 'warn',
@@ -64,14 +68,14 @@ module.exports = {
     'space-in-parens': 'error',
     'space-infix-ops': 'error',
     'space-unary-ops': 'error',
-    'max-len': ['error', { code: 200 }],
-    'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
+    'max-len': ['error', {code: 200}],
+    'max-lines': ['error', {max: 300, skipBlankLines: true, skipComments: true}],
     'keyword-spacing': 'error',
     'no-mixed-operators': 'error',
-    'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+    'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 1}],
     'no-whitespace-before-property': 'error',
     'nonblock-statement-body-position': 'error',
-    'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
+    'object-property-newline': ['error', {allowAllPropertiesOnSameLine: true}],
     'arrow-spacing': 'error',
     'arrow-parens': 'error',
     'no-confusing-arrow': 'error',
@@ -81,9 +85,21 @@ module.exports = {
     'object-shorthand': 'off',
     'prefer-const': 'error',
     'prefer-template': 'error',
-    'react/jsx-filename-extension': [ 'warn', {'extensions': ['.tsx']} ],
-    "@typescript-eslint/no-use-before-define": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-uses-react": "off",
+    'react/jsx-filename-extension': ['warn', {'extensions': ['.tsx']}],
+    '@typescript-eslint/no-use-before-define': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off',
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/semi': ['error', 'always'],
+    '@typescript-eslint/member-delimiter-style': ['error', {
+      multiline: {
+        delimiter: 'semi',
+        requireLast: true
+      },
+      singleline: {
+        delimiter: 'semi',
+        requireLast: false
+      }
+    }],
   },
 }

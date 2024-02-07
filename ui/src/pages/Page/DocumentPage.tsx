@@ -37,7 +37,7 @@ const DocumentPage = () => {
   const location = useLocation();
   const [selectedPage, setSelectedPage] = useState<string>(location.pathname.split('/')[4]);
   const [page, setPage] = useState<Page | undefined>(undefined);
-  const [popupProps, setPopupProps] = useState<{ isPopupOpen: boolean, isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
+  const [popupProps, setPopupProps] = useState<{ isPopupOpen: boolean; isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
   const projectId = location.pathname.split('/')[2];
 
   useEffect(() => {

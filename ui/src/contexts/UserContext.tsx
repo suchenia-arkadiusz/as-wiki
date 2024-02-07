@@ -1,22 +1,22 @@
 import { createContext, type ReactNode, useContext, useState } from 'react';
-import { type TUser } from './types.ts';
+import { type User } from './types.ts';
 
-interface Props {
-  children: ReactNode
-}
+type Props = {
+  children: ReactNode;
+};
 
-interface UserContextType {
-  setUser: (_user: TUser) => void
-  getUser: () => TUser | undefined
-  children?: ReactNode
-}
+type UserContextType = {
+  setUser: (_user: User) => void;
+  getUser: () => User | undefined;
+  children?: ReactNode;
+};
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = (props: Props) => {
-  const [user, setUser] = useState<TUser | undefined>(undefined);
+  const [user, setUser] = useState<User | undefined>(undefined);
 
-  const getUser = (): TUser | undefined => {
+  const getUser = (): User | undefined => {
     return user;
   };
 

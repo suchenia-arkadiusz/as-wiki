@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IconsContainer, TableCell, TableRowContainer } from '../../../../components/styles.ts';
 import Button from '../../../../components/Button/Button.tsx';
 
-interface TableRowProps {
-  project: Project
-}
+type TableRowProps = {
+  project: Project;
+};
 
 const TableRow = (props: TableRowProps) => {
   const { project } = props;

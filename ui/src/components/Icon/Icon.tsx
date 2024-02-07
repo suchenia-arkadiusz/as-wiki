@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const IconContainer = styled.span<{ $width: number, $height: number }>`
+const IconContainer = styled.span<{ $width: number; $height: number }>`
   background: none;
   display: flex;
   align-items: center;
@@ -16,10 +16,10 @@ const IconContainer = styled.span<{ $width: number, $height: number }>`
 `;
 
 type Props = {
-  iconName: string
-  width?: number
-  height?: number
-}
+  iconName: string;
+  width?: number;
+  height?: number;
+};
 
 const Icon = ({ iconName, width, height }: Props) => {
   return <IconContainer data-testid="IconContainer" className={`${iconName}`} $width={width || 16} $height={height || 16} />;
