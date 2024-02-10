@@ -4,6 +4,7 @@ import { config } from './config/config';
 import { dbConnect } from './db/connect';
 import { routes } from './routes';
 import cors from 'cors';
+import {runMigration} from './db/migration';
 
 export const getApp = () => {
   const app = express();
@@ -12,6 +13,7 @@ export const getApp = () => {
   app.use(cors());
 
   config.dbClient = dbConnect(config.db);
+  runMigration();
 
   addRoutes(app);
 

@@ -1,18 +1,21 @@
 {
-  "dev": {
-    "driver": "pg",
-    "user": "aswiki",
-    "password": "84H33r0xJz5XhCZBtuQLSW9IsGFrlGPS",
-    "host": "localhost",
-    "port": "5432",
-    "database": "aswiki"
+  "defaultEnv": {
+    "ENV": "NODE_ENV"
   },
-  "test": {
+  "prod": {
     "driver": "pg",
-    "user": "aswiki",
-    "password": "84H33r0xJz5XhCZBtuQLSW9IsGFrlGPS",
-    "host": "localhost",
+    "user": {
+      "ENV": "DB_USERNAME"
+    },
+    "password": {
+      "ENV": "DB_PASSWORD"
+    },
+    "host": {
+      "ENV": "DB_HOST"
+    },
     "port": "5432",
-    "database": "aswiki_test"
+    "database": {
+      "ENV": "DB_NAME"
+    }
   }
 }

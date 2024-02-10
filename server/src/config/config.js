@@ -11,4 +11,5 @@ export const config = {
   dbClient: undefined,
   uriPrefix: '/api/v1',
   tokenSecret: process.env.APP_TOKEN_SECRET || 'dev-token',
+  environment: process.env.APP_ENV || 'dev',
 };
