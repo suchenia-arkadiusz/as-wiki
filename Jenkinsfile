@@ -42,10 +42,10 @@ pipeline {
                     steps {
                         sh '''
                         cd ui
-                        docker build -t git.aru-software.pl/ARU-SOFTWARE/as-wiki/as-wiki-ui:latest -t git.aru-software.pl/ARU-SOFTWARE/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER .
+                        docker build -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER .
                         docker login git.aru-software.pl -U aru -p $GITEA_TOKEN
-                        docker push git.aru-software.pl/ARU-SOFTWARE/as-wiki/as-wiki-ui:latest
-                        docker push git.aru-software.pl/ARU-SOFTWARE/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER
+                        docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest
+                        docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER
                         '''
                     }
                 }
