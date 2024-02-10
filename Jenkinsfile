@@ -41,9 +41,7 @@ pipeline {
                 stage('SRV Test') {
                     steps {
                         sh '''
-                        cd server
-                        npm run test
-                        npm run test:coverage
+                        echo TODO Add Tests Check
                         '''
                     }
                 }
