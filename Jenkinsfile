@@ -9,6 +9,7 @@ pipeline {
         stage('UI Build') {
             steps {
                 sh '''
+                cd ui
                 npm install
                 npm run eslint
                 npm run build
