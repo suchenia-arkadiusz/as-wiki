@@ -10,7 +10,12 @@ pipeline {
     }
 
     stages {
-        stage('UI') {
+        stage('NODE') {
+            agent {
+                docker {
+                    image 'node:18.17.1-alpine'
+                }
+            }
             stages {
                 stage('UI Build') {
                     steps {
@@ -31,10 +36,14 @@ pipeline {
                         '''
                     }
                 }
+            }
+        }
+        stage('DOCKER') {
+            agent {
+                label 'amd64'
+            }
+            stages {
                 stage('UI Build Docker Image') {
-                    agent {
-                        label 'amd64'
-                    }
                     steps {
                         sh '''
                         cd ui
