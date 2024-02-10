@@ -10,8 +10,6 @@ export const updateExistingPage = async (page, pageId, userId) => {
     ...page
   };
 
-  console.log({page, existingPage, updatedPage});
-
   const query = 'UPDATE "PAGES" SET name = $1, content = $2, updated_at = $3, updated_by = $4, version = $5, is_public = $6, parent_id = $7 WHERE id = $8 RETURNING *';
   const values = [
     updatedPage.name,
