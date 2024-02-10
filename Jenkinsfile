@@ -67,8 +67,6 @@ pipeline {
                         }
                     }
                 }
-            }
-            stages {
                 stage('SRV Build Docker Image') {
                     steps {
                         withCredentials([usernamePassword(credentialsId: 'gitea-packages', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
