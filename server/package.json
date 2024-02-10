@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "babel -d ./dist && node dist/app.js",
+    "start": "babel -d ./dist ./src -s && node dist/app.js",
     "build": "babel -d ./dist ./src -s",
     "dev": "nodemon --exec babel-node src/app.js",
     "test": "jest --forceExit",

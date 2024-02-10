@@ -6,13 +6,18 @@ import { routes } from './routes';
 import cors from 'cors';
 import {runMigration} from './db/migration';
 
-export const getApp = () => {
+export const getApp = async () => {
   const app = express();
   app.use(express.json());
   app.use(cookieParser());
   app.use(cors());
 
-  config.dbClient = dbConnect(config.db);
+  config.dbClient = await dbConnect(config.db);
+
+  if (!config.dbClient) {
+    process.exit();
+  }
+  
   runMigration();
 
   addRoutes(app);
