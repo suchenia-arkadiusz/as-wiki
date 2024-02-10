@@ -1,14 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18.17.1-alpine'
-        }
-    }
+    agent none
     
-    environment {
-        GITEA_TOKEN = credentials('gitea-token')
-    }
-
     stages {
         stage('NODE') {
             agent {
@@ -41,6 +33,9 @@ pipeline {
         stage('DOCKER') {
             agent {
                 label 'amd64'
+            }
+            environment {
+                GITEA_TOKEN = credentials('gitea-token')
             }
             stages {
                 stage('UI Build Docker Image') {
