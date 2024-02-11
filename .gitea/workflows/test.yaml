@@ -6,5 +6,6 @@ jobs:
     Check-NVM:
         runs-on: local-runner
         steps:
+            - run: "source ~/.bashrc"
             - run: "nvm install"
             - run: "docker --version"
