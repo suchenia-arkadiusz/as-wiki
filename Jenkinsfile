@@ -7,16 +7,10 @@ pipeline {
                 label 'local-amd64'
             }
             stages {
-                stage('Load NVM') {
-                    steps {
-                        sh '''
-                        . $NVM_DIR/nvm.sh
-                        '''
-                    }
-                }
                 stage('UI Build') {
                     steps {
                         sh '''
+                        . $NVM_DIR/nvm.sh
                         cd ui
                         nvm install
                         npm install
@@ -28,6 +22,7 @@ pipeline {
                 stage('UI Test') {
                     steps {
                         sh '''
+                        . $NVM_DIR/nvm.sh
                         cd ui
                         nvm install
                         npm run test
@@ -38,6 +33,7 @@ pipeline {
                 stage('SRV Build') {
                     steps {
                         sh '''
+                        . $NVM_DIR/nvm.sh
                         cd server
                         nvm install
                         npm install
