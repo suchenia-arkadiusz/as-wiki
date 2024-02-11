@@ -9,6 +9,7 @@ RUN npm install \
 FROM node:18.17.1-alpine3.18 as release
 WORKDIR /app
 COPY --from=build /app /app
+RUN npm install -g npm
 EXPOSE 3000
 CMD ["node", "dist/app.js"]
 # CMD ["npx", "db-migrate", "up", "-e", "prod", "&&", "node", "dist/app.js"]
