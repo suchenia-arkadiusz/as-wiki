@@ -19,7 +19,7 @@ const connect = async (client, attempt) => {
     return client;
   } catch (err) {
     await sleep(5000);
-    await connect(client, attempt + 1).then(() => {});
+    return await connect(client, attempt + 1).then(() => {});
   }
 };
 
