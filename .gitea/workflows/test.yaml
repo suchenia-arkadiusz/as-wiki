@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
     Check-NVM:
-        runs-on: ubuntu-latest:host
+        runs-on: local-runner:host
         steps:
             - run: "nvm --version"
             - run: "docker --version"
