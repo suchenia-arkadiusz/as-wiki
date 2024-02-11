@@ -1,0 +1,10 @@
+name: Test Action
+run-name: ${{ gitea.actor }} is testing out Gitea Actions
+on: [push]
+
+jobs:
+    Check-NVM:
+        runs-on: ubuntu-latest
+        steps:
+            - run: "nvm --version"
+            - run: "docker --version"
