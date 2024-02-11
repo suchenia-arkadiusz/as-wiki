@@ -7,6 +7,6 @@ jobs:
         runs-on: local-runner
         steps:
             - run: echo $NVM_DIR
-            - run: "source ~/.bashrc"
-            - run: "$NVM_DIR/nvm --version"
+            - run: "source ~/.nvm/nvm.sh"
+            - run: "nvm --version"
             - run: "docker --version"
