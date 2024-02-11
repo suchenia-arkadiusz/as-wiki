@@ -5,6 +5,7 @@ import { dbConnect } from './db/connect';
 import { routes } from './routes';
 import cors from 'cors';
 import {runMigration} from './db/migration';
+import {log} from './config/logger';
 
 export const getApp = async () => {
   const app = express();
@@ -15,6 +16,7 @@ export const getApp = async () => {
   config.dbClient = await dbConnect(config.db);
 
   if (!config.dbClient) {
+    log.warn({}, 'Server shutdown!');
     process.exit();
   }
   
