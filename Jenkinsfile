@@ -10,9 +10,9 @@ pipeline {
                 stage('UI Build') {
                     steps {
                         sh '''
-                        . $NVM_DIR/nvm.sh
+                        . $NVM_DIR/nvm.sh >> /dev/null
                         cd ui
-                        nvm install
+                        nvm install >> /dev/null
                         npm install
                         npm run eslint
                         npm run build
@@ -22,9 +22,9 @@ pipeline {
                 stage('UI Test') {
                     steps {
                         sh '''
-                        . $NVM_DIR/nvm.sh
+                        . $NVM_DIR/nvm.sh >> /dev/null
                         cd ui
-                        nvm install
+                        nvm install >> /dev/null
                         npm run test
                         npm run test:coverage
                         '''
@@ -33,9 +33,9 @@ pipeline {
                 stage('SRV Build') {
                     steps {
                         sh '''
-                        . $NVM_DIR/nvm.sh
+                        . $NVM_DIR/nvm.sh >> /dev/null
                         cd server
-                        nvm install
+                        nvm install >> /dev/null
                         npm install
                         npm run eslint
                         npm run build
