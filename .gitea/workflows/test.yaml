@@ -8,5 +8,5 @@ jobs:
         steps:
             - run: echo $NVM_DIR
             - run: "source ~/.nvm/nvm.sh"
-            - run: "nvm --version"
+            - run: "nvm.sh --version"
             - run: "docker --version"
