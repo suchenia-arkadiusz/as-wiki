@@ -51,7 +51,7 @@ const DocumentPage = () => {
         }
       });
     }
-  }, [selectedPage]);
+  }, [selectedPage, popupProps]);
 
   const openPopup = (isEdit: boolean) => {
     setPopupProps({ isEdit, isPopupOpen: true });
@@ -93,7 +93,7 @@ const DocumentPage = () => {
           </>
         )
         : null}
-      {popupProps.isPopupOpen ? <CreatePagePopup onClose={() => { closePopup(); }} selectedPage={page} isEdit={popupProps.isEdit} /> : null}
+      {popupProps.isPopupOpen ? <CreatePagePopup onClose={closePopup} selectedPage={page} isEdit={popupProps.isEdit} /> : null}
     </DocumentPageContainer>
   );
 };

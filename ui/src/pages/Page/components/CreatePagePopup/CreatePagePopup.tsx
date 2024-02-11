@@ -10,6 +10,7 @@ import Input from '../../../../components/Input/Input.tsx';
 import { validateStringInput } from '../../../../utils/validators.ts';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -43,6 +44,8 @@ type CreatePagePopupProps = {
 const CreatePagePopup = (props: CreatePagePopupProps) => {
   const { onClose, selectedPage, isEdit = false } = props;
   const nameRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const api = useRestApiContext();
   const toasterContext = useToasterContext();
   const pageListContext = usePageListContext();
@@ -87,7 +90,13 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
 
     if (response.status === 200) {
       pageListContext.fetchPages();
-      toasterContext.addToast('Page created successfully!', 'SUCCESS');
+      const data = await response.json();
+      navigate(`/projects/${projectId}/pages/${data.id}`);
+      if (isEdit) {
+        toasterContext.addToast('Page updated successfully!', 'SUCCESS');
+      } else {
+        toasterContext.addToast('Page created successfully!', 'SUCCESS');
+      }
     }
 
     onClose();
