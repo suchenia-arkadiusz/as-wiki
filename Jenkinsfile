@@ -10,9 +10,9 @@ pipeline {
                 stage('UI Build') {
                     steps {
                         sh '''
-                        . $NVM_DIR/nvm.sh >> /dev/null
+                        . $NVM_DIR/nvm.sh
                         cd ui
-                        nvm install >> /dev/null
+                        nvm install
                         npm install
                         npm run eslint
                         npm run build
@@ -22,9 +22,9 @@ pipeline {
                 stage('UI Test') {
                     steps {
                         sh '''
-                        . $NVM_DIR/nvm.sh >> /dev/null
+                        . $NVM_DIR/nvm.sh
                         cd ui
-                        nvm install >> /dev/null
+                        nvm install
                         npm run test
                         npm run test:coverage
                         '''
@@ -33,9 +33,9 @@ pipeline {
                 stage('SRV Build') {
                     steps {
                         sh '''
-                        . $NVM_DIR/nvm.sh >> /dev/null
+                        . $NVM_DIR/nvm.sh
                         cd server
-                        nvm install >> /dev/null
+                        nvm install
                         npm install
                         npm run eslint
                         npm run build
@@ -58,7 +58,7 @@ pipeline {
                 }
             }
             agent {
-                label 'amd64'
+                label 'local-amd64'
             }
             stages {
                 stage('UI Build Docker Image') {
