@@ -4,15 +4,21 @@ pipeline {
     stages {
         stage('NODE') {
             agent {
-                docker {
-                    image 'node:18.17.1-alpine'
-                }
+                label 'local-amd64'
             }
             stages {
+                stage('Load NVM') {
+                    steps {
+                        sh '''
+                        . $NVM_DIR/nvm.sh
+                        '''
+                    }
+                }
                 stage('UI Build') {
                     steps {
                         sh '''
                         cd ui
+                        nvm install
                         npm install
                         npm run eslint
                         npm run build
@@ -23,6 +29,7 @@ pipeline {
                     steps {
                         sh '''
                         cd ui
+                        nvm install
                         npm run test
                         npm run test:coverage
                         '''
@@ -32,6 +39,7 @@ pipeline {
                     steps {
                         sh '''
                         cd server
+                        nvm install
                         npm install
                         npm run eslint
                         npm run build
