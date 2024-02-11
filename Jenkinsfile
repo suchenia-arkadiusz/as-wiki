@@ -48,6 +48,11 @@ pipeline {
             }
         }
         stage('DOCKER') {
+            when {
+                expression {
+                    env.BRANCH_NAME == 'main'
+                }
+            }
             agent {
                 label 'amd64'
             }
