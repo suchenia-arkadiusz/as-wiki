@@ -15,6 +15,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - name: UI Build
+              env:
+                  DB_USER: ${{ secrets.TEST_SERVICES_PG_USER }}
               run: |
                     . $NVM_DIR/nvm.sh
                     cd ui
@@ -37,3 +39,6 @@ jobs:
                     npm install
                     npm run eslint
                     npm run build
+            - name: Check secrets
+              run: |
+                    echo "$DB_USER"
