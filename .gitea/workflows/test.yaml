@@ -6,8 +6,6 @@ jobs:
     Check-NVM:
         runs-on: local-runner
         steps:
-            - run: "echo $NVM_DIR"
-            - run: "exec bash"
             - run: ". $NVM_DIR/nvm.sh"
-            - run: "nvm.sh --version"
+            - run: "nvm --version"
             - run: "docker --version"
