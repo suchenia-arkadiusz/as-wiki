@@ -12,8 +12,8 @@ on:
 jobs:
     Node-Build-&-Test:
         runs-on: local-runner
-        uses: actions/checkout@v3
         steps:
+            - uses: actions/checkout@v3
             - name: UI Build
               run: |
                     . $NVM_DIR/nvm.sh
