@@ -1,12 +1,41 @@
 name: Test Action
 run-name: ${{ gitea.actor }} is testing out Gitea Actions
-on: [push]
+on:
+    push:
+        branches:
+            - main
+            - develop
+    pull_request:
+        types:
+            - opened
 
 jobs:
-    Check-NVM:
+    UI-Build:
         runs-on: local-runner
         steps:
             - run: |
                   . $NVM_DIR/nvm.sh
-                  nvm --version
-                  docker --version
+                  cd ui
+                  nvm install
+                  npm install
+                  npm run eslint
+                  npm run build
+    UI-Test:
+        runs-on: local-runner
+        steps:
+            - run: |
+                  . $NVM_DIR/nvm.sh
+                  cd ui
+                  nvm install
+                  npm run test
+                  npm run test:coverage
+    SRV-Build:
+        runs-on: local-runner
+        steps:
+            - run: |
+                  . $NVM_DIR/nvm.sh
+                  cd server
+                  nvm install
+                  npm install
+                  npm run eslint
+                  npm run build
