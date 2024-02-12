@@ -13,6 +13,7 @@ jobs:
     UI-Build:
         runs-on: local-runner
         steps:
+            - uses: actions/checkout@v3
             - run: |
                   . $NVM_DIR/nvm.sh
                   cd ui
