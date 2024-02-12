@@ -13,7 +13,7 @@ jobs:
     Node-Build-&-Test:
         runs-on: local-runner
         steps:
-            - run: '. $NVM_DIR/nvm.sh'
+            - run: '. ${{ env.NVM_DIR }}/nvm.sh'
             - uses: actions/checkout@v3
               env:
                   DB_USER: ${{ secrets.TEST_SERVICES_PG_USER }}
