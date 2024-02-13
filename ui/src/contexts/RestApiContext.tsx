@@ -8,6 +8,7 @@ type RestAPIContextType = {
   get: (_url: string, _headers?: object) => Promise<Response>;
   post: (_url: string, _body: object, _headers?: object) => Promise<Response>;
   put: (_url: string, _body: object, _headers?: object) => Promise<Response>;
+  del: (_url: string, _headers?: object) => Promise<Response>;
 };
 
 export const RestApiContext = createContext<RestAPIContextType | undefined>(undefined);
@@ -40,6 +41,13 @@ export const RestApiProvider = (props: Props) => {
     });
   };
 
+  const del = async (url: string, headers: object = {}): Promise<Response> => {
+    return await fetch(`${baseUrl}${url}`, {
+      method: 'DELETE',
+      headers: getHeaders(headers)
+    });
+  };
+
   const getHeaders = (headers: object) => {
     const basicHeaders = {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -49,7 +57,7 @@ export const RestApiProvider = (props: Props) => {
     return { ...basicHeaders, ...headers };
   };
 
-  const contextValue = useMemo(() => ({ get, post, put }), []);
+  const contextValue = useMemo<RestAPIContextType>(() => ({ get, post, put, del }), []);
 
   return <RestApiContext.Provider value={contextValue}>{props.children}</RestApiContext.Provider>;
 };

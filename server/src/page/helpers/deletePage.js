@@ -3,7 +3,7 @@ import {log} from '../../config/logger';
 
 export const deletePageById = async (id) => {
   const client = config.dbClient;
-  const query = 'DELETE FROM "PAGES" WHERE id = $1';
+  const query = 'SELECT delete_page($1)';
 
   try {
     await client.query(query, [id]);

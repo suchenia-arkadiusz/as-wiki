@@ -8,6 +8,7 @@ import { type CreatedByUser, type Page } from '../../types.ts';
 import { formatDate } from '../../utils/date.ts';
 import Button from '../../components/Button/Button.tsx';
 import CreatePagePopup from './components/CreatePagePopup/CreatePagePopup.tsx';
+import { useToasterContext } from '../../contexts/ToasterContext.tsx';
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -35,6 +36,7 @@ const DocumentPage = () => {
   const api = useRestApiContext();
   const { projects } = useProjectsContext();
   const location = useLocation();
+  const toasterContext = useToasterContext();
   const [selectedPage, setSelectedPage] = useState<string>(location.pathname.split('/')[4]);
   const [page, setPage] = useState<Page | undefined>(undefined);
   const [popupProps, setPopupProps] = useState<{ isPopupOpen: boolean; isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
@@ -43,7 +45,7 @@ const DocumentPage = () => {
   useEffect(() => {
     const pageId = location.pathname.split('/')[4];
     if (pageId && pageId.length > 0) {
-      api.get(`/api/v1/projects/${projectId}/pages/${pageId}`).then((response) => {
+      api.get(`/api/v1/projects/${projectId}/pages/${pageId}`).then((response: Response) => {
         if (response.status === 200) {
           response.json().then((data: Page) => {
             setPage(data);
@@ -63,6 +65,18 @@ const DocumentPage = () => {
 
   const getUserDetails = (data?: CreatedByUser): string =>
     (data ? (data.firstName && data.lastName ? `${data.firstName} ${data.lastName}` : data.username) : '');
+
+  const deletePage = () => {
+    const pageId = location.pathname.split('/')[4];
+    api.del(`/api/v1/projects/${projectId}/pages/${pageId}`).then((response: Response) => {
+      if (response.status === 204) {
+        setPage(undefined);
+        toasterContext.addToast('Page deleted successfully!', 'SUCCESS');
+      } else {
+        toasterContext.addToast('Something went wrong!', 'ERROR');
+      }
+    });
+  };
 
   return (
     <DocumentPageContainer data-testid="DocumentPageContainer">
@@ -86,8 +100,8 @@ const DocumentPage = () => {
             </PageContentContainer>
             <PageIconsContainer>
               <Button onClick={() => { alert('Edit Permissions'); }} iconName="bi-lock" />
-              <Button onClick={() => { openPopup(true); }} iconName="bi-pen" />
-              <Button onClick={() => { alert('Delete'); }} iconName="bi-trash3" />
+              <Button onClick={() => openPopup(true) } iconName="bi-pen" />
+              <Button onClick={deletePage} iconName="bi-trash3" />
               <Button onClick={() => { alert('More'); }} iconName="bi-three-dots" />
             </PageIconsContainer>
           </>
