@@ -11,7 +11,7 @@ on:
 
 jobs:
     Node-Build-&-Test:
-        runs-on: local-host
+        runs-on: local-runner
         steps:
             - uses: actions/checkout@v3
               env:
