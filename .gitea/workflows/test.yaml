@@ -11,7 +11,7 @@ on:
 
 jobs:
     Node-Build-&-Test:
-        runs-on: docker-runner
+        runs-on: local-host
         steps:
             - uses: actions/checkout@v3
               env:
