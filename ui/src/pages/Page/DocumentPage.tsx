@@ -9,6 +9,7 @@ import { formatDate } from '../../utils/date.ts';
 import Button from '../../components/Button/Button.tsx';
 import CreatePagePopup from './components/CreatePagePopup/CreatePagePopup.tsx';
 import { useToasterContext } from '../../contexts/ToasterContext.tsx';
+import { MdPreview } from 'md-editor-rt';
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -96,7 +97,9 @@ const DocumentPage = () => {
                   {getUserDetails(page?.updatedBy)}
                 </p>
               </section>
-              <article dangerouslySetInnerHTML={{ __html: page?.content ? page.content : '' }} />
+              <article data-color-mode="light">
+                <MdPreview modelValue={page?.content || ''} language='en-US' previewTheme='vuepress' codeTheme='github'/>
+              </article>
             </PageContentContainer>
             <PageIconsContainer>
               <Button onClick={() => { alert('Edit Permissions'); }} iconName="bi-lock" />
