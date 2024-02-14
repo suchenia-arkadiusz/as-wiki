@@ -10,6 +10,7 @@ import Button from '../../components/Button/Button.tsx';
 import CreatePagePopup from './components/CreatePagePopup/CreatePagePopup.tsx';
 import { useToasterContext } from '../../contexts/ToasterContext.tsx';
 import { MdPreview } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -98,7 +99,10 @@ const DocumentPage = () => {
                 </p>
               </section>
               <article data-color-mode="light">
-                <MdPreview modelValue={page?.content || ''} language='en-US' previewTheme='vuepress' codeTheme='github'/>
+                <MdPreview
+                  modelValue={page?.content || ''}
+                  language='en-US'
+                  codeTheme='stackoverflow'/>
               </article>
             </PageContentContainer>
             <PageIconsContainer>

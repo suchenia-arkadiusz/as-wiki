@@ -7,43 +7,13 @@
   font-weight: 400;
   font-size: 1rem;
 
-  color-scheme: light dark;
   background-color: #fff;
   color: #747474;
   padding: 0;
   margin: 0;
 }
 
-.ql-syntax {
-  font-family: monospace !important;
-  font-size: 0.8rem !important;
-}
-
-.ql-container.ql-snow {
-  border: none !important;
-}
-
-.ql-toolbar.ql-snow {
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-}
-
-.ql-editor:not(.ql-blank) {
-  max-height: 770px;
-  overflow: auto;
-}
-
-.ql-editor.ql-blank {
-  padding: 0;
-}
-
-.ql-syntax {
-  background: #f1f2f3 !important;
-  border-radius: 5px !important;
-  padding: 10px !important;
-  width: 100% !important;
-  color: #393939 !important;
+input[type=checkbox] {
 }
 
 h1 {
@@ -65,5 +35,8 @@ p {
 
 code * {
   background-color: inherit;
-  /*color: #282828;*/
+}
+
+ul .task-list-item input {
+  margin-left: -1em !important;
 }

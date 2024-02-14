@@ -94,8 +94,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
           footers={[]}
           toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
           editorId='page-content-editor'
-          previewTheme='vuepress'
-          codeTheme='github'
+          codeTheme='stackoverfloew'
           language='en-US'
           modelValue={value}
           onChange={setValue}
