@@ -7,4 +7,5 @@ export type Project = {
   color?: string;
   logo?: ReactNode;
   logoUrl?: string;
+  numberOfPages?: number;
 };
