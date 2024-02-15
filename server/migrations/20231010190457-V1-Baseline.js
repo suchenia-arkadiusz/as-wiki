@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
-var dbm;
-var type;
-var seed;
-var fs = require("fs");
-var path = require("path");
-var Promise;
-var { v4: uuidv4 } = require("uuid");
-var bcrypt = require("bcryptjs");
-require("dotenv").config();
+let dbm;
+let type;
+let seed;
+const fs = require('fs');
+const path = require('path');
+let Promise;
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 /**
  * We receive the dbmigrate dependency from dbmigrate initially.
@@ -24,11 +24,11 @@ exports.setup = function (options, seedLink) {
 exports.up = function (db) {
   createUsersTableAndAdminUser(db);
 
-  var filePath = path.join(__dirname, "sqls", "20231010190457-V1-Baseline-up.sql");
+  const filePath = path.join(__dirname, 'sqls', '20231010190457-V1-Baseline-up.sql');
   return new Promise(function (resolve, reject) {
-    fs.readFile(filePath, { encoding: "utf-8" }, function (err, data) {
+    fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
       if (err) return reject(err);
-      console.log("received data: " + data);
+      console.log(`received data: ${  data}`);
 
       resolve(data);
     });
@@ -38,11 +38,11 @@ exports.up = function (db) {
 };
 
 exports.down = function (db) {
-  var filePath = path.join(__dirname, "sqls", "20231010190457-V1-Baseline-down.sql");
+  const filePath = path.join(__dirname, 'sqls', '20231010190457-V1-Baseline-down.sql');
   return new Promise(function (resolve, reject) {
-    fs.readFile(filePath, { encoding: "utf-8" }, function (err, data) {
+    fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
       if (err) return reject(err);
-      console.log("received data: " + data);
+      console.log(`received data: ${  data}`);
 
       resolve(data);
     });
@@ -57,7 +57,7 @@ exports._meta = {
 
 function createUsersTableAndAdminUser(db) {
   bcrypt.hash(process.env.APP_ADMIN_USER_PASSWORD, 12).then((hashedPassword) => {
-    var createUsersTableQuery = `CREATE TABLE "USERS" (
+    const createUsersTableQuery = `CREATE TABLE "USERS" (
     "id" uuid PRIMARY KEY ,
     "username" VARCHAR(50) UNIQUE NOT NULL,
     "password" VARCHAR(255) NOT NULL,
@@ -69,7 +69,7 @@ function createUsersTableAndAdminUser(db) {
     "permissions" VARCHAR(255)
 );`;
     db.runSql(createUsersTableQuery);
-    var createAdminUserQuery = `INSERT INTO "USERS" (
+    const createAdminUserQuery = `INSERT INTO "USERS" (
     "id",
     "username",
     "password",
@@ -83,7 +83,7 @@ function createUsersTableAndAdminUser(db) {
     '${uuidv4()}',
     'admin','${hashedPassword}',
     '${process.env.APP_ADMIN_USER_EMAIL}',
-    null,
+    'Admin',
     null,
     '${new Date().toISOString()}',
     null,
