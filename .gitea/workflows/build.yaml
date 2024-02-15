@@ -45,7 +45,7 @@ jobs:
     DEV-Build-Docker:
         runs-on: local-runner
         needs: [UI-Build-&-Test, SRV-Build-&-Test]
-        if: gitea.ref_name == develop
+        if: ${{ gitea.ref_name }} == develop
         env:
             BUILD_NUMBER: ${{ gitea.run_id }}
         steps:
@@ -67,7 +67,7 @@ jobs:
     PROD-Build-Docker:
         runs-on: local-runner
         needs: [UI-Build-&-Test, SRV-Build-&-Test]
-        if: gitea.ref_name == main
+        if: ${{ gitea.ref_name }} == main
         env:
             BUILD_NUMBER: ${{ gitea.run_id }}
         steps:
