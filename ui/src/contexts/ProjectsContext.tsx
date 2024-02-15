@@ -2,6 +2,7 @@ import { type Project } from './types.ts';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { useRestApiContext } from './RestApiContext.tsx';
+import { useToasterContext } from './ToasterContext.tsx';
 
 type Props = {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ type Props = {
 type ProjectsContextType = {
   projects: Project[];
   addProject: (_project: Project) => void;
+  deleteProject: (_projectId: string) => void;
   isLoaded: boolean;
 };
 
@@ -17,6 +19,7 @@ export const ProjectsContext = createContext<ProjectsContextType | undefined>(un
 
 export const ProjectsProvider = (props: Props) => {
   const api = useRestApiContext();
+  const toasterContext = useToasterContext();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -36,7 +39,18 @@ export const ProjectsProvider = (props: Props) => {
     setProjects([...projects, project]);
   };
 
-  return <ProjectsContext.Provider value={{ projects, addProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
+  const deleteProject = (projectId: string) => {
+    api.del(`/api/v1/projects/${projectId}`).then((response: Response) => {
+      if (response.status === 204) {
+        setProjects(projects.filter((project) => project.id !== projectId));
+        toasterContext.addToast('Project deleted successfully!', 'SUCCESS');
+      } else {
+        toasterContext.addToast('Something went wrong!', 'ERROR');
+      }
+    });
+  };
+
+  return <ProjectsContext.Provider value={{ projects, addProject, deleteProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
 };
 
 export const ProjectsContextLayout = () => {
