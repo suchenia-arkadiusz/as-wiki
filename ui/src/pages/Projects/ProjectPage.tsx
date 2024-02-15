@@ -14,7 +14,7 @@ const ProjectPageContainer = styled.div`
 const ProjectPage = () => {
   const params = useParams();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [project, setProject] = useState<Project & { numberOfPages: number }>();
+  const [project, setProject] = useState<Project>();
   const api = useRestApiContext();
 
   useEffect(() => {
@@ -22,14 +22,12 @@ const ProjectPage = () => {
     api.get(`/api/v1/projects/${params.id}`).then((response) => {
       if (response.status === 200) {
         response.json().then((data: Project) => {
-          setProject({ ...data, numberOfPages: getProjectNumberOfPages() });
+          setProject(data);
           setIsLoaded(true);
         });
       }
     });
   }, []);
-
-  const getProjectNumberOfPages = (): number => 10;
 
   return (
     <>
