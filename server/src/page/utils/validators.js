@@ -6,7 +6,7 @@ export const validateCreatePageInput = (req, res, next) => {
     name: Joi.string().required(),
     content: Joi.string(),
     isPublic: Joi.boolean(),
-    parentId: Joi.string(),
+    parentId: Joi.string().allow(null),
   });
 
   const validated = schema.validate(req.body);
