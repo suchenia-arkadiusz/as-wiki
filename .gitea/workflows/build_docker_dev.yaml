@@ -1,0 +1,30 @@
+name: Build DEV Docker image
+run-name: Build the asWiki app's DEV Docker image
+on:
+    workflow_run:
+        workflows: ["Build & Test"]
+        branches: ["develop"]
+        types:
+            - completed
+
+jobs:
+    DEV-Build-Docker:
+        runs-on: local-runner
+        env:
+            BUILD_NUMBER: ${{ gitea.run_id }}
+        steps:
+            - uses: actions/checkout@v3
+            - name: UI Docker Build
+              run: |
+                    cd ui
+                    docker build -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest-dev -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER-dev .
+                    docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest-dev
+                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER-dev
+            - name: SRV Docker Build
+              run: |
+                    cd server
+                    docker build -t git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest-dev -t git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER-dev .
+                    docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest-dev
+                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER-dev
