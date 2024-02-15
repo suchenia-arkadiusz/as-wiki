@@ -38,7 +38,7 @@ type Props = {
 };
 
 const Button = (props: Props) => {
-  const { iconName, onClick, text, color, hoverColor, height, iconPosition, className, padding, disabled } = props;
+  const { iconName, onClick, text, color, hoverColor, height, iconPosition, className, padding, disabled = false } = props;
 
   return (
     <ButtonContainer
@@ -49,7 +49,7 @@ const Button = (props: Props) => {
       $height={height || 16}
       $padding={padding || '0'}
       className={className}
-      disabled={!disabled ? false : disabled}
+      disabled={disabled}
     >
       {iconPosition === 'right' ? (
         <>
