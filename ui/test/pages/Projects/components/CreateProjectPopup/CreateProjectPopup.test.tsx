@@ -2,13 +2,14 @@ import { render, within } from '@testing-library/react';
 import CreateProjectPopup from '../../../../../src/pages/Projects/components/CreateProjectPopup/CreateProjectPopup.tsx';
 import { expect, vi } from 'vitest';
 import MockBrowser from '../../../../mocks/MockBrowser.tsx';
+import { Project } from '../../../../../src/contexts/types.ts';
 
 const onClose = vi.fn();
 
-const setupScreen = () => {
+const setupScreen = (selectedProject: Project | undefined = undefined, isEdit: boolean = false) => {
   return render(
     <MockBrowser>
-      <CreateProjectPopup onClose={onClose} />
+      <CreateProjectPopup onClose={onClose} selectedProject={selectedProject} isEdit={isEdit} />
     </MockBrowser>
   );
 };
