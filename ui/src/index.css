@@ -40,3 +40,7 @@ code * {
 ul .task-list-item input {
   margin-left: -1em !important;
 }
+
+.md-editor {
+  height: 100%
+ }
