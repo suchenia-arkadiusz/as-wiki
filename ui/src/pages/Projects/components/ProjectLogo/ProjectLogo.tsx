@@ -3,7 +3,7 @@ import { type ReactNode, useEffect, useState } from 'react';
 
 type ProjectLogoProps = {
   projectName: string;
-  projectColor: string;
+  projectColor?: string;
   logoUrl?: string;
 };
 

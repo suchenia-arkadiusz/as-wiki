@@ -22,7 +22,11 @@ const HeaderCell = styled.th`
   font-weight: bold;
 `;
 
-const ProjectsTable = () => {
+type Props = {
+  openPopup: (_isEdit: boolean, _selectedProject: Project | undefined) => void;
+};
+
+const ProjectsTable = (props: Props) => {
   const projectsContext = useProjectsContext();
 
   return (
@@ -44,7 +48,7 @@ const ProjectsTable = () => {
                   ...item,
                   logo: <ProjectLogo projectName={item.name} projectColor={item.color} logoUrl={item.logoUrl} />
                 }))
-                .map((project: Project) => <TableRow key={project.id} project={project} />)
+                .map((project: Project) => <TableRow {...props} key={project.id} project={project} />)
             )
             : (
               <TableLoader numOfColumns={4} />

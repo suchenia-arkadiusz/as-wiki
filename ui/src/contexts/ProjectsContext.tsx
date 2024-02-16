@@ -11,6 +11,7 @@ type Props = {
 type ProjectsContextType = {
   projects: Project[];
   addProject: (_project: Project) => void;
+  editProject: (_project: Project) => void;
   deleteProject: (_projectId: string) => void;
   isLoaded: boolean;
 };
@@ -35,8 +36,32 @@ export const ProjectsProvider = (props: Props) => {
     });
   }, []);
 
-  const addProject = (project: Project) => {
-    setProjects([...projects, project]);
+  const addProject = async (project: Project) => {
+    const response = await api.post('/api/v1/projects', { name: project.name, description: project.description});
+
+    if (response.status !== 200) {
+      toasterContext.addToast('Something went wrong!', 'ERROR');
+    }
+
+    if (response.status === 200) {
+      const responseProject = await response.json();
+      setProjects([...projects, responseProject]);
+      toasterContext.addToast('Project created successfully!', 'SUCCESS');
+    }
+  };
+
+  const editProject = async (project: Project) => {
+    const response = await api.put(`/api/v1/projects/${project?.id}`, {name: project.name, description: project.description});
+
+    if (response.status !== 200) {
+      toasterContext.addToast('Something went wrong!', 'ERROR');
+    }
+
+    if (response.status === 200) {
+      setProjects(projects.map((p) => (p.id === project.id ? project : p)));
+      toasterContext.addToast('Project edited successfully!', 'SUCCESS');
+    }
+
   };
 
   const deleteProject = (projectId: string) => {
@@ -50,7 +75,7 @@ export const ProjectsProvider = (props: Props) => {
     });
   };
 
-  return <ProjectsContext.Provider value={{ projects, addProject, deleteProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
+  return <ProjectsContext.Provider value={{ projects, addProject, editProject, deleteProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
 };
 
 export const ProjectsContextLayout = () => {

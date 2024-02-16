@@ -27,5 +27,6 @@ const mapProject = (project) => {
     createdBy: project.created_by,
     updatedAt: project.updated_at,
     updatedBy: project.updated_by,
+    version: project.version,
   };
 };
