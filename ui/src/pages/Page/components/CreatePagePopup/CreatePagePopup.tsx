@@ -24,6 +24,10 @@ const CreatePageButtonContainer = styled.div`
   width: 100%;
 `;
 
+const EditorContainer = styled.div`
+  height: 800px;
+`;
+
 type CreatePagePopupProps = {
   onClose: () => void;
   selectedPage: Page | undefined;
@@ -76,7 +80,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
   };
 
   return (
-    <Popup title={isEdit ? 'Edit Page' : 'Create Page'} width={1400} height={1000} onClose={onClose}>
+    <Popup title={isEdit ? 'Edit Page' : 'Create Page'} width={1400} onClose={onClose}>
       <CreatePageContainer data-testid="CreatePage.container" data-color-mode="light">
         <Input
           ref={nameRef}
@@ -89,16 +93,19 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
           onChange={() => { setValidatedName(nameRef.current ? validateStringInput(nameRef.current.value) : false); }}
           defaultValue={isEdit ? selectedPage?.name : undefined}
         />
-        <MdEditor
-          showCodeRowNumber={true}
-          footers={[]}
-          toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
-          editorId='page-content-editor'
-          codeTheme='stackoverfloew'
-          language='en-US'
-          modelValue={value}
-          onChange={setValue}
-        />
+        <EditorContainer>
+          <MdEditor
+            showCodeRowNumber={true}
+            footers={[]}
+            toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
+            editorId='page-content-editor'
+            codeTheme='stackoverfloew'
+            language='en-US'
+            modelValue={value}
+            onChange={setValue}
+            preview={false}
+          />
+        </EditorContainer>
         <CreatePageButtonContainer data-testid="CreatePage.button.container">
           <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={!validatedName} />
         </CreatePageButtonContainer>
