@@ -42,7 +42,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
   const api = useRestApiContext();
   const toasterContext = useToasterContext();
   const pageListContext = usePageListContext();
-  const [value, setValue] = useState<string>(selectedPage?.content || '');
+  const [value, setValue] = useState<string>(isEdit ? selectedPage?.content || '' : '');
 
   const [validatedName, setValidatedName] = useState<boolean>(isEdit);
 
