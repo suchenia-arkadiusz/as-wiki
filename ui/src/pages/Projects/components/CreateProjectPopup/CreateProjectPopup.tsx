@@ -5,9 +5,8 @@ import { useRef, useState } from 'react';
 import Button from '../../../../components/Button/Button.tsx';
 import styled from 'styled-components';
 import { validateStringInput } from '../../../../utils/validators.ts';
-import { useRestApiContext } from '../../../../contexts/RestApiContext.tsx';
-import { useToasterContext } from '../../../../contexts/ToasterContext.tsx';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
+import { Project } from '../../types.ts';
 
 const CreateProjectContainer = styled.div`
   display: flex;
@@ -23,36 +22,26 @@ const CreateProjectButtonContainer = styled.div`
 
 type CreatePagePopupProps = {
   onClose: () => void;
+  selectedProject: Project | undefined;
+  isEdit: boolean;
 };
 
 const CreateProjectPopup = (props: CreatePagePopupProps) => {
-  const { onClose } = props;
+  const { onClose, selectedProject, isEdit } = props;
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const api = useRestApiContext();
-  const toasterContext = useToasterContext();
   const projectsContext = useProjectsContext();
 
   const [validatedForm, setValidatedForm] = useState({
-    name: false,
-    description: false
+    name: isEdit,
+    description: isEdit
   });
 
   const onSubmit = async () => {
-    const body = {
-      name: nameRef.current?.value || '',
-      description: descriptionRef.current?.value || ''
-    };
-
-    const response = await api.post('/api/v1/projects', body);
-
-    if (response.status !== 200) {
-      toasterContext.addToast('Something went wrong!', 'ERROR');
-    }
-
-    if (response.status === 200) {
-      projectsContext.addProject(await response.json());
-      toasterContext.addToast('Project created successfully!', 'SUCCESS');
+    if (isEdit) {
+      projectsContext.editProject({...selectedProject, id: selectedProject?.id || '', name: nameRef.current?.value || '', description: descriptionRef.current?.value || ''});
+    } else {
+      projectsContext.addProject({id: '', name: nameRef.current?.value || '', description: descriptionRef.current?.value || ''});
     }
 
     onClose();
@@ -77,6 +66,7 @@ const CreateProjectPopup = (props: CreatePagePopupProps) => {
           type="text"
           validated={validatedForm.name}
           onChange={() => { setValidatedForm({ ...validatedForm, name: validateStringInput(nameRef.current?.value || '') }); }}
+          defaultValue={isEdit ? selectedProject?.name : undefined}
         />
         <TextArea
           ref={descriptionRef}
@@ -87,6 +77,7 @@ const CreateProjectPopup = (props: CreatePagePopupProps) => {
           value=""
           validated={validatedForm.description}
           onChange={() => { setValidatedForm({ ...validatedForm, description: validateStringInput(descriptionRef.current?.value || '') }); }}
+          defaultValue={isEdit ? selectedProject?.description : undefined}
         />
 
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">

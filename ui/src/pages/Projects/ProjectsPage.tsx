@@ -4,6 +4,7 @@ import { Left, Right } from '../../components/styles.ts';
 import { useState } from 'react';
 import Button from '../../components/Button/Button.tsx';
 import CreateProjectPopup from './components/CreateProjectPopup/CreateProjectPopup.tsx';
+import { Project } from './types.ts';
 
 const ProjectsPageContainer = styled.div`
   display: flex;
@@ -16,8 +17,23 @@ const ProjectsPageHeader = styled.div`
   justify-content: space-between;
 `;
 
+type ProjectCreateOrEditPopupProps = {
+  isPopupOpen: boolean;
+  isEdit: boolean;
+  selectedProject: Project | undefined;
+};
+
 const ProjectsPage = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState < boolean > (false);
+  const [popupProps, setPopupProps] = useState<ProjectCreateOrEditPopupProps> ({isPopupOpen: false, isEdit: false, selectedProject: undefined});
+
+  const openPopup = (isEdit: boolean, selectedProject: Project | undefined) => {
+    setPopupProps({isEdit, isPopupOpen: true, selectedProject});
+  };
+
+  const closePopup = () => {
+    setPopupProps({isEdit: false, isPopupOpen: false, selectedProject: undefined});
+  };
+
   return (
     <ProjectsPageContainer data-testid="ProjectsPage.container">
       <ProjectsPageHeader data-testid="ProjectsPage.container.header">
@@ -25,11 +41,11 @@ const ProjectsPage = () => {
           <h1>PROJECTS</h1>
         </Left>
         <Right data-testid="ProjectsPage.container.header.addProject">
-          <Button iconName="bi-plus-lg" onClick={() => { setIsPopupOpen(true); }} text="Add Project" />
+          <Button iconName="bi-plus-lg" onClick={() => openPopup(false, undefined)} text="Add Project" />
         </Right>
       </ProjectsPageHeader>
-      {isPopupOpen ? <CreateProjectPopup onClose={() => { setIsPopupOpen(false); }} /> : null}
-      <ProjectsTable />
+      {popupProps.isPopupOpen ? <CreateProjectPopup onClose={closePopup} isEdit={popupProps.isEdit} selectedProject={popupProps.selectedProject} /> : null}
+      <ProjectsTable openPopup={openPopup} />
     </ProjectsPageContainer>
   );
 };

@@ -54,7 +54,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
       parentId: isEdit ? selectedPage?.parentId : selectedPage?.id || undefined
     };
 
-    let response;
+    let response: Response;
     if (isEdit) {
       response = await api.put(`/api/v1/projects/${projectId}/pages/${selectedPage?.id}`, body);
     } else {

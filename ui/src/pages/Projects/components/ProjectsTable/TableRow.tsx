@@ -4,13 +4,14 @@ import { IconsContainer, TableCell, TableRowContainer } from '../../../../compon
 import Button from '../../../../components/Button/Button.tsx';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
 
-type TableRowProps = {
+type Props = {
   project: Project;
+  openPopup: (_isEdit: boolean, _selectedProject: Project | undefined) => void;
 };
 
-const TableRow = (props: TableRowProps) => {
+const TableRow = (props: Props) => {
   const projectsContext = useProjectsContext();
-  const { project } = props;
+  const { project, openPopup } = props;
   const navigate = useNavigate();
 
   const deleteProject = () => {
@@ -29,7 +30,7 @@ const TableRow = (props: TableRowProps) => {
       <TableCell data-testid="ProjectsTable.table.row.actions">
         <IconsContainer>
           <Button iconName="bi-info-circle" onClick={() => { navigate(`/projects/${project.id}`); }} />
-          <Button iconName="bi-pen" onClick={() => {}} />
+          <Button iconName="bi-pen" onClick={() => openPopup(true, project)} />
           <Button iconName="bi-trash" onClick={deleteProject} />
         </IconsContainer>
       </TableCell>

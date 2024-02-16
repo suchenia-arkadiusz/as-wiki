@@ -62,7 +62,7 @@ const DocumentPage = () => {
   };
 
   const closePopup = () => {
-    setPopupProps({ ...popupProps, isPopupOpen: false });
+    setPopupProps({ isEdit: false, isPopupOpen: false });
   };
 
   const getUserDetails = (data?: CreatedByUser): string =>
