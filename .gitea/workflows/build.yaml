@@ -42,3 +42,12 @@ jobs:
                     npm install
                     npm run eslint
                     npm run build
+            - name: Test
+              run: |
+                    . $NVM_DIR/nvm.sh
+                    cd server
+                    nvm install
+                    docker-compose -f test-services.yml up -d
+                    npm run test
+                    npm run test:coverage
+                    docker-compose -f test-services.yml down

@@ -1,4 +1,4 @@
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import request from 'supertest';
 import {getUserByUsername} from '../../src/auth/helpers/getUser';
 import {generateJWT} from '../../src/auth/utils/generateJWT';
@@ -8,9 +8,7 @@ import {deleteProjectById} from '../../src/project/helpers/deleteProject';
 describe('API createPage', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
-  });
+  beforeAll(async () => {app = await getExpressApp();});
 
   it('POST should return 401 if no token is provided', async () => {
     await request(app).post('/api/v1/projects/projectId/pages').expect(401);

@@ -1,13 +1,13 @@
 import request from 'supertest';
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import { deleteUserByUserName } from '../../src/auth/helpers/deleteUser';
 import expect from 'expect';
 
 describe('API registerUser', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('POST should return 400 if no email is provided', async () => {
