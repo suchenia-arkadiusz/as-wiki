@@ -64,7 +64,7 @@ describe('API registerUser', () => {
       .post('/register')
       .send({
         password: '123456',
-        email: 'admin@aswiki.com',
+        email: 'test@aswiki.com',
         username: 'test',
       })
       .expect(409);

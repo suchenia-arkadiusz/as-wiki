@@ -62,3 +62,4 @@ jobs:
                     npm run test
                     npm run test:coverage
                     docker-compose -f test-services.yml down
+                    docker-compose -f test-services.yml rm -f
