@@ -1,12 +1,12 @@
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import request from 'supertest';
 import { generateJWT } from '../../src/auth/utils/generateJWT';
 
 describe('API refreshToken', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('POST should return 401 if no refresh token is provided', async () => {

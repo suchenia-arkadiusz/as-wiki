@@ -32,6 +32,15 @@ jobs:
                     npm run test:coverage
     SRV-Build-&-Test:
         runs-on: local-runner
+        env:
+            DB_HOST: localhost
+            DB_USERNAME: testUser
+            DB_PASSWORD: testUserPassword
+            DB_NAME: aswiki_test
+            DB_PORT: 10000
+            APP_ADMIN_USER_PASSWORD: testUserPassword
+            APP_ADMIN_USER_EMAIL: test@aswiki.com
+            APP_ENV: test
         steps:
             - uses: actions/checkout@v3
             - name: Build
@@ -42,3 +51,15 @@ jobs:
                     npm install
                     npm run eslint
                     npm run build
+            - name: Test
+              run: |
+                    . $NVM_DIR/nvm.sh
+                    cd server
+                    nvm install
+                    docker-compose -f test-services.yml up -d
+                    sleep 10s
+                    npx db-migrate up -e test
+                    npm run test
+                    npm run test:coverage
+                    docker-compose -f test-services.yml down
+                    docker-compose -f test-services.yml rm -f

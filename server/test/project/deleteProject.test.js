@@ -1,4 +1,4 @@
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import { deleteProjectById } from '../../src/project/helpers/deleteProject';
 import { getUserByUsername } from '../../src/auth/helpers/getUser';
 import { generateJWT } from '../../src/auth/utils/generateJWT';
@@ -8,8 +8,8 @@ import expect from 'expect';
 describe('deleteProject', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('should return false if there is no project with the given id', async () => {

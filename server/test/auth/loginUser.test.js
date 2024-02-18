@@ -1,4 +1,4 @@
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import request from 'supertest';
 
 require('dotenv').config();
@@ -6,8 +6,8 @@ require('dotenv').config();
 describe('API loginUser', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('POST should return 401 if username is empty', async () => {

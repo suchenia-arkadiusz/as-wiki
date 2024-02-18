@@ -1,14 +1,14 @@
 import request from 'supertest';
 import { generateJWT } from '../../src/auth/utils/generateJWT';
 import { getUserByUsername } from '../../src/auth/helpers/getUser';
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import { deleteUserByUserName } from '../../src/auth/helpers/deleteUser';
 
 describe('API getUsers', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('GET should return 401 if no token is provided', async () => {

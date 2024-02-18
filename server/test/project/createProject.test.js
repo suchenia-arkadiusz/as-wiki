@@ -1,14 +1,15 @@
-import { getApp } from '../../src/getExpressApp';
 import request from 'supertest';
 import { generateJWT } from '../../src/auth/utils/generateJWT';
 import { getUserByUsername } from '../../src/auth/helpers/getUser';
 import { deleteProjectById } from '../../src/project/helpers/deleteProject';
+import { getExpressApp } from '../config/getApp';
+import expect from 'expect';
 
 describe('API createProject', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('POST should return 401 if no token is provided', async () => {
