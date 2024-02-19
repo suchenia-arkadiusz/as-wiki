@@ -231,4 +231,4 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm+all,node
 
-.npmrc
+junit.xml

@@ -34,14 +34,15 @@ const PageListPanelContainer = styled.div`
   }
 `;
 
-type PageListPanelProps = {
+type Props = {
   projectName: string;
+  selectedPageId: string;
   onSelectedPage: (_id: string) => void;
   onAddPage: (_isEdit: boolean) => void;
 };
 
-const PageListPanel = (props: PageListPanelProps) => {
-  const { projectName, onSelectedPage, onAddPage } = props;
+const PageListPanel = (props: Props) => {
+  const { projectName, selectedPageId, onSelectedPage, onAddPage } = props;
   const { pages } = usePageListContext();
   const location = useLocation();
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const PageListPanel = (props: PageListPanelProps) => {
         <Button iconName="bi-plus-lg" onClick={() => { onAddPage(false); }} text="Add Page" />
       </Right>
       <h1>{projectName}</h1>
-      <TreeList data={pages} onSelect={onSelect} />
+      <TreeList selectedPageId={selectedPageId} data={pages} onSelect={onSelect} />
     </PageListPanelContainer>
   );
 };

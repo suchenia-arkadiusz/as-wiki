@@ -14,6 +14,7 @@ const createPagesList = (pages) => {
     id: page.id,
     name: page.name,
     children: getChildrenPages(pages, page.id),
+    parentId: page.parentId,
   }));
 };
 
@@ -23,5 +24,6 @@ const getChildrenPages = (pages, parentId) => {
     id: page.id,
     name: page.name,
     children: getChildrenPages(pages, page.id),
+    parentId: page.parentId,
   }));
 };
