@@ -86,6 +86,7 @@ const DocumentPage = () => {
         projectName={projects.find((project) => project.id === projectId)?.name || 'No Project'}
         onSelectedPage={setSelectedPage}
         onAddPage={openPopup}
+        selectedPageId={selectedPage}
       />
       {page
         ? (

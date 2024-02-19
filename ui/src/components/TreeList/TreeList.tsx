@@ -12,19 +12,51 @@ const TreeListItemContainer = styled.div<{ $margin: string }>`
   width: 100%;
 `;
 
-type TreeListProps = {
+type Props = {
   data: TreeListElement[];
+  selectedPageId: string;
   onSelect: (_id: string) => void;
   level?: number;
 };
 
-const TreeList = (props: TreeListProps) => {
-  const { data, level = 0, onSelect } = props;
+const TreeList = (props: Props) => {
+  const { data, selectedPageId, level = 0, onSelect } = props;
   const [listData, setListData] = useState<TreeListElement[]>([]);
 
   useEffect(() => {
-    setListData(data);
+    if (!selectedPageId) return;
+
+    if (data.find((item) => item.id === selectedPageId)) {
+      setListData(data);
+    } else {
+      data.forEach((item) => {
+        const shouldBeExpanded = openElement(item.children);
+        if (shouldBeExpanded) {
+          item.isExpanded = true;
+        }
+      });
+      setListData(data);
+    }
   }, [data]);
+
+  const openElement = (elements: TreeListElement[]) => {
+    if (!elements || elements.length === 0) return;
+
+    let result = false;
+
+    if (elements.find((item) => item.id === selectedPageId)) {
+      result = true;
+    } else {
+      elements.forEach((item) => {
+        const shouldBeExpanded = openElement(item.children);
+        if (shouldBeExpanded) {
+          item.isExpanded = true;
+          result = true;
+        }
+      });
+    }
+    return result;
+  };
 
   const toggleItem = (id: string) => {
     const items = [...listData];
@@ -34,6 +66,8 @@ const TreeList = (props: TreeListProps) => {
 
     setListData(items);
   };
+
+  const hasChildren = (item: TreeListElement) => item.children && item.children.length > 0;
 
   return (
     <>
@@ -51,13 +85,11 @@ const TreeList = (props: TreeListProps) => {
                 <Button onClick={() => { onSelect(item.id); }} text={item.name} />
               )}
           </TreeListItemContainer>
-          {item.isExpanded ? <TreeList data={item.children} level={level + 1} onSelect={onSelect} /> : null}
+          {item.isExpanded ? <TreeList selectedPageId={selectedPageId} data={item.children} level={level + 1} onSelect={onSelect} /> : null}
         </div>
       ))}
     </>
   );
 };
-
-const hasChildren = (item: TreeListElement) => item.children && item.children.length > 0;
 
 export default TreeList;
