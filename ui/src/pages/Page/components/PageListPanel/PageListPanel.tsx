@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { usePageListContext } from '../../../../contexts/PageListContext.tsx';
+import { usePagesContext } from '../../../../contexts/PagesContext.tsx';
 import TreeList from '../../../../components/TreeList/TreeList.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Right } from '../../../../components/styles.ts';
@@ -43,7 +43,7 @@ type Props = {
 
 const PageListPanel = (props: Props) => {
   const { projectName, selectedPageId, onSelectedPage, onAddPage } = props;
-  const { pages } = usePageListContext();
+  const { pages } = usePagesContext();
   const location = useLocation();
   const navigate = useNavigate();
 

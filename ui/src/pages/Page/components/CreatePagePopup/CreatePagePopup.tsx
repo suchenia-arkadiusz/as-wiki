@@ -2,13 +2,11 @@ import Popup from '../../../../components/Popup/Popup.tsx';
 import { type Page } from '../../../../types.ts';
 import styled from 'styled-components';
 import Button from '../../../../components/Button/Button.tsx';
-import { useRestApiContext } from '../../../../contexts/RestApiContext.tsx';
 import { useRef, useState } from 'react';
-import { useToasterContext } from '../../../../contexts/ToasterContext.tsx';
-import { usePageListContext } from '../../../../contexts/PageListContext.tsx';
+import { usePagesContext } from '../../../../contexts/PagesContext.tsx';
 import Input from '../../../../components/Input/Input.tsx';
 import { validateStringInput } from '../../../../utils/validators.ts';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { MdEditor } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 
@@ -38,10 +36,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
   const { onClose, selectedPage, isEdit = false } = props;
   const nameRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
-  const navigate = useNavigate();
-  const api = useRestApiContext();
-  const toasterContext = useToasterContext();
-  const pageListContext = usePageListContext();
+  const {createPage, updatePage} = usePagesContext();
   const [value, setValue] = useState<string>(isEdit ? selectedPage?.content || '' : '');
 
   const [validatedName, setValidatedName] = useState<boolean>(isEdit);
@@ -54,26 +49,10 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
       parentId: isEdit ? selectedPage?.parentId : selectedPage?.id || undefined
     };
 
-    let response: Response;
     if (isEdit) {
-      response = await api.put(`/api/v1/projects/${projectId}/pages/${selectedPage?.id}`, body);
+      updatePage(projectId, selectedPage?.id || '', body);
     } else {
-      response = await api.post(`/api/v1/projects/${projectId}/pages`, body);
-    }
-
-    if (response.status !== 200) {
-      toasterContext.addToast('Something went wrong!', 'ERROR');
-    }
-
-    if (response.status === 200) {
-      pageListContext.fetchPages();
-      const data = await response.json();
-      navigate(`/projects/${projectId}/pages/${data.id}`);
-      if (isEdit) {
-        toasterContext.addToast('Page updated successfully!', 'SUCCESS');
-      } else {
-        toasterContext.addToast('Page created successfully!', 'SUCCESS');
-      }
+      createPage(projectId, body);
     }
 
     onClose();
