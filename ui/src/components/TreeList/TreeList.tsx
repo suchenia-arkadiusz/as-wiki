@@ -24,7 +24,10 @@ const TreeList = (props: Props) => {
   const [listData, setListData] = useState<TreeListElement[]>([]);
 
   useEffect(() => {
-    if (!selectedPageId) return;
+    if (!selectedPageId) {
+      setListData(data);
+      return;
+    }
 
     if (data.find((item) => item.id === selectedPageId)) {
       setListData(data);
