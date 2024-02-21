@@ -50,12 +50,10 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
     };
 
     if (isEdit) {
-      updatePage(projectId, selectedPage?.id || '', body);
+      updatePage(projectId, selectedPage?.id || '', body, onClose);
     } else {
-      createPage(projectId, body);
+      createPage(projectId, body, onClose);
     }
-
-    onClose();
   };
 
   return (

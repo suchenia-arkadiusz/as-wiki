@@ -16,8 +16,8 @@ type PagesContextType = {
   page: Page | undefined;
   getPage: (_projectId: string, _pageId: string) => void;
   deletePage: (_projectId: string, _pageId: string) => void;
-  createPage: (_projectId: string, _body: object) => void;
-  updatePage: (_projectId: string, _pageId: string, _body: object) => void;
+  createPage: (_projectId: string, _body: object, _onClose: () => void) => void;
+  updatePage: (_projectId: string, _pageId: string, _body: object, _onClose: () => void) => void;
 };
 
 export const PagesContext = createContext<PagesContextType | undefined>(undefined);
@@ -71,7 +71,7 @@ export const PagesProvider = (props: Props) => {
     });
   };
 
-  const createPage = (projectId: string, body: object) => {
+  const createPage = (projectId: string, body: object, onClose: () => void) => {
     api.post(`/api/v1/projects/${projectId}/pages`, body).then(async (response:Response) => {
       if (response.status !== 200) {
         toasterContext.addToast('Something went wrong!', 'ERROR');
@@ -81,11 +81,12 @@ export const PagesProvider = (props: Props) => {
         const data = await response.json();
         navigate(`/projects/${projectId}/pages/${data.id}`);
         toasterContext.addToast('Page created successfully!', 'SUCCESS');
+        onClose();
       }
     });
   };
 
-  const updatePage = (projectId: string, pageId: string, body: object) => {
+  const updatePage = (projectId: string, pageId: string, body: object, onClose: () => void) => {
     api.put(`/api/v1/projects/${projectId}/pages/${pageId}`, body).then(async (response:Response) => {
       if (response.status !== 200) {
         toasterContext.addToast('Something went wrong!', 'ERROR');
@@ -95,6 +96,7 @@ export const PagesProvider = (props: Props) => {
         const data = await response.json();
         navigate(`/projects/${projectId}/pages/${data.id}`);
         toasterContext.addToast('Page updated successfully!', 'SUCCESS');
+        onClose();
       }
     });
   };
