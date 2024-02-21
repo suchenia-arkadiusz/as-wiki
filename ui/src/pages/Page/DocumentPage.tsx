@@ -83,7 +83,7 @@ const DocumentPage = () => {
                   {getUserDetails(page?.updatedBy)}
                 </p>
               </section>
-              <article data-color-mode="light">
+              <article data-color-mode='light'>
                 <MdPreview
                   modelValue={page?.content || ''}
                   language='en-US'
