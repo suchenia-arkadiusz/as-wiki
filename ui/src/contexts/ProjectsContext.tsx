@@ -10,8 +10,8 @@ type Props = {
 
 type ProjectsContextType = {
   projects: Project[];
-  addProject: (_project: Project) => void;
-  editProject: (_project: Project) => void;
+  addProject: (_project: Project, _onClose: () => void) => void;
+  editProject: (_project: Project, _onClose: () => void) => void;
   deleteProject: (_projectId: string) => void;
   isLoaded: boolean;
 };
@@ -36,7 +36,7 @@ export const ProjectsProvider = (props: Props) => {
     });
   }, []);
 
-  const addProject = async (project: Project) => {
+  const addProject = async (project: Project, onClose: () => void) => {
     const response = await api.post('/api/v1/projects', { name: project.name, description: project.description});
 
     if (response.status !== 200) {
@@ -47,10 +47,11 @@ export const ProjectsProvider = (props: Props) => {
       const responseProject = await response.json();
       setProjects([...projects, responseProject]);
       toasterContext.addToast('Project created successfully!', 'SUCCESS');
+      onClose();
     }
   };
 
-  const editProject = async (project: Project) => {
+  const editProject = async (project: Project, onClose: () => void) => {
     const response = await api.put(`/api/v1/projects/${project?.id}`, {name: project.name, description: project.description});
 
     if (response.status !== 200) {
@@ -60,6 +61,7 @@ export const ProjectsProvider = (props: Props) => {
     if (response.status === 200) {
       setProjects(projects.map((p) => (p.id === project.id ? project : p)));
       toasterContext.addToast('Project edited successfully!', 'SUCCESS');
+      onClose();
     }
 
   };
