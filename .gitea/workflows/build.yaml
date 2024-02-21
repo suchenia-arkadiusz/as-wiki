@@ -28,7 +28,6 @@ jobs:
                     . $NVM_DIR/nvm.sh
                     cd ui
                     nvm install
-                    npm run test
                     npm run test:coverage
     SRV-Build-&-Test:
         runs-on: local-runner
@@ -59,7 +58,5 @@ jobs:
                     docker-compose -f test-services.yml up -d
                     sleep 10s
                     npx db-migrate up -e test
-                    npm run test
                     npm run test:coverage
                     docker-compose -f test-services.yml down
-                    docker-compose -f test-services.yml rm -f
