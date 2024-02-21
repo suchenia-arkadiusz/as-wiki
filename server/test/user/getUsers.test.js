@@ -26,7 +26,7 @@ describe('API getUsers', () => {
     const response = await request(app)
       .get('/api/v1/users')
       .set({ Authorization: `Bearer ${validToken}` })
-      .expect(300);
+      .expect(200);
 
     expect(response.body.length).toBe(1);
   });

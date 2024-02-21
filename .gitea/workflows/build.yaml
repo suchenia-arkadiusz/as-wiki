@@ -61,7 +61,5 @@ jobs:
                     npx db-migrate up -e test
                     npm run test
                     npm run test:coverage
-            - name: Delete the test container
-              if: always()
-              run: |
                     docker-compose -f test-services.yml down
+                    docker-compose -f test-services.yml rm -f
