@@ -22,13 +22,13 @@ describe('<CreateProjectPopup />', () => {
     expect(screen.getByTestId('CreateProject.button.container')).toBeInTheDocument();
   });
 
-  it('show render the form', () => {
+  it('should render the form', () => {
     const screen = setupScreen();
     const formContainer = screen.getByTestId('CreateProject.container');
     const buttonContainer = screen.getByTestId('CreateProject.button.container');
 
     expect(within(formContainer).getByText('Name *')).toBeInTheDocument();
-    expect(within(formContainer).getByText('Description *')).toBeInTheDocument();
+    expect(within(formContainer).getByTestId('CreateProject.description')).toBeInTheDocument();
     expect(within(buttonContainer).getByText('Save')).toBeInTheDocument();
     expect(within(within(buttonContainer).getByText('Save')).getByTestId('IconContainer')).toHaveClass('bi-floppy');
   });

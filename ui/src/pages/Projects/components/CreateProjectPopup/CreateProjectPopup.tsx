@@ -43,12 +43,10 @@ const CreateProjectPopup = (props: Props) => {
 
   const onSubmit = async () => {
     if (isEdit) {
-      projectsContext.editProject({...selectedProject, id: selectedProject?.id || '', name: nameRef.current?.value || '', description});
+      projectsContext.editProject({...selectedProject, id: selectedProject?.id || '', name: nameRef.current?.value || '', description}, onClose);
     } else {
-      projectsContext.addProject({id: '', name: nameRef.current?.value || '', description});
+      projectsContext.addProject({id: '', name: nameRef.current?.value || '', description}, onClose);
     }
-
-    onClose();
   };
 
   return (
@@ -70,7 +68,7 @@ const CreateProjectPopup = (props: Props) => {
           }}
           defaultValue={isEdit ? selectedProject?.name : undefined}
         />
-        <EditorContainer>
+        <EditorContainer data-testid='CreateProject.description'>
           <MdEditor
             showCodeRowNumber={true}
             footers={[]}
