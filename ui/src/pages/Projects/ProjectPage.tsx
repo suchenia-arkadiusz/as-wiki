@@ -5,6 +5,7 @@ import { type Project } from './types.ts';
 import Loader from '../../components/Loader/Loader.tsx';
 import { useRestApiContext } from '../../contexts/RestApiContext.tsx';
 import { MdPreview } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 const ProjectPageContainer = styled.div`
   display: flex;

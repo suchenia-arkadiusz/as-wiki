@@ -7,6 +7,7 @@ import { validateStringInput } from '../../../../utils/validators.ts';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
 import { Project } from '../../types.ts';
 import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 const CreateProjectContainer = styled.div`
   display: flex;
