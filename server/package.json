@@ -7,8 +7,8 @@
     "start": "babel -d ./dist ./src -s && node dist/app.js",
     "build": "babel -d ./dist ./src -s",
     "dev": "nodemon --exec babel-node src/app.js",
-    "test": "jest --forceExit",
-    "test:coverage": "jest --coverage --forceExit",
+    "test": "jest --runInBand --forceExit",
+    "test:coverage": "jest --coverage --runInBand --forceExit",
     "eslint": "eslint src/ test/",
     "eslint:fix": "eslint src/ test/ --fix"
   },
