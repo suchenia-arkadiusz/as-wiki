@@ -1,4 +1,5 @@
 {
+  "sql-file": true,
   "defaultEnv": {
     "ENV": "NODE_ENV"
   },
