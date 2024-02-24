@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { type Project } from './types.ts';
 import Loader from '../../components/Loader/Loader.tsx';
 import { useRestApiContext } from '../../contexts/RestApiContext.tsx';
+import { MdPreview } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 const ProjectPageContainer = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const ProjectPageContainer = styled.div`
 const ProjectPage = () => {
   const params = useParams();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [project, setProject] = useState<Project & { numberOfPages: number }>();
+  const [project, setProject] = useState<Project>();
   const api = useRestApiContext();
 
   useEffect(() => {
@@ -22,14 +24,12 @@ const ProjectPage = () => {
     api.get(`/api/v1/projects/${params.id}`).then((response) => {
       if (response.status === 200) {
         response.json().then((data: Project) => {
-          setProject({ ...data, numberOfPages: getProjectNumberOfPages() });
+          setProject(data);
           setIsLoaded(true);
         });
       }
     });
   }, []);
-
-  const getProjectNumberOfPages = (): number => 10;
 
   return (
     <>
@@ -37,11 +37,16 @@ const ProjectPage = () => {
         ? (
           <ProjectPageContainer>
             <h1>{project?.name.toUpperCase()}</h1>
-            <p>{project?.description}</p>
             <p>
               <strong>Total number of pages: </strong>
               {project?.numberOfPages}
             </p>
+            <article data-color-mode='light'>
+              <MdPreview
+                modelValue={project?.description || ''}
+                language='en-US'
+                codeTheme='stackoverflow'/>
+            </article>
           </ProjectPageContainer>
         )
         : (

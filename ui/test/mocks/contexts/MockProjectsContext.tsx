@@ -26,6 +26,8 @@ const MockProjectsContext = ({ children }: { children: React.ReactNode }) => {
         }
       ],
       addProject: () => {},
+      editProject: () => {},
+      deleteProject: () => {},
       isLoaded: true
     }),
     []

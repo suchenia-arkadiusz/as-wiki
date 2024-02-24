@@ -13,7 +13,7 @@ export const registerUser = async (req, res) => {
   const user = { id: savedUser.id, username, email, firstName, lastName, avatarURL, userGroups: savedUser.userGroups };
 
   const token = generateJWT(user);
-  const refreshToken = generateJWT(user, '1d');
+  const refreshToken = generateJWT(user, '7d');
 
   res.status(200).send({ user, jwt: token, refreshToken });
 };

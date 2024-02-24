@@ -1,7 +1,7 @@
 import axios from 'axios';
 import buffer from 'buffer';
 
-export const generateProjectLogo = (projectName: string, projectColor: string) => {
+export const generateProjectLogo = (projectName: string, projectColor?: string) => {
   const projectLetter = projectName.substring(0, 1).toUpperCase();
 
   return (

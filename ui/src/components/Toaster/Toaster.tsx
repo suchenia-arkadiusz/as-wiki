@@ -38,6 +38,7 @@ const ToasterContainer = styled.div<{ $bgColor: string; $color: string }>`
   border-radius: 10px;
   gap: 10px;
   padding: 10px;
+  z-index: 1000;
 
   animation: ${ToasterAnimation} 5s ease-in-out forwards;
 `;

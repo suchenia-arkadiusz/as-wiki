@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { usePageListContext } from '../../../../contexts/PageListContext.tsx';
+import { usePagesContext } from '../../../../contexts/PagesContext.tsx';
 import TreeList from '../../../../components/TreeList/TreeList.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Right } from '../../../../components/styles.ts';
@@ -34,15 +34,16 @@ const PageListPanelContainer = styled.div`
   }
 `;
 
-type PageListPanelProps = {
+type Props = {
   projectName: string;
+  selectedPageId: string;
   onSelectedPage: (_id: string) => void;
   onAddPage: (_isEdit: boolean) => void;
 };
 
-const PageListPanel = (props: PageListPanelProps) => {
-  const { projectName, onSelectedPage, onAddPage } = props;
-  const { pages } = usePageListContext();
+const PageListPanel = (props: Props) => {
+  const { projectName, selectedPageId, onSelectedPage, onAddPage } = props;
+  const { pages } = usePagesContext();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -58,7 +59,7 @@ const PageListPanel = (props: PageListPanelProps) => {
         <Button iconName="bi-plus-lg" onClick={() => { onAddPage(false); }} text="Add Page" />
       </Right>
       <h1>{projectName}</h1>
-      <TreeList data={pages} onSelect={onSelect} />
+      <TreeList selectedPageId={selectedPageId} data={pages} onSelect={onSelect} />
     </PageListPanelContainer>
   );
 };

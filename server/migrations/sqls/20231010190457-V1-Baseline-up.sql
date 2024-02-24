@@ -100,6 +100,27 @@ CREATE VIEW PAGE_CONTENT AS
     u_first_name, u.last_name AS u_last_name, u.username AS u_username
 FROM "PAGES" AS p JOIN "USERS" AS u ON p.updated_by = u.id JOIN "USERS" AS c ON p.created_by = c.id;
 
+CREATE OR REPLACE FUNCTION delete_page (page_id UUID)
+RETURNS BOOL
+LANGUAGE plpgsql
+AS $$
+    DECLARE
+        children_num INT;
+        row RECORD;
+    BEGIN
+        SELECT count(*) INTO children_num FROM "PAGES" WHERE parent_id = page_id;
+        IF children_num > 0 THEN
+            FOR row IN SELECT id FROM "PAGES" WHERE parent_id = page_id
+            LOOP
+                PERFORM delete_page(row.id);
+            END LOOP;
+        END IF;
+        DELETE FROM "PAGES" WHERE id = page_id;
+
+        RETURN true;
+    END;
+$$;
+
 INSERT INTO "GROUPS" (id, name, permissions, created_at, created_by, updated_at, updated_by) SELECT gen_random_uuid(), 'ADMIN', 'admin',
  now(), "USERS".id, now(), "USERS".id FROM "USERS" WHERE "username" = 'admin';
 INSERT INTO "GROUPS" (id, name, permissions, created_at, created_by, updated_at, updated_by) SELECT gen_random_uuid(), 'USER',

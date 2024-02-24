@@ -1,12 +1,14 @@
 import { render, waitFor, within } from '@testing-library/react';
 import ProjectsTable from '../../../../../src/pages/Projects/components/ProjectsTable/ProjectsTable.tsx';
 import MockBrowser from '../../../../mocks/MockBrowser.tsx';
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
+
+const openPopup = vi.fn();
 
 const setupScreen = () => {
   return render(
     <MockBrowser>
-      <ProjectsTable />
+      <ProjectsTable openPopup={openPopup}/>
     </MockBrowser>
   );
 };

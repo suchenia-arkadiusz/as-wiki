@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  postgresql:
+    image: postgres:16.1-alpine3.19
+    container_name: as_wiki_test_db
+    ports:
+      - "10000:5432"
+    environment:
+      - POSTGRES_PASSWORD=testUserPassword
+      - POSTGRES_USER=testUser
+      - POSTGRES_DB=aswiki_test
+    

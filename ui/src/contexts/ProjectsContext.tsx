@@ -2,6 +2,7 @@ import { type Project } from './types.ts';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { useRestApiContext } from './RestApiContext.tsx';
+import { useToasterContext } from './ToasterContext.tsx';
 
 type Props = {
   children: React.ReactNode;
@@ -9,7 +10,9 @@ type Props = {
 
 type ProjectsContextType = {
   projects: Project[];
-  addProject: (_project: Project) => void;
+  addProject: (_project: Project, _onClose: () => void) => void;
+  editProject: (_project: Project, _onClose: () => void) => void;
+  deleteProject: (_projectId: string) => void;
   isLoaded: boolean;
 };
 
@@ -17,6 +20,7 @@ export const ProjectsContext = createContext<ProjectsContextType | undefined>(un
 
 export const ProjectsProvider = (props: Props) => {
   const api = useRestApiContext();
+  const toasterContext = useToasterContext();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -32,11 +36,48 @@ export const ProjectsProvider = (props: Props) => {
     });
   }, []);
 
-  const addProject = (project: Project) => {
-    setProjects([...projects, project]);
+  const addProject = async (project: Project, onClose: () => void) => {
+    const response = await api.post('/api/v1/projects', { name: project.name, description: project.description});
+
+    if (response.status !== 200) {
+      toasterContext.addToast('Something went wrong!', 'ERROR');
+    }
+
+    if (response.status === 200) {
+      const responseProject = await response.json();
+      setProjects([...projects, responseProject]);
+      toasterContext.addToast('Project created successfully!', 'SUCCESS');
+      onClose();
+    }
   };
 
-  return <ProjectsContext.Provider value={{ projects, addProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
+  const editProject = async (project: Project, onClose: () => void) => {
+    const response = await api.put(`/api/v1/projects/${project?.id}`, {name: project.name, description: project.description});
+
+    if (response.status !== 200) {
+      toasterContext.addToast('Something went wrong!', 'ERROR');
+    }
+
+    if (response.status === 200) {
+      setProjects(projects.map((p) => (p.id === project.id ? project : p)));
+      toasterContext.addToast('Project edited successfully!', 'SUCCESS');
+      onClose();
+    }
+
+  };
+
+  const deleteProject = (projectId: string) => {
+    api.del(`/api/v1/projects/${projectId}`).then((response: Response) => {
+      if (response.status === 204) {
+        setProjects(projects.filter((project) => project.id !== projectId));
+        toasterContext.addToast('Project deleted successfully!', 'SUCCESS');
+      } else {
+        toasterContext.addToast('Something went wrong!', 'ERROR');
+      }
+    });
+  };
+
+  return <ProjectsContext.Provider value={{ projects, addProject, editProject, deleteProject, isLoaded }}>{props.children}</ProjectsContext.Provider>;
 };
 
 export const ProjectsContextLayout = () => {

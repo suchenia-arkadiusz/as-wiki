@@ -2,14 +2,21 @@ import { type Project } from '../../types.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import { IconsContainer, TableCell, TableRowContainer } from '../../../../components/styles.ts';
 import Button from '../../../../components/Button/Button.tsx';
+import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
 
-type TableRowProps = {
+type Props = {
   project: Project;
+  openPopup: (_isEdit: boolean, _selectedProject: Project | undefined) => void;
 };
 
-const TableRow = (props: TableRowProps) => {
-  const { project } = props;
+const TableRow = (props: Props) => {
+  const projectsContext = useProjectsContext();
+  const { project, openPopup } = props;
   const navigate = useNavigate();
+
+  const deleteProject = () => {
+    projectsContext.deleteProject(project.id);
+  };
 
   return (
     <TableRowContainer key={project.id} data-testid="ProjectsTable.table.row">
@@ -23,8 +30,8 @@ const TableRow = (props: TableRowProps) => {
       <TableCell data-testid="ProjectsTable.table.row.actions">
         <IconsContainer>
           <Button iconName="bi-info-circle" onClick={() => { navigate(`/projects/${project.id}`); }} />
-          <Button iconName="bi-pen" onClick={() => {}} />
-          <Button iconName="bi-trash" onClick={() => {}} />
+          <Button iconName="bi-pen" onClick={() => openPopup(true, project)} />
+          <Button iconName="bi-trash" onClick={deleteProject} />
         </IconsContainer>
       </TableCell>
     </TableRowContainer>

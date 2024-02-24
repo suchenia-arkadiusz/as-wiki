@@ -18,11 +18,6 @@ export type Project = {
   id: string;
   name: string;
   description: string;
-  color: string;
+  color?: string;
   logoUrl?: string;
-};
-
-export type PageListElementChild = {
-  id: string;
-  name: string;
 };

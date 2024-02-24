@@ -20,7 +20,7 @@ export const loginUser = async (req, res) => {
 
   const { password: _, ...responseUser } = user;
   const token = generateJWT({ userId: user.id, ...user });
-  const refreshToken = generateJWT({ userId: user.id, ...user }, '1d');
+  const refreshToken = generateJWT({ userId: user.id, ...user }, '7d');
 
   res.send({ user: responseUser, jwt: token, refreshToken });
 };

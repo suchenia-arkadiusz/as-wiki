@@ -1,4 +1,4 @@
-import { getApp } from '../../src/getExpressApp';
+import { getExpressApp } from '../config/getApp';
 import { getUserByUsername } from '../../src/auth/helpers/getUser';
 import { generateJWT } from '../../src/auth/utils/generateJWT';
 import request from 'supertest';
@@ -7,8 +7,8 @@ import { deleteProjectById } from '../../src/project/helpers/deleteProject';
 describe('API updateProject', () => {
   let app;
 
-  beforeAll(() => {
-    app = getApp();
+  beforeAll(async () => {
+    app = await getExpressApp();
   });
 
   it('PUT should return 401 if no token is provided', async () => {

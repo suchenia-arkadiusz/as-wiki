@@ -4,15 +4,15 @@ pipeline {
     stages {
         stage('NODE') {
             agent {
-                docker {
-                    image 'node:18.17.1-alpine'
-                }
+                label 'local-amd64'
             }
             stages {
                 stage('UI Build') {
                     steps {
                         sh '''
+                        . $NVM_DIR/nvm.sh
                         cd ui
+                        nvm install
                         npm install
                         npm run eslint
                         npm run build
@@ -22,7 +22,9 @@ pipeline {
                 stage('UI Test') {
                     steps {
                         sh '''
+                        . $NVM_DIR/nvm.sh
                         cd ui
+                        nvm install
                         npm run test
                         npm run test:coverage
                         '''
@@ -31,7 +33,9 @@ pipeline {
                 stage('SRV Build') {
                     steps {
                         sh '''
+                        . $NVM_DIR/nvm.sh
                         cd server
+                        nvm install
                         npm install
                         npm run eslint
                         npm run build
@@ -48,8 +52,13 @@ pipeline {
             }
         }
         stage('DOCKER') {
+            when {
+                expression {
+                    env.BRANCH_NAME == 'main'
+                }
+            }
             agent {
-                label 'amd64'
+                label 'local-amd64'
             }
             stages {
                 stage('UI Build Docker Image') {

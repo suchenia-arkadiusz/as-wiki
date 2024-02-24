@@ -1,13 +1,13 @@
 import Popup from '../../../../components/Popup/Popup.tsx';
 import Input from '../../../../components/Input/Input.tsx';
-import TextArea from '../../../../components/TextArea/TextArea.tsx';
 import { useRef, useState } from 'react';
 import Button from '../../../../components/Button/Button.tsx';
 import styled from 'styled-components';
 import { validateStringInput } from '../../../../utils/validators.ts';
-import { useRestApiContext } from '../../../../contexts/RestApiContext.tsx';
-import { useToasterContext } from '../../../../contexts/ToasterContext.tsx';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
+import { Project } from '../../types.ts';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 
 const CreateProjectContainer = styled.div`
   display: flex;
@@ -21,52 +21,40 @@ const CreateProjectButtonContainer = styled.div`
   width: 100%;
 `;
 
-type CreatePagePopupProps = {
+const EditorContainer = styled.div`
+  height: 800px;
+`;
+
+type Props = {
   onClose: () => void;
+  selectedProject: Project | undefined;
+  isEdit: boolean;
 };
 
-const CreateProjectPopup = (props: CreatePagePopupProps) => {
-  const { onClose } = props;
+const CreateProjectPopup = (props: Props) => {
+  const { onClose, selectedProject, isEdit } = props;
   const nameRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const api = useRestApiContext();
-  const toasterContext = useToasterContext();
+  const [description, setDescription] = useState<string>(isEdit ? selectedProject?.description || '' : '');
   const projectsContext = useProjectsContext();
 
   const [validatedForm, setValidatedForm] = useState({
-    name: false,
-    description: false
+    name: isEdit,
+    description: isEdit
   });
 
   const onSubmit = async () => {
-    const body = {
-      name: nameRef.current?.value || '',
-      description: descriptionRef.current?.value || ''
-    };
-
-    const response = await api.post('/api/v1/projects', body);
-
-    if (response.status !== 200) {
-      toasterContext.addToast('Something went wrong!', 'ERROR');
+    if (isEdit) {
+      projectsContext.editProject({...selectedProject, id: selectedProject?.id || '', name: nameRef.current?.value || '', description}, onClose);
+    } else {
+      projectsContext.addProject({id: '', name: nameRef.current?.value || '', description}, onClose);
     }
-
-    if (response.status === 200) {
-      projectsContext.addProject(await response.json());
-      toasterContext.addToast('Project created successfully!', 'SUCCESS');
-    }
-
-    onClose();
   };
 
   return (
-    <Popup title="Create project" width={600} onClose={onClose}>
+    <Popup title={isEdit ? 'Edit Project' : 'Create project'} width={1400} onClose={onClose}>
       <CreateProjectContainer
         data-testid="CreateProject.container"
-        onKeyDown={async (e) => {
-          if (e.key === 'Enter') {
-            await onSubmit();
-          }
-        }}
+        data-color-mode='light'
       >
         <Input
           ref={nameRef}
@@ -76,19 +64,24 @@ const CreateProjectPopup = (props: CreatePagePopupProps) => {
           placeholder="Project name"
           type="text"
           validated={validatedForm.name}
-          onChange={() => { setValidatedForm({ ...validatedForm, name: validateStringInput(nameRef.current?.value || '') }); }}
+          onChange={() => {
+            setValidatedForm({ ...validatedForm, name: validateStringInput(nameRef.current?.value || '') });
+          }}
+          defaultValue={isEdit ? selectedProject?.name : undefined}
         />
-        <TextArea
-          ref={descriptionRef}
-          isRequired
-          inputKey="project-description"
-          label="Description"
-          placeholder="Project description"
-          value=""
-          validated={validatedForm.description}
-          onChange={() => { setValidatedForm({ ...validatedForm, description: validateStringInput(descriptionRef.current?.value || '') }); }}
-        />
-
+        <EditorContainer data-testid='CreateProject.description'>
+          <MdEditor
+            showCodeRowNumber={true}
+            footers={[]}
+            toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
+            editorId='page-content-editor'
+            codeTheme='stackoverfloew'
+            language='en-US'
+            modelValue={description}
+            onChange={setDescription}
+            preview={false}
+          />
+        </EditorContainer>
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">
           <Button iconName="bi-floppy" onClick={onSubmit} text="Save" />
         </CreateProjectButtonContainer>

@@ -3,11 +3,13 @@ import PageListPanel from './components/PageListPanel/PageListPanel.tsx';
 import { useProjectsContext } from '../../contexts/ProjectsContext.tsx';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useRestApiContext } from '../../contexts/RestApiContext.tsx';
-import { type CreatedByUser, type Page } from '../../types.ts';
+import { type CreatedByUser } from '../../types.ts';
 import { formatDate } from '../../utils/date.ts';
 import Button from '../../components/Button/Button.tsx';
 import CreatePagePopup from './components/CreatePagePopup/CreatePagePopup.tsx';
+import { MdPreview } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
+import { usePagesContext } from '../../contexts/PagesContext.tsx';
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -32,37 +34,35 @@ const PageIconsContainer = styled.div`
 `;
 
 const DocumentPage = () => {
-  const api = useRestApiContext();
   const { projects } = useProjectsContext();
   const location = useLocation();
+  const {page, deletePage, getPage} = usePagesContext();
   const [selectedPage, setSelectedPage] = useState<string>(location.pathname.split('/')[4]);
-  const [page, setPage] = useState<Page | undefined>(undefined);
   const [popupProps, setPopupProps] = useState<{ isPopupOpen: boolean; isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
   const projectId = location.pathname.split('/')[2];
 
   useEffect(() => {
     const pageId = location.pathname.split('/')[4];
     if (pageId && pageId.length > 0) {
-      api.get(`/api/v1/projects/${projectId}/pages/${pageId}`).then((response) => {
-        if (response.status === 200) {
-          response.json().then((data: Page) => {
-            setPage(data);
-          });
-        }
-      });
+      getPage(projectId, pageId);
     }
-  }, [selectedPage]);
+  }, [selectedPage, popupProps]);
 
   const openPopup = (isEdit: boolean) => {
     setPopupProps({ isEdit, isPopupOpen: true });
   };
 
   const closePopup = () => {
-    setPopupProps({ ...popupProps, isPopupOpen: false });
+    setPopupProps({ isEdit: false, isPopupOpen: false });
   };
 
   const getUserDetails = (data?: CreatedByUser): string =>
     (data ? (data.firstName && data.lastName ? `${data.firstName} ${data.lastName}` : data.username) : '');
+
+  const removePage = () => {
+    const pageId = location.pathname.split('/')[4];
+    deletePage(projectId, pageId);
+  };
 
   return (
     <DocumentPageContainer data-testid="DocumentPageContainer">
@@ -70,6 +70,7 @@ const DocumentPage = () => {
         projectName={projects.find((project) => project.id === projectId)?.name || 'No Project'}
         onSelectedPage={setSelectedPage}
         onAddPage={openPopup}
+        selectedPageId={selectedPage}
       />
       {page
         ? (
@@ -82,18 +83,23 @@ const DocumentPage = () => {
                   {getUserDetails(page?.updatedBy)}
                 </p>
               </section>
-              <article dangerouslySetInnerHTML={{ __html: page?.content ? page.content : '' }} />
+              <article data-color-mode='light'>
+                <MdPreview
+                  modelValue={page?.content || ''}
+                  language='en-US'
+                  codeTheme='stackoverflow'/>
+              </article>
             </PageContentContainer>
             <PageIconsContainer>
               <Button onClick={() => { alert('Edit Permissions'); }} iconName="bi-lock" />
-              <Button onClick={() => { openPopup(true); }} iconName="bi-pen" />
-              <Button onClick={() => { alert('Delete'); }} iconName="bi-trash3" />
+              <Button onClick={() => openPopup(true) } iconName="bi-pen" />
+              <Button onClick={removePage} iconName="bi-trash3" />
               <Button onClick={() => { alert('More'); }} iconName="bi-three-dots" />
             </PageIconsContainer>
           </>
         )
         : null}
-      {popupProps.isPopupOpen ? <CreatePagePopup onClose={() => { closePopup(); }} selectedPage={page} isEdit={popupProps.isEdit} /> : null}
+      {popupProps.isPopupOpen ? <CreatePagePopup onClose={closePopup} selectedPage={page} isEdit={popupProps.isEdit} /> : null}
     </DocumentPageContainer>
   );
 };

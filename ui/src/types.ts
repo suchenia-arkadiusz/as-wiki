@@ -3,6 +3,7 @@ export type TreeListElement = {
   name: string;
   isExpanded: boolean;
   children: TreeListElement[];
+  parentId?: string;
 };
 
 export type Page = {
