@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import { validateStringInput } from '../../../../utils/validators.ts';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
 import { Project } from '../../types.ts';
-import { MdEditor } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import MDEditor from '../../../../components/MDEditor/MDEditor.tsx';
 
 const CreateProjectContainer = styled.div`
   display: flex;
@@ -19,10 +18,6 @@ const CreateProjectButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-`;
-
-const EditorContainer = styled.div`
-  height: 800px;
 `;
 
 type Props = {
@@ -69,19 +64,7 @@ const CreateProjectPopup = (props: Props) => {
           }}
           defaultValue={isEdit ? selectedProject?.name : undefined}
         />
-        <EditorContainer data-testid='CreateProject.description'>
-          <MdEditor
-            showCodeRowNumber={true}
-            footers={[]}
-            toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
-            editorId='page-content-editor'
-            codeTheme='stackoverfloew'
-            language='en-US'
-            modelValue={description}
-            onChange={setDescription}
-            preview={false}
-          />
-        </EditorContainer>
+        <MDEditor value={description} onChange={setDescription} />
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">
           <Button iconName="bi-floppy" onClick={onSubmit} text="Save" />
         </CreateProjectButtonContainer>

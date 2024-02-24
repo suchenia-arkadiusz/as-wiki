@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { type Project } from './types.ts';
 import Loader from '../../components/Loader/Loader.tsx';
 import { useRestApiContext } from '../../contexts/RestApiContext.tsx';
-import { MdPreview } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import MDPreview from '../../components/MDEditor/MDPreview.tsx';
 
 const ProjectPageContainer = styled.div`
   display: flex;
@@ -41,12 +40,7 @@ const ProjectPage = () => {
               <strong>Total number of pages: </strong>
               {project?.numberOfPages}
             </p>
-            <article data-color-mode='light'>
-              <MdPreview
-                modelValue={project?.description || ''}
-                language='en-US'
-                codeTheme='stackoverflow'/>
-            </article>
+            <MDPreview value={project?.description || ''} />
           </ProjectPageContainer>
         )
         : (

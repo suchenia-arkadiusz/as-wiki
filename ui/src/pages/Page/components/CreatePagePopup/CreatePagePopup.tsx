@@ -7,8 +7,7 @@ import { usePagesContext } from '../../../../contexts/PagesContext.tsx';
 import Input from '../../../../components/Input/Input.tsx';
 import { validateStringInput } from '../../../../utils/validators.ts';
 import { useLocation } from 'react-router-dom';
-import { MdEditor } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import MDEditor from '../../../../components/MDEditor/MDEditor.tsx';
 
 const CreatePageContainer = styled.div`
   display: flex;
@@ -20,10 +19,6 @@ const CreatePageButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-`;
-
-const EditorContainer = styled.div`
-  height: 800px;
 `;
 
 type CreatePagePopupProps = {
@@ -70,19 +65,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
           onChange={() => { setValidatedName(nameRef.current ? validateStringInput(nameRef.current.value) : false); }}
           defaultValue={isEdit ? selectedPage?.name : undefined}
         />
-        <EditorContainer>
-          <MdEditor
-            showCodeRowNumber={true}
-            footers={[]}
-            toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
-            editorId='page-content-editor'
-            codeTheme='stackoverfloew'
-            language='en-US'
-            modelValue={value}
-            onChange={setValue}
-            preview={false}
-          />
-        </EditorContainer>
+        <MDEditor value={value} onChange={setValue} />
         <CreatePageButtonContainer data-testid="CreatePage.button.container">
           <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={!validatedName} />
         </CreatePageButtonContainer>

@@ -7,9 +7,8 @@ import { type CreatedByUser } from '../../types.ts';
 import { formatDate } from '../../utils/date.ts';
 import Button from '../../components/Button/Button.tsx';
 import CreatePagePopup from './components/CreatePagePopup/CreatePagePopup.tsx';
-import { MdPreview } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
 import { usePagesContext } from '../../contexts/PagesContext.tsx';
+import MDPreview from '../../components/MDEditor/MDPreview.tsx';
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -83,12 +82,7 @@ const DocumentPage = () => {
                   {getUserDetails(page?.updatedBy)}
                 </p>
               </section>
-              <article data-color-mode='light'>
-                <MdPreview
-                  modelValue={page?.content || ''}
-                  language='en-US'
-                  codeTheme='stackoverflow'/>
-              </article>
+              <MDPreview value={page?.content || ''} />
             </PageContentContainer>
             <PageIconsContainer>
               <Button onClick={() => { alert('Edit Permissions'); }} iconName="bi-lock" />
