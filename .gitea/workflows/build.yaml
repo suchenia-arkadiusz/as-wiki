@@ -55,6 +55,7 @@ jobs:
                     . $NVM_DIR/nvm.sh
                     cd server
                     nvm install
+		    docker-compose -f test-services.yml down
                     docker-compose -f test-services.yml up -d
                     sleep 10s
                     npx db-migrate up -e test
