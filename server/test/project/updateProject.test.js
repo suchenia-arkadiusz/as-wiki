@@ -69,7 +69,7 @@ describe('API updateProject', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: projectName,
-          description: 'description',
+          shortDescription: 'description',
           isPublic: false,
           logoUrl: 'logoUrl',
         })
@@ -80,7 +80,7 @@ describe('API updateProject', () => {
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: updatedProjectName,
-        description: 'description',
+        shortDescription: 'description',
       })
       .expect(200);
 

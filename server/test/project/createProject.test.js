@@ -35,7 +35,7 @@ describe('API createProject', () => {
     expect(response.body.message).toBe('"name" is required');
   });
 
-  it('POST should return 400 if no description is provided', async () => {
+  it('POST should return 400 if no short description is provided', async () => {
     const adminUser = await getUserByUsername('admin');
     const validToken = generateJWT(adminUser, '1d');
 
@@ -47,7 +47,7 @@ describe('API createProject', () => {
       })
       .expect(400);
 
-    expect(response.body.message).toBe('"description" is required');
+    expect(response.body.message).toBe('"shortDescription" is required');
   });
 
   it('POST should return 400 if there is a wrong parameter', async () => {
@@ -59,7 +59,7 @@ describe('API createProject', () => {
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: 'name',
-        description: 'description',
+        shortDescription: 'description',
         wrongParameter: 'wrongParameter',
       })
       .expect(400);
@@ -78,7 +78,7 @@ describe('API createProject', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: projectName,
-          description: 'description',
+          shortDescription: 'description',
         })
     ).body;
 
@@ -87,7 +87,7 @@ describe('API createProject', () => {
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: projectName,
-        description: 'description',
+        shortDescription: 'description',
         isPublic: false,
         logoUrl: 'logoUrl',
       })
@@ -108,7 +108,7 @@ describe('API createProject', () => {
       .set({ Authorization: `Bearer ${validToken}` })
       .send({
         name: projectName,
-        description: 'description',
+        shortDescription: 'description',
         isPublic: false,
         logoUrl: 'logoUrl',
       })
