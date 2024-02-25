@@ -47,6 +47,7 @@ export const AuthProvider = (props: Props) => {
                 userContext.setUser(data.user);
                 localStorage.setItem('token', data.jwt);
                 localStorage.setItem('refreshToken', data.refreshToken);
+                navigate(location.pathname, {replace: true});
               });
             }
           });

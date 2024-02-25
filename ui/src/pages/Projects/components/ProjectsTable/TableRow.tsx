@@ -26,7 +26,7 @@ const TableRow = (props: Props) => {
           {project.name}
         </Link>
       </TableCell>
-      <TableCell data-testid="ProjectsTable.table.row.description">{project.description}</TableCell>
+      <TableCell data-testid="ProjectsTable.table.row.description">{project.shortDescription}</TableCell>
       <TableCell data-testid="ProjectsTable.table.row.actions">
         <IconsContainer>
           <Button iconName="bi-info-circle" onClick={() => { navigate(`/projects/${project.id}`); }} />

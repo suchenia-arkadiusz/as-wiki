@@ -41,7 +41,7 @@ describe('API getProject', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: projectName,
-          description: 'description',
+          shortDescription: 'description',
           isPublic: false,
           logoUrl: 'logoUrl',
         })
@@ -69,7 +69,7 @@ describe('API getProject', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: projectName,
-          description: 'description',
+          shortDescription: 'description',
           isPublic: false,
           logoUrl: 'logoUrl',
           permissions: {
