@@ -37,7 +37,7 @@ export const PagePermissionsProvider = (props: Props) => {
       userId: permission.permissions ? permission.permissions[0].userId : undefined,
       groupId: permission.permissions ? permission.permissions[0]?.groupId : undefined,
     }).then((response: Response) => {
-      if (response.status === 200) {
+      if (response.status === 204) {
         toaster.addToast('Permission added', 'SUCCESS');
         fetchPermissions(projectId, pageId);
       } else if (response.status === 409) {
@@ -50,7 +50,7 @@ export const PagePermissionsProvider = (props: Props) => {
 
   const deletePermission = (projectId: string, pageId: string, permission: PagePermission) => {
     api.del(`/api/v1/projects/${projectId}/pages/${pageId}/permissions`, permission.permissions ? permission.permissions[0] : {}).then((response: Response) => {
-      if (response.status === 200) {
+      if (response.status === 204) {
         toaster.addToast('Permission deleted', 'SUCCESS');
         fetchPermissions(projectId, pageId);
       }

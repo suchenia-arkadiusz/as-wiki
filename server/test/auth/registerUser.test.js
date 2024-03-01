@@ -60,6 +60,14 @@ describe('API registerUser', () => {
   });
 
   it('POST should return 409 if user with given email already exists', async () => {
+    const testUser = await request(app)
+      .post('/register')
+      .send({
+        password: '123456',
+        email: 'test@aswiki.com',
+        username: 'test',
+      });
+
     const response = await request(app)
       .post('/register')
       .send({
@@ -70,6 +78,8 @@ describe('API registerUser', () => {
       .expect(409);
 
     expect(response.body.message).toBe('User with given username already exists!');
+
+    await deleteUserByUserName('test');
   });
 
   it('POST should return 500 if user group does not exist', async () => {
