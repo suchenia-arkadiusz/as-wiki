@@ -5,7 +5,7 @@ const MockUserContext = ({ children }: { children: React.ReactNode }) => {
   const contextValue = useMemo(
     () => ({
       setUser: () => {},
-      getUser: () => ({ username: 'test', email: 'test@test.com', firstName: 'Test', lastName: 'User', avatarUrl: '', password: '' })
+      getUser: () => ({ id: 'userId', username: 'test', email: 'test@test.com', firstName: 'Test', lastName: 'User', avatarUrl: '', password: '' })
     }),
     []
   );

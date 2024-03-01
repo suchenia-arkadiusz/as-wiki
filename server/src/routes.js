@@ -4,6 +4,7 @@ import { projectRoute } from './project/route';
 import { userRoute } from './user/route';
 import { userGroupRoute } from './userGroup/route';
 import { pageRoute } from './page/route';
+import {pagePermissionsRoute} from './pagePermissions/route';
 
 export const routes = () => {
   const prefix = config.uriPrefix;
@@ -14,5 +15,6 @@ export const routes = () => {
     { prefix, route: userRoute() },
     { prefix, route: userGroupRoute() },
     { prefix, route: pageRoute() },
+    { prefix, route: pagePermissionsRoute() }
   ];
 };

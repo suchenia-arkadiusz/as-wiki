@@ -54,6 +54,8 @@ export const PagesProvider = (props: Props) => {
         response.json().then((data: Page) => {
           setPage(data);
         });
+      } else if (response.status === 403) {
+        setPage(undefined);
       }
     });
   };

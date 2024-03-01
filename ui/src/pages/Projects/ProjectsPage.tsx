@@ -44,8 +44,8 @@ const ProjectsPage = () => {
           <Button iconName="bi-plus-lg" onClick={() => openPopup(false, undefined)} text="Add Project" />
         </Right>
       </ProjectsPageHeader>
-      {popupProps.isPopupOpen ? <CreateProjectPopup onClose={closePopup} isEdit={popupProps.isEdit} selectedProject={popupProps.selectedProject} /> : null}
       <ProjectsTable openPopup={openPopup} />
+      {popupProps.isPopupOpen ? <CreateProjectPopup onClose={closePopup} isEdit={popupProps.isEdit} selectedProject={popupProps.selectedProject} /> : null}
     </ProjectsPageContainer>
   );
 };

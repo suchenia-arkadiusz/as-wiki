@@ -54,7 +54,7 @@ const Popup = (props: Props) => {
   }
 
   return (
-    <PopupOverlay data-testid="PopupOverlayContainer" onClick={onClose}>
+    <PopupOverlay data-testid="PopupOverlayContainer">
       <PopupContainer data-testid="PopupContainer" style={popupStyle} onClick={(e) => { e.stopPropagation(); }}>
         <PopupHeader>
           <Left>

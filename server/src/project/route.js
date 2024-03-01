@@ -13,7 +13,7 @@ export const projectRoute = () => {
   router.use(authenticate);
 
   router.post('/projects', acl(['project:write']), validateCreateProjectInput, createProject);
-  router.put('/projects/:id', validateUpdateProjectInput, updateProject);
+  router.put('/projects/:id', acl(['project:write']), validateUpdateProjectInput, updateProject);
   router.get('/projects', acl(['project:read']), getProjects);
   router.get('/projects/:id', checkProjectPermissions, acl(['project:read']), getProject);
   router.delete('/projects/:id',checkProjectPermissions, acl(['project:write']), deleteProject);

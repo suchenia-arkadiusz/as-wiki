@@ -9,6 +9,9 @@ import Button from '../../components/Button/Button.tsx';
 import CreatePagePopup from './components/CreatePagePopup/CreatePagePopup.tsx';
 import { usePagesContext } from '../../contexts/PagesContext.tsx';
 import MDPreview from '../../components/MDEditor/MDPreview.tsx';
+import EditPermissionsPopup from './components/EditPermissionsPopup/EditPermissionsPopup.tsx';
+import { PagePermissionsProvider } from '../../contexts/PagePermissionsContext.tsx';
+import AccessDeniedPage from './components/AccessDeniedPage/AccessDeniedPage.tsx';
 
 const DocumentPageContainer = styled.section`
   display: flex;
@@ -37,7 +40,8 @@ const DocumentPage = () => {
   const location = useLocation();
   const {page, deletePage, getPage} = usePagesContext();
   const [selectedPage, setSelectedPage] = useState<string>(location.pathname.split('/')[4]);
-  const [popupProps, setPopupProps] = useState<{ isPopupOpen: boolean; isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
+  const [createPagePopupProps, setCreatePagePopupProps] = useState<{ isPopupOpen: boolean; isEdit: boolean }>({ isPopupOpen: false, isEdit: false });
+  const [isEditPermissionsPopupOpen, setIsEditPermissionsPopupOpen] = useState<boolean>(false);
   const projectId = location.pathname.split('/')[2];
 
   useEffect(() => {
@@ -45,14 +49,22 @@ const DocumentPage = () => {
     if (pageId && pageId.length > 0) {
       getPage(projectId, pageId);
     }
-  }, [selectedPage, popupProps]);
+  }, [selectedPage, createPagePopupProps]);
 
-  const openPopup = (isEdit: boolean) => {
-    setPopupProps({ isEdit, isPopupOpen: true });
+  const openCreatePagePopup = (isEdit: boolean) => {
+    setCreatePagePopupProps({ isEdit, isPopupOpen: true });
   };
 
-  const closePopup = () => {
-    setPopupProps({ isEdit: false, isPopupOpen: false });
+  const closeCreatePagePopup = () => {
+    setCreatePagePopupProps({ isEdit: false, isPopupOpen: false });
+  };
+
+  const openEditPermissionsPopup = () => {
+    setIsEditPermissionsPopupOpen(true);
+  };
+
+  const closeEditPermissionsPopup = () => {
+    setIsEditPermissionsPopupOpen(false);
   };
 
   const getUserDetails = (data?: CreatedByUser): string =>
@@ -65,35 +77,41 @@ const DocumentPage = () => {
 
   return (
     <DocumentPageContainer data-testid="DocumentPageContainer">
-      <PageListPanel
-        projectName={projects.find((project) => project.id === projectId)?.name || 'No Project'}
-        onSelectedPage={setSelectedPage}
-        onAddPage={openPopup}
-        selectedPageId={selectedPage}
-      />
-      {page
-        ? (
-          <>
-            <PageContentContainer>
-              <section>
-                <h1>{page?.name.toUpperCase()}</h1>
-                <p>
+      <PagePermissionsProvider>
+        <PageListPanel
+          projectName={projects.find((project) => project.id === projectId)?.name || 'No Project'}
+          onSelectedPage={setSelectedPage}
+          onAddPage={openCreatePagePopup}
+          selectedPageId={selectedPage}
+        />
+        {page
+          ? (
+            <>
+              <PageContentContainer>
+                <section>
+                  <h1>{page?.name.toUpperCase()}</h1>
+                  <p>
                 Created by {getUserDetails(page?.createdBy)}, last updated at {formatDate(page?.updatedAt || new Date())} by{' '}
-                  {getUserDetails(page?.updatedBy)}
-                </p>
-              </section>
-              <MDPreview value={page?.content || ''} />
-            </PageContentContainer>
-            <PageIconsContainer>
-              <Button onClick={() => { alert('Edit Permissions'); }} iconName="bi-lock" />
-              <Button onClick={() => openPopup(true) } iconName="bi-pen" />
-              <Button onClick={removePage} iconName="bi-trash3" />
-              <Button onClick={() => { alert('More'); }} iconName="bi-three-dots" />
-            </PageIconsContainer>
-          </>
-        )
-        : null}
-      {popupProps.isPopupOpen ? <CreatePagePopup onClose={closePopup} selectedPage={page} isEdit={popupProps.isEdit} /> : null}
+                    {getUserDetails(page?.updatedBy)}
+                  </p>
+                </section>
+                <MDPreview value={page?.content || ''} />
+              </PageContentContainer>
+              <PageIconsContainer>
+                <Button onClick={openEditPermissionsPopup} iconName="bi-lock" />
+                <Button onClick={() => openCreatePagePopup(true) } iconName="bi-pen" />
+                <Button onClick={removePage} iconName="bi-trash3" />
+                {/*<Button onClick={() => { alert('More'); }} iconName="bi-three-dots" />*/}
+              </PageIconsContainer>
+            </>
+          )
+          :
+          <PageContentContainer>
+            <AccessDeniedPage />
+          </PageContentContainer>}
+        {createPagePopupProps.isPopupOpen ? <CreatePagePopup onClose={closeCreatePagePopup} selectedPage={page} isEdit={createPagePopupProps.isEdit} /> : null}
+        {isEditPermissionsPopupOpen ? <EditPermissionsPopup onClose={closeEditPermissionsPopup} /> : null}
+      </PagePermissionsProvider>
     </DocumentPageContainer>
   );
 };

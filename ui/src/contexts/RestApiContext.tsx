@@ -8,7 +8,7 @@ type RestAPIContextType = {
   get: (_url: string, _headers?: object) => Promise<Response>;
   post: (_url: string, _body: object, _headers?: object) => Promise<Response>;
   put: (_url: string, _body: object, _headers?: object) => Promise<Response>;
-  del: (_url: string, _headers?: object) => Promise<Response>;
+  del: (_url: string, _body?: object, _headers?: object) => Promise<Response>;
 };
 
 export const RestApiContext = createContext<RestAPIContextType | undefined>(undefined);
@@ -41,10 +41,11 @@ export const RestApiProvider = (props: Props) => {
     });
   };
 
-  const del = async (url: string, headers: object = {}): Promise<Response> => {
+  const del = async (url: string, body?: object, headers: object = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'DELETE',
-      headers: getHeaders(headers)
+      headers: getHeaders(headers),
+      body: JSON.stringify(body)
     });
   };
 
