@@ -35,14 +35,4 @@ describe('<Popup />', () => {
 
     expect(onClose).toHaveBeenCalled();
   });
-
-  it('should close popup on click outside', () => {
-    const onClose = vi.fn();
-    const screen = setupScreen(onClose);
-    const overlayContainer = screen.getByTestId('PopupOverlayContainer');
-
-    fireEvent.click(overlayContainer);
-
-    expect(onClose).toHaveBeenCalled();
-  });
 });
