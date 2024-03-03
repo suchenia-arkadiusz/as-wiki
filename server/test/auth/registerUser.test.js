@@ -60,7 +60,7 @@ describe('API registerUser', () => {
   });
 
   it('POST should return 409 if user with given email already exists', async () => {
-    const testUser = await request(app)
+    await request(app)
       .post('/register')
       .send({
         password: '123456',
