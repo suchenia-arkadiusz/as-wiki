@@ -14,22 +14,23 @@ const TreeListItemContainer = styled.div<{ $margin: string }>`
 
 type Props = {
   data: TreeListElement[];
-  selectedPageId: string;
+  selectedDataElementId: string;
   onSelect: (_id: string) => void;
   level?: number;
+  'data-testid'?: string;
 };
 
 const TreeList = (props: Props) => {
-  const { data, selectedPageId, level = 0, onSelect } = props;
+  const { data, selectedDataElementId, level = 0, onSelect } = props;
   const [listData, setListData] = useState<TreeListElement[]>([]);
 
   useEffect(() => {
-    if (!selectedPageId) {
+    if (!selectedDataElementId) {
       setListData(data);
       return;
     }
 
-    if (data.find((item) => item.id === selectedPageId)) {
+    if (data.find((item) => item.id === selectedDataElementId)) {
       setListData(data);
     } else {
       data.forEach((item) => {
@@ -47,7 +48,7 @@ const TreeList = (props: Props) => {
 
     let result = false;
 
-    if (elements.find((item) => item.id === selectedPageId)) {
+    if (elements.find((item) => item.id === selectedDataElementId)) {
       result = true;
     } else {
       elements.forEach((item) => {
@@ -73,25 +74,35 @@ const TreeList = (props: Props) => {
   const hasChildren = (item: TreeListElement) => item.children && item.children.length > 0;
 
   return (
-    <>
+    <div data-testid={props["data-testid"] ? `${props["data-testid"]}-${level}` : `TreeList.container-${level || 0}`}>
       {listData.map((item) => (
         <div key={item.id}>
-          <TreeListItemContainer $margin={hasChildren(item) ? `${level * 25}px` : `${(level * 25) + 26}px`}>
-            {hasChildren(item)
-              ? (
-                <>
-                  <Button iconName={item.isExpanded ? 'bi-chevron-up' : 'bi-chevron-down'} onClick={() => { toggleItem(item.id); }} />
-                  <Button onClick={() => { onSelect(item.id); }} text={item.name} />
-                </>
-              )
-              : (
-                <Button onClick={() => { onSelect(item.id); }} text={item.name} />
-              )}
+          <TreeListItemContainer
+            $margin={hasChildren(item) ? `${level * 25}px` : `${level * 25 + 26}px`}
+            data-testid={`TreeList.item.container-${item.id}`}
+          >
+            {hasChildren(item) ? (
+              <Button
+                data-testid={`TreeList.item.expand-${item.id}`}
+                iconName={item.isExpanded ? "bi-chevron-up" : "bi-chevron-down"}
+                onClick={() => {
+                  toggleItem(item.id);
+                }}
+              />
+            ) : null}
+            <Button
+              onClick={() => {
+                onSelect(item.id);
+              }}
+              text={item.name}
+            />
           </TreeListItemContainer>
-          {item.isExpanded ? <TreeList selectedPageId={selectedPageId} data={item.children} level={level + 1} onSelect={onSelect} /> : null}
+          {item.isExpanded ? (
+            <TreeList selectedDataElementId={selectedDataElementId} data={item.children} level={level + 1} onSelect={onSelect} />
+          ) : null}
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

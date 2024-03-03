@@ -35,6 +35,7 @@ type Props = {
   className?: string;
   padding?: string;
   disabled?: boolean;
+  'data-testid'?: string;
 };
 
 const Button = (props: Props) => {
@@ -42,7 +43,7 @@ const Button = (props: Props) => {
 
   return (
     <ButtonContainer
-      data-testid="ButtonContainer"
+      data-testid={props['data-testid'] ? props['data-testid'] : 'ButtonContainer'}
       onClick={onClick}
       $color={color || '#747474'}
       $hoverColor={hoverColor || '#393939'}

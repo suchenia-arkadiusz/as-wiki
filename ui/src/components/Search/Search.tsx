@@ -1,5 +1,5 @@
 import Input from '../Input/Input.tsx';
-import {useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const DataContainer = styled.div`
@@ -51,22 +51,26 @@ const Search = (props: Props) => {
   };
 
   return (
-    <>
+    <div data-testid="Search.container">
       <Input
         ref={searchRef}
-        inputKey='search'
-        label=''
-        placeholder='Search'
+        inputKey="search"
+        label=""
+        placeholder="Search"
         validated
         onChange={() => handleOnChange(searchRef.current?.value || '')}
         value={searchTerm}
       />
-      <DataContainer>
+      <DataContainer data-testid="Search.data.container">
         {data.map((item) => (
-          <DataElement key={item.key} onClick={() => handleOnSelect(item)}>{item.value}</DataElement>
+          <DataElement key={item.key}
+                       onClick={() => handleOnSelect(item)}
+                       data-testid={`Search.data.element-${item.key}`}>
+            {item.value}
+          </DataElement>
         ))}
       </DataContainer>
-    </>
+    </div>
   );
 };
 

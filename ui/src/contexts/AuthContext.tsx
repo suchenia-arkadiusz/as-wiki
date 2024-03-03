@@ -1,9 +1,9 @@
-import { createContext, type ReactNode, useEffect, useMemo } from 'react';
+import { createContext, type ReactNode, useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToasterContext } from './ToasterContext.tsx';
 import { useRestApiContext } from './RestApiContext.tsx';
 import { useUserContext } from './UserContext.tsx';
-import { User } from './types.ts';
+import { RegisterUser, User } from './types.ts';
 
 type ResponseData = {
   user: User;
@@ -17,6 +17,8 @@ type Props = {
 
 export type AuthContextType = {
   checkAuth: () => void;
+  login: (_username: string, _password: string) => void;
+  register: (body: RegisterUser) => void;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -67,7 +69,53 @@ export const AuthProvider = (props: Props) => {
     navigate('/', { state: { from: location.pathname } });
   };
 
-  const contextValue = useMemo(() => ({ checkAuth }), []);
+  const login = async (username: string, password: string) => {
+    const response = await api.post('/login', { username, password });
 
-  return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
+    if (response.status === 401) {
+      toasterContext.addToast('Wrong username or password!', 'ERROR');
+    }
+
+    if (response.status === 200) {
+      const data = await response.json();
+      userContext.setUser(data.user);
+      localStorage.setItem('token', data.jwt);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      toasterContext.addToast('Signed in successfully!', 'SUCCESS');
+      if (location.state?.from) {
+        navigate(location.state.from);
+        return;
+      }
+      navigate('/dashboard');
+    }
+  }
+
+  const register = async (body: RegisterUser) => {
+    const response = await api.post('/register', body);
+
+    if (response.status !== 200) {
+      toasterContext.addToast('Something went wrong!', 'ERROR');
+      return;
+    }
+
+    const data = await response.json();
+    userContext.setUser(data.user);
+    localStorage.setItem('token', data.jwt);
+    localStorage.setItem('token', data.jwt);
+    localStorage.setItem('refreshToken', data.refreshToken);
+    toasterContext.addToast('Signed up successfully!', 'SUCCESS');
+    navigate('/dashboard');
+  }
+
+  return <AuthContext.Provider value={{checkAuth, login, register}}>{props.children}</AuthContext.Provider>;
 };
+
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuthContext must be used within AuthProvider');
+  }
+
+  return context;
+}

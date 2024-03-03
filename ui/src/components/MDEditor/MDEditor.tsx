@@ -15,7 +15,7 @@ const MDEditor = (props: Props) => {
   const {value, onChange} = props;
 
   return (
-    <EditorContainer>
+    <EditorContainer data-testid='MDEditor.container'>
       <MdEditor
         showCodeRowNumber={true}
         footers={[]}

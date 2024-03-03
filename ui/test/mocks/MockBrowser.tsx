@@ -5,9 +5,17 @@ import MockRecentlyViewedContext from './contexts/MockRecentlyViewedContext.tsx'
 import MockProjectsContext from './contexts/MockProjectsContext.tsx';
 import { RestApiProvider } from '../../src/contexts/RestApiContext.tsx';
 import { ToasterProvider } from '../../src/contexts/ToasterContext.tsx';
+import MockAuthContext from "./contexts/MockAuthContext.tsx";
+import { RegisterUser } from "../../src/contexts/types.ts";
 
 type MockBrowserProps = {
   children: ReactNode;
+  api?: any;
+  authContextProps?: {
+    checkAuth?: () => void;
+    login?: (_username: string, _password: string) => void;
+    register?: (_body: RegisterUser) => void;
+  };
 };
 
 const MockBrowser = (props: MockBrowserProps) => {
@@ -17,9 +25,13 @@ const MockBrowser = (props: MockBrowserProps) => {
       <ToasterProvider>
         <RestApiProvider>
           <MockUserContext>
-            <MockRecentlyViewedContext>
-              <MockProjectsContext>{children}</MockProjectsContext>
-            </MockRecentlyViewedContext>
+            <MockAuthContext {...props.authContextProps}>
+              <MockRecentlyViewedContext>
+                <MockProjectsContext>
+                    {children}
+                </MockProjectsContext>
+              </MockRecentlyViewedContext>
+            </MockAuthContext>
           </MockUserContext>
         </RestApiProvider>
       </ToasterProvider>

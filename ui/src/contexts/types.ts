@@ -7,6 +7,14 @@ export type User = {
   avatarUrl?: string;
 };
 
+export type RegisterUser = {
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type UserGroup = {
   id: string;
   name: string;

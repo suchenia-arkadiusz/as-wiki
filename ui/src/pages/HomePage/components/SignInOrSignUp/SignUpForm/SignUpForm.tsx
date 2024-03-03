@@ -5,10 +5,8 @@ import styled from 'styled-components';
 import { type SignUpFormValidated } from '../types.ts';
 import { validateStringInput } from '../../../../../utils/validators.ts';
 import { getValueFromInputRef } from '../../../../../utils/input.ts';
-import { useRestApiContext } from '../../../../../contexts/RestApiContext.tsx';
-import { useUserContext } from '../../../../../contexts/UserContext.tsx';
-import { useToasterContext } from '../../../../../contexts/ToasterContext.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from "../../../../../contexts/AuthContext.tsx";
+import Button from "../../../../../components/Button/Button.tsx";
 
 const SignUpFormContainer = styled.div`
   display: flex;
@@ -25,10 +23,7 @@ const SignUpForm = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
-  const api = useRestApiContext();
-  const userContext = useUserContext();
-  const toasterContext = useToasterContext();
-  const navigate = useNavigate();
+  const { register } = useAuthContext();
   const [validatedForm, setValidatedForm] = useState<SignUpFormValidated>({
     username: false,
     password: false,
@@ -47,20 +42,7 @@ const SignUpForm = () => {
       lastName: getValueFromInputRef(lastNameRef),
     };
 
-    const response = await api.post('/register', body);
-
-    if (response.status !== 200) {
-      toasterContext.addToast('Something went wrong!', 'ERROR');
-      return;
-    }
-
-    const data = await response.json();
-    userContext.setUser(data.user);
-    localStorage.setItem('token', data.jwt);
-    localStorage.setItem('token', data.jwt);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    toasterContext.addToast('Signed up successfully!', 'SUCCESS');
-    navigate('/dashboard');
+    register(body);
   };
 
   return (
@@ -73,6 +55,7 @@ const SignUpForm = () => {
       }}
     >
       <Input
+        data-testid='SignUpForm.username'
         ref={usernameRef}
         label="Username"
         type="text"
@@ -85,6 +68,7 @@ const SignUpForm = () => {
         inputKey="sign-up-username"
       />
       <Input
+        data-testid='SignUpForm.password'
         ref={passwordRef}
         label="Password"
         type="password"
@@ -97,6 +81,7 @@ const SignUpForm = () => {
         inputKey="sign-up-password"
       />
       <Input
+        data-testid='SignUpForm.confirmPassword'
         ref={confirmPasswordRef}
         label="Confirm password"
         type="password"
@@ -111,6 +96,7 @@ const SignUpForm = () => {
         inputKey="sign-up-confirmPassword"
       />
       <Input
+        data-testid='SignUpForm.email'
         ref={emailRef}
         label="E-mail"
         type="text"
@@ -123,6 +109,7 @@ const SignUpForm = () => {
         inputKey="sign-up-email"
       />
       <Input
+        data-testid='SignUpForm.firstName'
         ref={firstNameRef}
         label="First name"
         type="text"
@@ -134,6 +121,7 @@ const SignUpForm = () => {
         inputKey="sign-up-firstName"
       />
       <Input
+        data-testid='SignUpForm.lastName'
         ref={lastNameRef}
         label="Last name"
         type="text"
@@ -144,9 +132,7 @@ const SignUpForm = () => {
         }}
         inputKey="sign-up-lastName"
       />
-      <button className="primary-btn" onClick={onSubmit}>
-        Sign up
-      </button>
+      <Button text={'Sign up'} onClick={onSubmit} data-testid='SignUpForm.button' />
     </SignUpFormContainer>
   );
 };
