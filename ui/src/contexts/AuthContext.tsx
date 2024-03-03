@@ -18,7 +18,7 @@ type Props = {
 export type AuthContextType = {
   checkAuth: () => void;
   login: (_username: string, _password: string) => void;
-  register: (body: RegisterUser) => void;
+  register: (_body: RegisterUser) => void;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -88,7 +88,7 @@ export const AuthProvider = (props: Props) => {
       }
       navigate('/dashboard');
     }
-  }
+  };
 
   const register = async (body: RegisterUser) => {
     const response = await api.post('/register', body);
@@ -105,7 +105,7 @@ export const AuthProvider = (props: Props) => {
     localStorage.setItem('refreshToken', data.refreshToken);
     toasterContext.addToast('Signed up successfully!', 'SUCCESS');
     navigate('/dashboard');
-  }
+  };
 
   return <AuthContext.Provider value={{checkAuth, login, register}}>{props.children}</AuthContext.Provider>;
 };
@@ -118,4 +118,4 @@ export const useAuthContext = () => {
   }
 
   return context;
-}
+};

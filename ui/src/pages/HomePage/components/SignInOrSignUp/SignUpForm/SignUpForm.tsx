@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { type SignUpFormValidated } from '../types.ts';
 import { validateStringInput } from '../../../../../utils/validators.ts';
 import { getValueFromInputRef } from '../../../../../utils/input.ts';
-import { useAuthContext } from "../../../../../contexts/AuthContext.tsx";
-import Button from "../../../../../components/Button/Button.tsx";
+import { useAuthContext } from '../../../../../contexts/AuthContext.tsx';
+import Button from '../../../../../components/Button/Button.tsx';
 
 const SignUpFormContainer = styled.div`
   display: flex;

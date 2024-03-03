@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { type SignInFormValidated } from '../types.ts';
 import { validateStringInput } from '../../../../../utils/validators.ts';
 import Button from '../../../../../components/Button/Button.tsx';
-import { useAuthContext } from "../../../../../contexts/AuthContext.tsx";
+import { useAuthContext } from '../../../../../contexts/AuthContext.tsx';
 
 const SignInFormContainer = styled.div`
   display: flex;

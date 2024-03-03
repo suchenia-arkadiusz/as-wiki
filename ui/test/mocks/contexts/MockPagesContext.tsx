@@ -1,17 +1,13 @@
-import { ReactNode, useMemo } from "react";
-import { PagesContext } from "../../../src/contexts/PagesContext.tsx";
-import { useLocation } from "react-router-dom";
+import { ReactNode, useMemo } from 'react';
+import { PagesContext } from '../../../src/contexts/PagesContext.tsx';
 
 type Props = {
   children: ReactNode;
   withPage?: boolean;
 };
 
-
 const MockPagesContext = (props: Props) => {
   const {withPage = true, children} = props;
-  const location = useLocation();
-  console.log(location.pathname)
   const contextValue = useMemo(() => ({
     pages: [
       {
@@ -88,6 +84,6 @@ const MockPagesContext = (props: Props) => {
   }), []);
 
   return <PagesContext.Provider value={contextValue}>{children}</PagesContext.Provider>;
-}
+};
 
-export default MockPagesContext
+export default MockPagesContext;

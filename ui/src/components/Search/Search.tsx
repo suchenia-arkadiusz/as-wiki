@@ -64,8 +64,8 @@ const Search = (props: Props) => {
       <DataContainer data-testid="Search.data.container">
         {data.map((item) => (
           <DataElement key={item.key}
-                       onClick={() => handleOnSelect(item)}
-                       data-testid={`Search.data.element-${item.key}`}>
+            onClick={() => handleOnSelect(item)}
+            data-testid={`Search.data.element-${item.key}`}>
             {item.value}
           </DataElement>
         ))}

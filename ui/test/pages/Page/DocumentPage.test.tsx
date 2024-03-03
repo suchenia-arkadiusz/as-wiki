@@ -1,7 +1,7 @@
-import DocumentPage from "../../../src/pages/Page/DocumentPage.tsx";
-import MockBrowser from "../../mocks/MockBrowser.tsx";
-import { render } from "@testing-library/react";
-import MockPagesContext from "../../mocks/contexts/MockPagesContext.tsx";
+import DocumentPage from '../../../src/pages/Page/DocumentPage.tsx';
+import MockBrowser from '../../mocks/MockBrowser.tsx';
+import { render } from '@testing-library/react';
+import MockPagesContext from '../../mocks/contexts/MockPagesContext.tsx';
 
 const setupScreen = (withPage: boolean = true) => {
   return render(
@@ -11,7 +11,7 @@ const setupScreen = (withPage: boolean = true) => {
       </MockPagesContext>
     </MockBrowser>
   );
-}
+};
 
 describe('<DocumentPage />', () => {
   it('should render the component', () => {

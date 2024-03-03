@@ -1,7 +1,8 @@
 import { fireEvent, render, within } from '@testing-library/react';
 import MockBrowser from '../../../../mocks/MockBrowser.tsx';
 import SignUpForm from '../../../../../src/pages/HomePage/components/SignInOrSignUp/SignUpForm/SignUpForm.tsx';
-import { RegisterUser } from "../../../../../src/contexts/types.ts";
+import { RegisterUser } from '../../../../../src/contexts/types.ts';
+import { expect, vi } from 'vitest';
 
 const setupScreen = (register: (_body: RegisterUser) => void = () => {}) => {
   return render(
@@ -56,8 +57,8 @@ describe('<SignUpForm />', () => {
       email: 'test@email.com',
       firstName: 'firstName',
       lastName: 'lastName'
-    })
-  })
+    });
+  });
 
   it('should call "register" function when form is submitted by hittinh the "Enter" key', () => {
     const register = vi.fn();
@@ -77,6 +78,6 @@ describe('<SignUpForm />', () => {
       email: 'test@email.com',
       firstName: 'firstName',
       lastName: 'lastName'
-    })
-  })
+    });
+  });
 });
