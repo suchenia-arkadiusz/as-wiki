@@ -41,7 +41,11 @@ const ProjectsPage = () => {
           <h1>PROJECTS</h1>
         </Left>
         <Right data-testid="ProjectsPage.container.header.addProject">
-          <Button iconName="bi-plus-lg" onClick={() => openPopup(false, undefined)} text="Add Project" />
+          <Button
+            data-testid="ProjectsPage.button.addProject"
+            iconName="bi-plus-lg"
+            onClick={() => openPopup(false, undefined)}
+            text="Add Project" />
         </Right>
       </ProjectsPageHeader>
       <ProjectsTable openPopup={openPopup} />

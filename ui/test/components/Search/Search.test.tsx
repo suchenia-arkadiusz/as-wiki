@@ -23,7 +23,7 @@ describe('<Search />', () => {
   it('should render Input component', () => {
     const screen = setupScreen([]);
 
-    expect(screen.getByTestId('InputContainer')).toBeInTheDocument();
+    expect(screen.getByTestId('Search.input')).toBeInTheDocument();
   });
 
   it('should render DataContainer component', () => {
@@ -43,9 +43,9 @@ describe('<Search />', () => {
 
   it('should call onChange when input value changes', () => {
     const screen = setupScreen([]);
-    screen.getByTestId('InputContainer.input').focus();
-    fireEvent.change(screen.getByTestId('InputContainer.input'), { target: { value: 'test' } });
-    screen.getByTestId('InputContainer.input').blur();
+    screen.getByTestId('Search.input').focus();
+    fireEvent.change(screen.getByTestId('Search.input.input'), { target: { value: 'test' } });
+    screen.getByTestId('Search.input').blur();
 
     expect(onChange).toHaveBeenCalledWith('test');
     expect(onChange).toHaveBeenCalled();

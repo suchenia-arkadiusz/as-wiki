@@ -28,6 +28,7 @@ type Props = {
   onChange: (_value: string) => void;
   onSelect: (_value: DataType) => void;
   data: Array<DataType>;
+  'data-testid'?: string;
 };
 
 export type DataType = {
@@ -50,9 +51,12 @@ const Search = (props: Props) => {
     onChange(value);
   };
 
+  const dataTestId = props['data-testid'] ? props['data-testid'] : 'Search';
+
   return (
-    <div data-testid="Search.container">
+    <div data-testid={`${dataTestId}.container`}>
       <Input
+        data-testid={`${dataTestId}.input`}
         ref={searchRef}
         inputKey="search"
         label=""
@@ -61,11 +65,9 @@ const Search = (props: Props) => {
         onChange={() => handleOnChange(searchRef.current?.value || '')}
         value={searchTerm}
       />
-      <DataContainer data-testid="Search.data.container">
+      <DataContainer data-testid={`${dataTestId}.data.container`}>
         {data.map((item) => (
-          <DataElement key={item.key}
-            onClick={() => handleOnSelect(item)}
-            data-testid={`Search.data.element-${item.key}`}>
+          <DataElement key={item.key} onClick={() => handleOnSelect(item)} data-testid={`${dataTestId}.data.element-${item.key}`}>
             {item.value}
           </DataElement>
         ))}

@@ -1,13 +1,18 @@
 import { ReactNode, useMemo } from 'react';
 import { PagesContext } from '../../../src/contexts/PagesContext.tsx';
+import {type Page} from '../../../src/types.ts';
 
 type Props = {
   children: ReactNode;
-  withPage?: boolean;
+  page?: Page;
+  getPage?: () => void;
+  deletePage?: () => void;
+  updatePage?: () => void;
+  createPage?: () => void;
 };
 
 const MockPagesContext = (props: Props) => {
-  const {withPage = true, children} = props;
+  const {page, getPage, deletePage, updatePage, createPage, children} = props;
   const contextValue = useMemo(() => ({
     pages: [
       {
@@ -63,24 +68,26 @@ const MockPagesContext = (props: Props) => {
     ],
     fetchPages: () => {},
     isLoaded: true,
-    page: withPage ? {
+    page: page ? page : {
       id: '1',
       name: 'Page 1',
-      content: 'Some content',
-      updatedAt: new Date(),
+      content: 'Test content',
+      updatedAt: new Date(2024, 2, 5, 10, 0, 0, 0),
       updatedBy: {
         id: 'user1',
         username: 'user1'
       },
       createdBy: {
         id: 'user2',
-        username: 'user2'
+        username: 'user2',
+        firstName: 'user',
+        lastName: '2'
       }
-    } : undefined,
-    getPage: () => {},
-    deletePage: () => {},
-    createPage: () => {},
-    updatePage: () => {}
+    },
+    getPage: getPage ? getPage : () => {},
+    deletePage: deletePage ? deletePage :  () => {},
+    createPage: createPage ? createPage : () => {},
+    updatePage: updatePage ? updatePage : () => {}
   }), []);
 
   return <PagesContext.Provider value={contextValue}>{children}</PagesContext.Provider>;

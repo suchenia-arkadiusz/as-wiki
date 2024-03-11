@@ -40,11 +40,9 @@ describe('<ProjectsTable />', () => {
     const screen = setupScreen();
     const row = (await screen.findAllByTestId('ProjectsTable.table.row'))[0];
     const actions = within(row).getByTestId('ProjectsTable.table.row.actions');
-    const buttons = within(actions).getAllByTestId('ButtonContainer');
 
-    expect(buttons).toHaveLength(3);
-    expect(within(buttons[0]).getByTestId('IconContainer')).toHaveClass('bi-info-circle');
-    expect(within(buttons[1]).getByTestId('IconContainer')).toHaveClass('bi-pen');
-    expect(within(buttons[2]).getByTestId('IconContainer')).toHaveClass('bi-trash');
+    expect(within(actions).getByTestId('ProjectsTable.button.info-1')).toBeInTheDocument();
+    expect(within(actions).getByTestId('ProjectsTable.button.edit-1')).toBeInTheDocument();
+    expect(within(actions).getByTestId('ProjectsTable.button.remove-1')).toBeInTheDocument();
   });
 });

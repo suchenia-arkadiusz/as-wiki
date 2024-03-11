@@ -29,9 +29,15 @@ const TableRow = (props: Props) => {
       <TableCell data-testid="ProjectsTable.table.row.description">{project.shortDescription}</TableCell>
       <TableCell data-testid="ProjectsTable.table.row.actions">
         <IconsContainer>
-          <Button iconName="bi-info-circle" onClick={() => { navigate(`/projects/${project.id}`); }} />
-          <Button iconName="bi-pen" onClick={() => openPopup(true, project)} />
-          <Button iconName="bi-trash" onClick={deleteProject} />
+          <Button
+            iconName="bi-info-circle"
+            onClick={() => {
+              navigate(`/projects/${project.id}`);
+            }}
+            data-testid={`ProjectsTable.button.info-${project.id}`}
+          />
+          <Button iconName="bi-pen" onClick={() => openPopup(true, project)} data-testid={`ProjectsTable.button.edit-${project.id}`} />
+          <Button iconName="bi-trash" onClick={deleteProject} data-testid={`ProjectsTable.button.remove-${project.id}`} />
         </IconsContainer>
       </TableCell>
     </TableRowContainer>

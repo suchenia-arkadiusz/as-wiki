@@ -17,6 +17,7 @@ const MDEditor = (props: Props) => {
   return (
     <EditorContainer data-testid='MDEditor.container'>
       <MdEditor
+        data-testid='MDEditor.editor'
         showCodeRowNumber={true}
         footers={[]}
         toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}

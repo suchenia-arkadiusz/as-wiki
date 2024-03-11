@@ -79,11 +79,11 @@ const TreeList = (props: Props) => {
         <div key={item.id}>
           <TreeListItemContainer
             $margin={hasChildren(item) ? `${level * 25}px` : `${(level * 25) + 26}px`}
-            data-testid={`TreeList.item.container-${item.id}`}
+            data-testid={props['data-testid'] ? `${props['data-testid']}.item.container-${item.id}` : `TreeList.item.container-${item.id}`}
           >
             {hasChildren(item) ? (
               <Button
-                data-testid={`TreeList.item.expand-${item.id}`}
+                data-testid={props['data-testid'] ? `${props['data-testid']}.item.expand-${item.id}` : `TreeList.item.expand-${item.id}`}
                 iconName={item.isExpanded ? 'bi-chevron-up' : 'bi-chevron-down'}
                 onClick={() => {
                   toggleItem(item.id);
@@ -95,6 +95,7 @@ const TreeList = (props: Props) => {
                 onSelect(item.id);
               }}
               text={item.name}
+              data-testid={props['data-testid'] ? `${props['data-testid']}.item.button-${item.id}` : `TreeList.item.button-${item.id}`}
             />
           </TreeListItemContainer>
           {item.isExpanded ? (

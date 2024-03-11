@@ -8,9 +8,9 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './test/setupTests.ts',
-    reporters: ['html'],
     coverage: {
       provider: 'istanbul'
-    }
+    },
+    exclude: ['**/node_modules/**', '**/dist/**', '**/coverage/**'],
   },
 });

@@ -85,7 +85,12 @@ const DocumentPage = () => {
           selectedPageId={selectedPage}
         />
         {page
-          ? (
+          ?
+          page.id === 'access-denied' ? (
+            <PageContentContainer data-testid='DocumentPage.pageContent.container.accessDenied'>
+              <AccessDeniedPage />
+            </PageContentContainer>
+          ) : (
             <>
               <PageContentContainer data-testid='DocumentPage.pageContent.container.page'>
                 <section>
@@ -105,10 +110,8 @@ const DocumentPage = () => {
               </PageIconsContainer>
             </>
           )
-          :
-          <PageContentContainer data-testid='DocumentPage.pageContent.container.accessDenied'>
-            <AccessDeniedPage />
-          </PageContentContainer>}
+          : null
+        }
         {createPagePopupProps.isPopupOpen ? <CreatePagePopup onClose={closeCreatePagePopup} selectedPage={page} isEdit={createPagePopupProps.isEdit} /> : null}
         {isEditPermissionsPopupOpen ? <EditPermissionsPopup onClose={closeEditPermissionsPopup} /> : null}
       </PagePermissionsProvider>
