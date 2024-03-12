@@ -69,69 +69,81 @@ const EditPermissionsPopup = (props: Props) => {
 
   const getUserFullName = (userId: string) => {
     const user = users.find((user) => user.id === userId);
-    return `${user?.firstName} ${user?.lastName}`;
+    return user?.username ? user.username : `${user?.firstName} ${user?.lastName}`;
   };
+
+  const hasPermissions = () =>
+    (permissions.permissions && permissions.permissions?.length > 0) ||
+    (permissions.inheritedPermissions && permissions.inheritedPermissions?.length > 0);
 
   return (
     <Popup title="Edit permissions" width={800} onClose={onClose}>
-      <PermissionsPopupContainer>
+      <PermissionsPopupContainer data-testid='EditPermissions.container'>
         <AddPermission users={users} userGroups={userGroups}/>
-        <PermissionsTableContainer>
-          <table style={{ borderCollapse: 'collapse' }}>
-            <thead>
-              <tr>
-                <th style={{width: '30px'}}></th>
-                <th style={{textAlign: 'left'}}>NAME</th>
-                <th style={{ width: '100px', textAlign: 'left'}}>ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {permissions.permissions
-                ? permissions.permissions.map((permission, index) => {
-                  return (
-                    <tr key={`permission-${index}`}>
-                      {permission.userId ? (
-                        <>
-                          <td>
-                            <Icon iconName="bi-person" />
-                          </td>
-                          <td>{getUserFullName(permission.userId)}</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>
-                            <Icon iconName="bi-people" />
-                          </td>
-                          <td>{userGroups.find((userGroup) => userGroup.id === permission.groupId)?.name}</td>
-                        </>
-                      )}
-                      <td>
-                        <Button iconName="bi-trash" onClick={() => handleDeletePermission({ permissions: [permission] })} />
-                      </td>
-                    </tr>
-                  );
-                })
-                : permissions.inheritedPermissions
-                  ? permissions.inheritedPermissions.map((permission, index) => {
-                    return <tr key={`inherited-permission-${index}`}>
-                      {permission.userId
-                        ? (<>
-                          <td><Icon iconName='bi-person' /></td>
-                          <td>
-                            {getUserFullName(permission.userId)} Inherited
-                          </td>
-                        </>
-                        )
-                        : (<>
-                          <td><Icon iconName='bi-people' /></td>
-                          <td>{userGroups.find((userGroup) => userGroup.id === permission.groupId)?.name} Inherited</td></>)}
-                      <td></td>
-                    </tr>;
+        {hasPermissions() ? (
+          <PermissionsTableContainer data-testid='EditPermissions.permissions.table'>
+            <table style={{ borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>
+                  <th style={{width: '30px'}}></th>
+                  <th style={{textAlign: 'left'}}>NAME</th>
+                  <th style={{ width: '100px', textAlign: 'left'}}>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {permissions.permissions
+                  ? permissions.permissions.map((permission, index) => {
+                    return (
+                      <tr key={`permission-${index}`} data-testid={`EditPermissions.permissions.table.row-${index}`}>
+                        {permission.userId ? (
+                          <>
+                            <td>
+                              <Icon iconName="bi-person" data-testid='EditPermissions.user.icon' />
+                            </td>
+                            <td>{getUserFullName(permission.userId)}</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>
+                              <Icon iconName="bi-people" data-testid='EditPermissions.group.icon' />
+                            </td>
+                            <td>{userGroups.find((userGroup) => userGroup.id === permission.groupId)?.name}</td>
+                          </>
+                        )}
+                        <td>
+                          <Button
+                            iconName="bi-trash"
+                            onClick={() => handleDeletePermission({ permissions: [permission] })}
+                            data-testid={`EditPermissions.permissions.button.delete-${index}`}
+                          />
+                        </td>
+                      </tr>
+                    );
                   })
-                  : null}
-            </tbody>
-          </table>
-        </PermissionsTableContainer>
+                  : permissions.inheritedPermissions
+                    ? permissions.inheritedPermissions.map((permission, index) => {
+                      return <tr key={`inherited-permission-${index}`} data-testid={`EditPermissions.permissions.table.row-${index}`}>
+                        {permission.userId
+                          ? (
+                            <>
+                              <td><Icon iconName='bi-person' data-testid='EditPermissions.user.icon' /></td>
+                              <td>
+                                {getUserFullName(permission.userId)}
+                              </td>
+                            </>
+                          )
+                          : (
+                            <>
+                              <td><Icon iconName='bi-people' data-testid='EditPermissions.group.icon' /></td>
+                              <td>{userGroups.find((userGroup) => userGroup.id === permission.groupId)?.name}</td></>)}
+                        <td>Inherited</td>
+                      </tr>;
+                    })
+                    : null}
+              </tbody>
+            </table>
+          </PermissionsTableContainer>
+        ) : null }
       </PermissionsPopupContainer>
     </Popup>
   );

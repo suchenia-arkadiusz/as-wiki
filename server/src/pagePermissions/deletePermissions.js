@@ -6,5 +6,5 @@ export const deletePermissions = async (req, res) => {
 
   const permissionsDeleted = await deletePermissionsForPage(pageId, permissions);
 
-  return permissionsDeleted ? res.status(200).send() : res.status(500).send();
+  return permissionsDeleted ? res.status(204).send() : res.status(500).send();
 };

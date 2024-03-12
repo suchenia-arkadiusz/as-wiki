@@ -23,8 +23,8 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   overrides: [
     {
@@ -44,7 +44,8 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    'react'
+    'react',
+    'typescript'
   ],
   rules: {
     'no-console': 'error',
@@ -61,7 +62,7 @@ module.exports = {
     'no-constant-condition': 'warn',
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
+    quotes: ['error', 'single', {}],
     semi: ['error', 'always'],
     'no-mixed-spaces-and-tabs': 'error',
     'space-before-blocks': 'error',
@@ -89,6 +90,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
+    'react/jsx-max-props-per-line': ['error', {maximum: 1, when: 'multiline'}],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/semi': ['error', 'always'],
     '@typescript-eslint/member-delimiter-style': ['error', {

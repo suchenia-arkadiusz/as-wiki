@@ -12,8 +12,8 @@ describe('<Toaster />', () => {
     expect(screen.getByText('test message')).toBeInTheDocument();
     expect(screen.getByTestId('Toaster.container')).toHaveStyle('background-color: #ff7826');
     expect(screen.getByTestId('Toaster.container')).toHaveStyle('color: #000000');
-    expect(screen.getByTestId('IconContainer')).toBeInTheDocument();
-    expect(screen.getByTestId('IconContainer')).toHaveClass('bi-exclamation-triangle');
+    expect(screen.getByTestId('Icon.container')).toBeInTheDocument();
+    expect(screen.getByTestId('Icon.container')).toHaveClass('bi-exclamation-triangle');
   });
 
   it('should render the component', () => {
@@ -22,8 +22,8 @@ describe('<Toaster />', () => {
     expect(screen.getByText('test message')).toBeInTheDocument();
     expect(screen.getByTestId('Toaster.container')).toHaveStyle('background-color: #61ff61');
     expect(screen.getByTestId('Toaster.container')).toHaveStyle('color: #000000');
-    expect(screen.getByTestId('IconContainer')).toBeInTheDocument();
-    expect(screen.getByTestId('IconContainer')).toHaveClass('bi-check-circle');
+    expect(screen.getByTestId('Icon.container')).toBeInTheDocument();
+    expect(screen.getByTestId('Icon.container')).toHaveClass('bi-check-circle');
   });
 
   it('should render the component', () => {
@@ -32,7 +32,7 @@ describe('<Toaster />', () => {
     expect(screen.getByText('test message')).toBeInTheDocument();
     expect(screen.getByTestId('Toaster.container')).toHaveStyle('background-color: #ff4a4a');
     expect(screen.getByTestId('Toaster.container')).toHaveStyle('color: #ffffff');
-    expect(screen.getByTestId('IconContainer')).toBeInTheDocument();
-    expect(screen.getByTestId('IconContainer')).toHaveClass('bi-exclamation-circle');
+    expect(screen.getByTestId('Icon.container')).toBeInTheDocument();
+    expect(screen.getByTestId('Icon.container')).toHaveClass('bi-exclamation-circle');
   });
 });

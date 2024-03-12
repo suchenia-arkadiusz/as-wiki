@@ -55,6 +55,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
     <Popup title={isEdit ? 'Edit Page' : 'Create Page'} width={1400} onClose={onClose}>
       <CreatePageContainer data-testid="CreatePage.container" data-color-mode="light">
         <Input
+          data-testid='CreatePage.name'
           ref={nameRef}
           isRequired
           inputKey="page-name"
@@ -67,7 +68,7 @@ const CreatePagePopup = (props: CreatePagePopupProps) => {
         />
         <MDEditor value={value} onChange={setValue} />
         <CreatePageButtonContainer data-testid="CreatePage.button.container">
-          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={!validatedName} />
+          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={!validatedName} data-testid='CreatePage.button.save' />
         </CreatePageButtonContainer>
       </CreatePageContainer>
     </Popup>

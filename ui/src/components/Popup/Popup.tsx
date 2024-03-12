@@ -61,7 +61,7 @@ const Popup = (props: Props) => {
             <h1>{title.toUpperCase()}</h1>
           </Left>
           <Right data-testid="PopupCloseButtonContainer">
-            <Button iconName="bi-x-lg" onClick={onClose} />
+            <Button iconName="bi-x-lg" onClick={onClose} data-testid='Popup.close.button'/>
           </Right>
         </PopupHeader>
         {children}

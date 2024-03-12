@@ -31,7 +31,7 @@ describe('<Popup />', () => {
     const screen = setupScreen(onClose);
     const closeButtonContainer = screen.getByTestId('PopupCloseButtonContainer');
 
-    fireEvent.click(within(closeButtonContainer).getByTestId('ButtonContainer'));
+    fireEvent.click(within(closeButtonContainer).getByTestId('Popup.close.button'));
 
     expect(onClose).toHaveBeenCalled();
   });

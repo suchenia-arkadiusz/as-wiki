@@ -1,7 +1,15 @@
 import { ProjectsContext } from '../../../src/contexts/ProjectsContext.tsx';
 import React, { useMemo } from 'react';
 
-const MockProjectsContext = ({ children }: { children: React.ReactNode }) => {
+type Props = {
+  children: React.ReactNode;
+  addProject?: (_body: object, _onClose: () => void) => void;
+  editProject?: (_body: object, _onClose: () => void) => void;
+};
+
+const MockProjectsContext = (props: Props) => {
+  const { children, addProject, editProject } = props;
+
   const contextValue = useMemo(
     () => ({
       projects: [
@@ -28,8 +36,8 @@ const MockProjectsContext = ({ children }: { children: React.ReactNode }) => {
           color: '#97ffa8'
         }
       ],
-      addProject: () => {},
-      editProject: () => {},
+      addProject: addProject ? addProject : () => {},
+      editProject: editProject ? editProject : () => {},
       deleteProject: () => {},
       isLoaded: true
     }),

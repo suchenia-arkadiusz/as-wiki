@@ -34,7 +34,7 @@ const ProjectPage = () => {
     <>
       {isLoaded
         ? (
-          <ProjectPageContainer>
+          <ProjectPageContainer data-testid='ProjectPage.container'>
             <h1>{project?.name.toUpperCase()}</h1>
             <p>
               <strong>Total number of pages: </strong>

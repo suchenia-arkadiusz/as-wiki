@@ -60,6 +60,10 @@ const CreateProjectPopup = (props: Props) => {
     }
   };
 
+  const isButtonDisabled = () => {
+    return !validatedForm.name || !validatedForm.shortDescription;
+  };
+
   return (
     <Popup title={isEdit ? 'Edit Project' : 'Create project'} width={1400} onClose={onClose}>
       <CreateProjectContainer
@@ -67,6 +71,7 @@ const CreateProjectPopup = (props: Props) => {
         data-color-mode='light'
       >
         <Input
+          data-testid='CreateProject.input.name'
           ref={nameRef}
           isRequired
           inputKey="project-name"
@@ -80,6 +85,7 @@ const CreateProjectPopup = (props: Props) => {
           defaultValue={isEdit ? selectedProject?.name : undefined}
         />
         <Input
+          data-testid='CreateProject.input.shortDescription'
           ref={shortDescriptionRef}
           isRequired
           inputKey="project-short-description"
@@ -92,9 +98,11 @@ const CreateProjectPopup = (props: Props) => {
           }}
           defaultValue={isEdit ? selectedProject?.shortDescription : undefined}
         />
-        <MDEditor value={description} onChange={setDescription} />
+        <div data-testid="CreateProject.editor.description">
+          <MDEditor value={description} onChange={setDescription} />
+        </div>
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">
-          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" />
+          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={isButtonDisabled()} data-testid="CreateProject.button.save" />
         </CreateProjectButtonContainer>
       </CreateProjectContainer>
     </Popup>

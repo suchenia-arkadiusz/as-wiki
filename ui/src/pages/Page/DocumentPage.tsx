@@ -76,7 +76,7 @@ const DocumentPage = () => {
   };
 
   return (
-    <DocumentPageContainer data-testid="DocumentPageContainer">
+    <DocumentPageContainer data-testid="DocumentPage.container">
       <PagePermissionsProvider>
         <PageListPanel
           projectName={projects.find((project) => project.id === projectId)?.name || 'No Project'}
@@ -85,9 +85,14 @@ const DocumentPage = () => {
           selectedPageId={selectedPage}
         />
         {page
-          ? (
+          ?
+          page.id === 'access-denied' ? (
+            <PageContentContainer data-testid='DocumentPage.pageContent.container.accessDenied'>
+              <AccessDeniedPage />
+            </PageContentContainer>
+          ) : (
             <>
-              <PageContentContainer>
+              <PageContentContainer data-testid='DocumentPage.pageContent.container.page'>
                 <section>
                   <h1>{page?.name.toUpperCase()}</h1>
                   <p>
@@ -98,17 +103,15 @@ const DocumentPage = () => {
                 <MDPreview value={page?.content || ''} />
               </PageContentContainer>
               <PageIconsContainer>
-                <Button onClick={openEditPermissionsPopup} iconName="bi-lock" />
-                <Button onClick={() => openCreatePagePopup(true) } iconName="bi-pen" />
-                <Button onClick={removePage} iconName="bi-trash3" />
+                <Button onClick={openEditPermissionsPopup} iconName="bi-lock" data-testid='DocumentPage.editPermissions.button' />
+                <Button onClick={() => openCreatePagePopup(true) } iconName="bi-pen" data-testid='DocumentPage.editPage.button' />
+                <Button onClick={removePage} iconName="bi-trash3" data-testid='DocumentPage.deletePage.button' />
                 {/*<Button onClick={() => { alert('More'); }} iconName="bi-three-dots" />*/}
               </PageIconsContainer>
             </>
           )
-          :
-          <PageContentContainer>
-            <AccessDeniedPage />
-          </PageContentContainer>}
+          : null
+        }
         {createPagePopupProps.isPopupOpen ? <CreatePagePopup onClose={closeCreatePagePopup} selectedPage={page} isEdit={createPagePopupProps.isEdit} /> : null}
         {isEditPermissionsPopupOpen ? <EditPermissionsPopup onClose={closeEditPermissionsPopup} /> : null}
       </PagePermissionsProvider>

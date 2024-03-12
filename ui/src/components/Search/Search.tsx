@@ -1,5 +1,5 @@
 import Input from '../Input/Input.tsx';
-import {useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const DataContainer = styled.div`
@@ -28,6 +28,7 @@ type Props = {
   onChange: (_value: string) => void;
   onSelect: (_value: DataType) => void;
   data: Array<DataType>;
+  'data-testid'?: string;
 };
 
 export type DataType = {
@@ -50,23 +51,28 @@ const Search = (props: Props) => {
     onChange(value);
   };
 
+  const dataTestId = props['data-testid'] ? props['data-testid'] : 'Search';
+
   return (
-    <>
+    <div data-testid={`${dataTestId}.container`}>
       <Input
+        data-testid={`${dataTestId}.input`}
         ref={searchRef}
-        inputKey='search'
-        label=''
-        placeholder='Search'
+        inputKey="search"
+        label=""
+        placeholder="Search"
         validated
         onChange={() => handleOnChange(searchRef.current?.value || '')}
         value={searchTerm}
       />
-      <DataContainer>
+      <DataContainer data-testid={`${dataTestId}.data.container`}>
         {data.map((item) => (
-          <DataElement key={item.key} onClick={() => handleOnSelect(item)}>{item.value}</DataElement>
+          <DataElement key={item.key} onClick={() => handleOnSelect(item)} data-testid={`${dataTestId}.data.element-${item.key}`}>
+            {item.value}
+          </DataElement>
         ))}
       </DataContainer>
-    </>
+    </div>
   );
 };
 

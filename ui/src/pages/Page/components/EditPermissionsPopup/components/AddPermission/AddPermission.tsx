@@ -84,9 +84,9 @@ const AddPermission = (props: Props) => {
   };
 
   return (
-    <AddPermissionContainer>
-      <Search onChange={setSearchTerm} data={data} onSelect={setSelected}/>
-      <Button onClick={handleAddPermission} text="Add" iconName='bi-plus-lg'/>
+    <AddPermissionContainer data-testid='AddPermission.container'>
+      <Search onChange={setSearchTerm} data={data} onSelect={setSelected} data-testid='AddPermission.search'/>
+      <Button onClick={handleAddPermission} text="Add" iconName='bi-plus-lg' data-testid='AddPermission.button.add'/>
     </AddPermissionContainer>);
 };
 
