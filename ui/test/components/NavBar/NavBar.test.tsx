@@ -14,7 +14,10 @@ const setupScreen = () => {
 describe('<NavBar />', () => {
   it('should render NavBarContainer', () => {
     const screen = setupScreen();
-    expect(screen.getByTestId('NavBarContainer')).toBeInTheDocument();
+    expect(screen.getByTestId('NavBar.container')).toBeInTheDocument();
+    expect(screen.getByTestId('UserAvatar.container')).toBeInTheDocument();
+    expect(screen.getByTestId('UserAvatar.button.avatar')).toBeInTheDocument();
+    expect(screen.getByTestId('NavBar.button.projects')).toBeInTheDocument();
   });
 
   it('should contain app name', () => {

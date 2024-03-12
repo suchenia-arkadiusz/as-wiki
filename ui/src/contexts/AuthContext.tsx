@@ -19,6 +19,7 @@ export type AuthContextType = {
   checkAuth: () => void;
   login: (_username: string, _password: string) => void;
   register: (_body: RegisterUser) => void;
+  logout: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -90,6 +91,13 @@ export const AuthProvider = (props: Props) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    userContext.setUser(undefined);
+    navigate('/');
+  };
+
   const register = async (body: RegisterUser) => {
     const response = await api.post('/register', body);
 
@@ -107,7 +115,7 @@ export const AuthProvider = (props: Props) => {
     navigate('/dashboard');
   };
 
-  return <AuthContext.Provider value={{checkAuth, login, register}}>{props.children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{checkAuth, login, register, logout}}>{props.children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => {

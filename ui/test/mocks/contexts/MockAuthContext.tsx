@@ -7,13 +7,15 @@ type Props = {
   checkAuth?: () => void;
   login?: (_username: string, _password: string) => void;
   register?: (_body: RegisterUser) => void;
+  logout?: () => void;
 };
 
 const MockAuthContext = (props: Props) => {
   const contextValue = useMemo(() => ({
     checkAuth: props.checkAuth ? props.checkAuth : () => {},
     login: props.login ? props.login : () => {},
-    register: props.register ? props.register : () => {}
+    register: props.register ? props.register : () => {},
+    logout: props.logout ? props.logout : () => {}
   }), []);
 
   return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;

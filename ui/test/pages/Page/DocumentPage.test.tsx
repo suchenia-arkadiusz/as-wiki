@@ -5,7 +5,7 @@ import MockPagesContext from '../../mocks/contexts/MockPagesContext.tsx';
 import {expect, vi} from 'vitest';
 import {type Page} from '../../../src/types.ts';
 
-const setupScreen = (page?: Page = undefined, deletePage?: () => void, getPage?: () => void) => {
+const setupScreen = (page?: Page, deletePage?: () => void, getPage?: () => void) => {
   return render(
     <MockBrowser>
       <MockPagesContext page={page} deletePage={deletePage} getPage={getPage}>
