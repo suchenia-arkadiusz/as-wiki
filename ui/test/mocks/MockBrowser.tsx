@@ -20,6 +20,7 @@ type MockBrowserProps = {
     checkAuth?: () => void;
     login?: (_username: string, _password: string) => void;
     register?: (_body: RegisterUser) => void;
+    logout?: () => void;
   };
   projectsContextProps?: {
     addProject: (_body: object, _onClose: () => void) => void;

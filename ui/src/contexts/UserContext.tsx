@@ -6,7 +6,7 @@ type Props = {
 };
 
 type UserContextType = {
-  setUser: (_user: User) => void;
+  setUser: (_user: User | undefined) => void;
   getUser: () => User | undefined;
   children?: ReactNode;
 };
