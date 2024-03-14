@@ -27,9 +27,17 @@ describe('<Search />', () => {
   });
 
   it('should render DataContainer component', () => {
+    const screen = setupScreen([{key: 'key', value: 'value'}]);
+
+    expect(screen.getByTestId('Search.data.overlay')).toBeInTheDocument();
+    expect(screen.getByTestId('Search.data.container')).toBeInTheDocument();
+  });
+
+  it('should not render DataContainer component when data is empty', () => {
     const screen = setupScreen([]);
 
-    expect(screen.getByTestId('Search.data.container')).toBeInTheDocument();
+    expect(screen.queryByTestId('Search.data.overlay')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('Search.data.container')).not.toBeInTheDocument();
   });
 
   it('should render DataElement component', () => {
@@ -57,6 +65,15 @@ describe('<Search />', () => {
     fireEvent.click(screen.getByTestId('Search.data.element-key'));
 
     expect(onSelect).toHaveBeenCalledWith(inputData[0]);
+    expect(onSelect).toHaveBeenCalled();
+  });
+
+  it('should call onSelect with "undefined" when the overlay is clicked', () => {
+    const inputData = [{key: 'key', value: 'value'}, {key: 'key2', value: 'value2'}];
+    const screen = setupScreen(inputData);
+    fireEvent.click(screen.getByTestId('Search.data.overlay'));
+
+    expect(onSelect).toHaveBeenCalledWith(undefined);
     expect(onSelect).toHaveBeenCalled();
   });
 });
