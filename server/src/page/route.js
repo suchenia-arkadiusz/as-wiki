@@ -8,10 +8,13 @@ import {updatePage} from './updatePage';
 import {deletePage} from './deletePage';
 import {acl} from '../security/permissions/acl';
 import {checkAccess} from './utils/access';
+import {searchPages} from './searchPages';
 
 export const pageRoute = () => {
   const router = express.Router();
   router.use(authenticate);
+
+  router.get('/pages/search', acl(['page:read']), searchPages);
 
   router.post('/projects/:projectId/pages', acl(['page:write']), checkAccess, validateCreatePageInput, createPage);
   router.get('/projects/:projectId/pages', acl(['page:read']), getPages);

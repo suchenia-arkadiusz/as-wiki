@@ -2,6 +2,22 @@ import Input from '../Input/Input.tsx';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 
+const SearchContainer = styled.div`
+  max-height: 60px;
+  width: 270px;
+  position: relative;
+`;
+
+const DataOverlay = styled.div`
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: none;
+`;
+
 const DataContainer = styled.div`
   display: block;
   flex-direction: column;
@@ -10,9 +26,11 @@ const DataContainer = styled.div`
   overflow: auto;
   border-radius: 5px;
   border: 1px solid #d9d9d9;
-  top: 130px;
+  top: 60px;
   max-height: 250px;
+  width: 270px;
   cursor: pointer;
+  z-index: 1000;
 `;
 
 const DataElement = styled.div`
@@ -26,7 +44,7 @@ const DataElement = styled.div`
 
 type Props = {
   onChange: (_value: string) => void;
-  onSelect: (_value: DataType) => void;
+  onSelect: (_value: DataType | undefined) => void;
   data: Array<DataType>;
   'data-testid'?: string;
 };
@@ -54,7 +72,7 @@ const Search = (props: Props) => {
   const dataTestId = props['data-testid'] ? props['data-testid'] : 'Search';
 
   return (
-    <div data-testid={`${dataTestId}.container`}>
+    <SearchContainer data-testid={`${dataTestId}.container`}>
       <Input
         data-testid={`${dataTestId}.input`}
         ref={searchRef}
@@ -65,14 +83,19 @@ const Search = (props: Props) => {
         onChange={() => handleOnChange(searchRef.current?.value || '')}
         value={searchTerm}
       />
-      <DataContainer data-testid={`${dataTestId}.data.container`}>
-        {data.map((item) => (
-          <DataElement key={item.key} onClick={() => handleOnSelect(item)} data-testid={`${dataTestId}.data.element-${item.key}`}>
-            {item.value}
-          </DataElement>
-        ))}
-      </DataContainer>
-    </div>
+      {data && data.length > 0 ? (
+        <>
+          <DataOverlay data-testid={`${dataTestId}.data.overlay`} onClick={() => onSelect(undefined)} />
+          <DataContainer data-testid={`${dataTestId}.data.container`}>
+            {data.map((item) => (
+              <DataElement key={item.key} onClick={() => handleOnSelect(item)} data-testid={`${dataTestId}.data.element-${item.key}`}>
+                {item.value}
+              </DataElement>
+            ))}
+          </DataContainer>
+        </>
+      ) : null}
+    </SearchContainer>
   );
 };
 

@@ -14,3 +14,12 @@ export const createPage = async (app, project, validToken, parentId = null) => {
       .send(body)
   ).body;
 };
+
+export const createPageWithBody = async (app, project, validToken, body) => {
+  return (
+    await request(app)
+      .post(`/api/v1/projects/${project.id}/pages`)
+      .set({ Authorization: `Bearer ${validToken}` })
+      .send(body)
+  ).body;
+};
