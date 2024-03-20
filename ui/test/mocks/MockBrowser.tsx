@@ -5,7 +5,7 @@ import MockRecentlyViewedContext from './contexts/MockRecentlyViewedContext.tsx'
 import MockProjectsContext from './contexts/MockProjectsContext.tsx';
 import { ToasterProvider } from '../../src/contexts/ToasterContext.tsx';
 import MockAuthContext from './contexts/MockAuthContext.tsx';
-import { RegisterUser } from '../../src/contexts/types.ts';
+import { RegisterUser, User } from '../../src/contexts/types.ts';
 import MockRestApiContext from './contexts/MockRestApiContext.tsx';
 
 type MockBrowserProps = {
@@ -26,6 +26,12 @@ type MockBrowserProps = {
     addProject: (_body: object, _onClose: () => void) => void;
     editProject: (_body: object, _onClose: () => void) => void;
   };
+  userContextProps?: {
+    user?: User;
+    setUser?: (_user: User | undefined) => void;
+    updateUser?: (_user: User, _currentPassword: string, _newPassword: string) => void;
+    getUser?: () => User | undefined;
+  };
 };
 
 const MockBrowser = (props: MockBrowserProps) => {
@@ -34,7 +40,7 @@ const MockBrowser = (props: MockBrowserProps) => {
     <BrowserRouter>
       <ToasterProvider>
         <MockRestApiContext {...props.api || defaultApiHandler}>
-          <MockUserContext>
+          <MockUserContext {...props.userContextProps}>
             <MockAuthContext {...props.authContextProps}>
               <MockRecentlyViewedContext>
                 <MockProjectsContext {...props.projectsContextProps}>

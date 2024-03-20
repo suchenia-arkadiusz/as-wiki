@@ -19,3 +19,8 @@
   border: none;
   border-bottom: 1px solid red;
 }
+
+.app-text-input:disabled {
+  background-color: #f9f9f9;
+  color: #a9a9a9;
+}

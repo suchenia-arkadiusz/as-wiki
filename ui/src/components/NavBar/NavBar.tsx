@@ -64,7 +64,7 @@ export const NavBar = () => {
           data-testid='NavBar.button.projects'
         />
       </Left>
-      <Right>
+      <Right style={{gap: '20px'}}>
         <Search onChange={setSearchTerm} onSelect={onSelect} data={data} data-testid='NavBar.search' />
         <UserAvatar />
       </Right>

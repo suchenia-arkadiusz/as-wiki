@@ -17,7 +17,7 @@ type InputProps = HTMLProps<HTMLInputElement> & {
 };
 
 const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
-  const { label, placeholder, isRequired, validated, type, onChange, inputKey, defaultValue, value } = props;
+  const { label, placeholder, isRequired, validated, type, onChange, inputKey, defaultValue, value, disabled } = props;
 
   const dataTestId = props['data-testid'] ? props['data-testid'] : 'InputContainer';
 
@@ -37,6 +37,7 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
         placeholder={placeholder}
         onChange={onChange}
         defaultValue={defaultValue}
+        disabled={disabled}
       />
     </InputContainer>
   );
