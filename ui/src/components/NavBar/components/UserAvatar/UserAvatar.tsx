@@ -10,7 +10,7 @@ const UserAvatarContainer = styled.div`
   align-items: center;
   height: 100%;
   justify-content: space-between;
-  gap: 10px;
+  gap: 20px;
   flex-direction: row;
   margin-top: 5px;
 `;

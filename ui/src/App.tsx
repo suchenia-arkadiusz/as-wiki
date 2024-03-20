@@ -14,6 +14,7 @@ import { AuthProvider } from './contexts/AuthContext.tsx';
 import DocumentPage from './pages/Page/DocumentPage.tsx';
 import { PagesContextLayout } from './contexts/PagesContext.tsx';
 import NotFoundPage from './pages/Errors/404/NotFoundPage.tsx';
+import UserProfilePage from './pages/UserProfile/UserProfilePage.tsx';
 
 const App = () => {
   const { toasters } = useToasterContext();
@@ -37,6 +38,7 @@ const App = () => {
                     <Route path="/projects/:id/pages/:pageId" element={<DocumentPage />} />
                   </Route>
                 </Route>
+                <Route path="/user-profile" element={<UserProfilePage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </div>

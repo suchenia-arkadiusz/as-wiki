@@ -1,9 +1,8 @@
 import Input from '../../../../../components/Input/Input.tsx';
 import { useRef, useState } from 'react';
-import { validateEmail, validatePasswords } from '../formValidation.ts';
+import { validateStringInput, validateEmail, validatePasswords } from '../../../../../utils/validators.ts';
 import styled from 'styled-components';
 import { type SignUpFormValidated } from '../types.ts';
-import { validateStringInput } from '../../../../../utils/validators.ts';
 import { getValueFromInputRef } from '../../../../../utils/input.ts';
 import { useAuthContext } from '../../../../../contexts/AuthContext.tsx';
 import Button from '../../../../../components/Button/Button.tsx';
