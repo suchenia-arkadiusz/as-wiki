@@ -11,7 +11,7 @@ import { usePagesContext } from '../../contexts/PagesContext.tsx';
 import MDPreview from '../../components/MDEditor/MDPreview.tsx';
 import EditPermissionsPopup from './components/EditPermissionsPopup/EditPermissionsPopup.tsx';
 import { PagePermissionsProvider } from '../../contexts/PagePermissionsContext.tsx';
-import AccessDeniedPage from './components/AccessDeniedPage/AccessDeniedPage.tsx';
+import AccessDeniedPage from '../Errors/403/AccessDeniedPage.tsx';
 
 const DocumentPageContainer = styled.section`
   display: flex;

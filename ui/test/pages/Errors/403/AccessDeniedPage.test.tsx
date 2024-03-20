@@ -1,4 +1,4 @@
-import AccessDeniedPage from '../../../../../src/pages/Page/components/AccessDeniedPage/AccessDeniedPage.tsx';
+import AccessDeniedPage from '../../../../src/pages/Errors/403/AccessDeniedPage.tsx';
 import {expect} from 'vitest';
 import { render } from '@testing-library/react';
 
