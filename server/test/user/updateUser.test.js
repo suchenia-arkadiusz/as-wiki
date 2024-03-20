@@ -15,6 +15,7 @@ describe('API updateUser', () => {
   it('PUT should return 401 if current password does not match', async () => {
     await registerUser(app, 'testUser', 'test@aswiki.com', 'pass1234');
     const user = await getUserByUsername('testUser');
+    console.log(user);
     const token = generateJWT(user, '1d');
 
     const response = await request(app)
@@ -36,6 +37,7 @@ describe('API updateUser', () => {
   it('PUT should return 200 if user is correctly updated', async () => {
     await registerUser(app, 'testUser', 'test@aswiki.com', 'pass1234');
     const user = await getUserByUsername('testUser');
+    console.log(user);
     const token = generateJWT(user, '1d');
 
     const response = await request(app)
@@ -59,6 +61,7 @@ describe('API updateUser', () => {
   it('PUT should return 200 and change the user\'s password', async () => {
     await registerUser(app, 'testUser', 'test@aswiki.com', 'pass1234');
     const user = await getUserByUsername('testUser');
+    console.log(user);
     const token = generateJWT(user, '1d');
 
     const response = await request(app)
