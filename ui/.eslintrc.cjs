@@ -48,7 +48,7 @@ module.exports = {
     'typescript'
   ],
   rules: {
-    'no-console': 'error',
+    'no-console': ['error', {allow: ['warn', 'error']}],
     'no-undef': 'error',
     'semi-spacing': 'error',
     eqeqeq: 'error',
