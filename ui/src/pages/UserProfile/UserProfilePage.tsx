@@ -6,6 +6,9 @@ import Button from '../../components/Button/Button.tsx';
 import { FlexRow } from '../../components/styles.ts';
 import { validateEmail, validatePasswords } from '../../utils/validators.ts';
 import { User } from '../../contexts/types.ts';
+import ImageInput from '../../components/Input/Image/ImageInput.tsx';
+import { useRestApiContext } from '../../contexts/RestApiContext.tsx';
+import { ImageUploadResponse } from '../../types.ts';
 
 const UserProfilePageContainer = styled.div`
   display: flex;
@@ -16,10 +19,12 @@ const UserProfilePageContainer = styled.div`
 
 const UserProfilePage = () => {
   const { user, updateUser } = useUserContext();
+  const api = useRestApiContext();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [email, setEmail] = useState<string>(user?.email || '');
   const [firstName, setFirstName] = useState<string>(user?.firstName || '');
   const [lastName, setLastName] = useState<string>(user?.lastName || '');
+  const [avatarUrl, setAvatarUrl] = useState<string>(user?.avatarUrl || '');
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [currentPassword, setCurrentPassword] = useState<string>('');
@@ -37,12 +42,26 @@ const UserProfilePage = () => {
       ...user,
       email,
       firstName,
-      lastName
+      lastName,
+      avatarUrl,
     };
 
     updateUser(newUser, currentPassword, newPassword);
 
     setIsEdit(false);
+  };
+
+  const onImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const form = new FormData();
+    form.append('file', file);
+
+    api.post('/upload', form, false)
+      .then((response) => response.json())
+      .then((data: ImageUploadResponse) => setAvatarUrl(`/upload/${data.id}`))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -79,6 +98,7 @@ const UserProfilePage = () => {
         value={lastName}
         onChange={(e: ChangeEvent<HTMLInputElement>) => { setLastName(e.target.value); }}
         disabled={!isEdit} />
+      <ImageInput label="Avatar" inputKey="avatar" data-testid="UserProfilePage.image" onChange={onImageUpload} />
       <h1>Password</h1>
       <Input
         data-testid="UserProfilePage.currentPassword"

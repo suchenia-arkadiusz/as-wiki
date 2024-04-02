@@ -11,10 +11,10 @@ import MockRestApiContext from './contexts/MockRestApiContext.tsx';
 type MockBrowserProps = {
   children: ReactNode;
   api?: {
-    get: (_url: string, _headers?: object) => Promise<Response>;
-    post: (_url: string, _body: object, _headers?: object) => Promise<Response>;
-    put: (_url: string, _body: object, _headers?: object) => Promise<Response>;
-    del: (_url: string, _body?: object, _headers?: object) => Promise<Response>;
+    get: (_url: string, _withContentType?: boolean, _headers?: object) => Promise<Response>;
+    post: (_url: string, _body: object, _withContentType?: boolean, _headers?: object) => Promise<Response>;
+    put: (_url: string, _body: object, _withContentType?: boolean, _headers?: object) => Promise<Response>;
+    del: (_url: string, _body?: object, _withContentType?: boolean, _headers?: object) => Promise<Response>;
   };
   authContextProps?: {
     checkAuth?: () => void;

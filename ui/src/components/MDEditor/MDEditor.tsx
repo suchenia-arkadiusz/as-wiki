@@ -9,10 +9,18 @@ const EditorContainer = styled.div`
 type Props = {
   value: string;
   onChange: (_value: string) => void;
+  onImageUpload?: (_images: File[]) => Promise<string[]>;
 };
 
 const MDEditor = (props: Props) => {
-  const {value, onChange} = props;
+  const {value, onChange, onImageUpload} = props;
+
+  const handleOnImageUpload = async (files: File[], callback: (_urls: string[]) => void) => {
+    if (!onImageUpload) return;
+
+    const urls = await onImageUpload(files);
+    callback(urls);
+  };
 
   return (
     <EditorContainer data-testid='MDEditor.container'>
@@ -27,6 +35,7 @@ const MDEditor = (props: Props) => {
         modelValue={value}
         onChange={onChange}
         preview={false}
+        onUploadImg={handleOnImageUpload}
       />
     </EditorContainer>
   );

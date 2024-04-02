@@ -28,6 +28,13 @@ const UserAvatar = () => {
   const user = userContext.getUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const normalizeAvatarUrl = (url: string) => {
+    if (url.startsWith('http')) {
+      return url;
+    }
+    return `${import.meta.env.VITE_APP_API_URL}${url}`;
+  };
+
   return (
     <UserAvatarContainer data-testid='UserAvatar.container'>
       <div>
@@ -35,7 +42,7 @@ const UserAvatar = () => {
       </div>
       <div>
         <UserAvatarButton onClick={() => setIsMenuOpen(!isMenuOpen)} data-testid='UserAvatar.button.avatar'>
-          <img src={user?.avatarUrl || avatar}
+          <img src={user?.avatarUrl ? normalizeAvatarUrl(user.avatarUrl) : avatar}
             style={{width: '50px', height: '50px', borderRadius: '50%'}}
             alt="User's avatar"
           />

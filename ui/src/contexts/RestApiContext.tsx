@@ -5,10 +5,10 @@ type Props = {
 };
 
 type RestAPIContextType = {
-  get: (_url: string, _headers?: object) => Promise<Response>;
-  post: (_url: string, _body: object, _headers?: object) => Promise<Response>;
-  put: (_url: string, _body: object, _headers?: object) => Promise<Response>;
-  del: (_url: string, _body?: object, _headers?: object) => Promise<Response>;
+  get: (_url: string, _withContentType?: boolean, _headers?: Record<string, string>) => Promise<Response>;
+  post: (_url: string, _body: object, _withContentType?: boolean, _headers?: Record<string, string>) => Promise<Response>;
+  put: (_url: string, _body: object, _withContentType?: boolean, _headers?: Record<string, string>) => Promise<Response>;
+  del: (_url: string, _body?: object, _withContentType?: boolean, _headers?: Record<string, string>) => Promise<Response>;
 };
 
 export const RestApiContext = createContext<RestAPIContextType | undefined>(undefined);
@@ -16,44 +16,47 @@ export const RestApiContext = createContext<RestAPIContextType | undefined>(unde
 export const RestApiProvider = (props: Props) => {
   const baseUrl = import.meta.env.VITE_APP_API_URL;
 
-  const get = async (url: string, headers: object = {}): Promise<Response> => {
+  const get = async (url: string, withContentType: boolean = true, headers: Record<string, string> = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'GET',
       mode: 'cors',
-      headers: getHeaders(headers)
+      headers: getHeaders(headers, withContentType)
     });
   };
 
-  const post = async (url: string, body: object, headers: object = {}): Promise<Response> => {
+  const post = async (url: string, body: object, withContentType: boolean = true, headers: Record<string, string> = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'POST',
       mode: 'cors',
-      headers: getHeaders(headers),
-      body: JSON.stringify(body)
+      headers: getHeaders(headers, withContentType),
+      body: withContentType ? JSON.stringify(body) : body as FormData
     });
   };
 
-  const put = async (url: string, body: object, headers: object = {}): Promise<Response> => {
+  const put = async (url: string, body: object, withContentType: boolean = true, headers: Record<string, string> = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'PUT',
-      headers: getHeaders(headers),
+      headers: getHeaders(headers, withContentType),
       body: JSON.stringify(body)
     });
   };
 
-  const del = async (url: string, body?: object, headers: object = {}): Promise<Response> => {
+  const del = async (url: string, body?: object, withContentType: boolean = true, headers: Record<string, string> = {}): Promise<Response> => {
     return await fetch(`${baseUrl}${url}`, {
       method: 'DELETE',
-      headers: getHeaders(headers),
+      headers: getHeaders(headers, withContentType),
       body: JSON.stringify(body)
     });
   };
 
-  const getHeaders = (headers: object) => {
-    const basicHeaders = {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json'
+  const getHeaders = (headers: object, withContentType: boolean) => {
+    const basicHeaders: Record<string, string> = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
     };
+
+    if (withContentType) {
+      basicHeaders['Content-Type'] = 'application/json';
+    }
 
     return { ...basicHeaders, ...headers };
   };

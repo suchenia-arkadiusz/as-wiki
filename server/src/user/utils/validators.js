@@ -9,6 +9,7 @@ export const validateUpdateUserInput = async (req, res, next) => {
     email: Joi.string().email().required(),
     firstName: Joi.string().allow(null, ''),
     lastName: Joi.string().allow(null, ''),
+    avatarUrl: Joi.string().allow(null, ''),
     newPassword: Joi.string().allow(null, ''),
     currentPassword: Joi.string().allow(null,'')
   });

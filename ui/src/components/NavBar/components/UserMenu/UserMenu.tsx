@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useAuthContext } from '../../../../contexts/AuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const UserMenuOverlay = styled.div`
   position: fixed;
@@ -43,9 +44,10 @@ type Props = {
 const UserMenu = (props: Props) => {
   const { onClose } = props;
   const authContext = useAuthContext();
+  const navigate = useNavigate();
 
   const MENU_ITEMS = [
-    {key: 'profile', value: 'Profile', action: () => {alert('Profile');}},
+    {key: 'profile', value: 'Profile', action: () => {navigate('/user-profile');}},
     {key: 'separator'},
     {key: 'signOut', value: 'Sign Out', action: () => authContext.logout()},
   ];
