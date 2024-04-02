@@ -4,11 +4,11 @@ import {getUserByUsername} from '../auth/helpers/getUser';
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, email, firstName, lastName, newPassword } = req.body;
+  const { username, email, firstName, lastName, avatarUrl, newPassword } = req.body;
 
   const encryptedPassword = newPassword ? await bcrypt.hash(newPassword, 12) : undefined;
 
-  const isUpdated = await updateExistingUser(id, email, firstName, lastName, encryptedPassword);
+  const isUpdated = await updateExistingUser(id, email, firstName, lastName, avatarUrl, encryptedPassword);
 
   if (isUpdated) {
     const { password: _, ...updatedUser } = await getUserByUsername(username);

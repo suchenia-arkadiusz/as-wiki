@@ -37,7 +37,7 @@ export const ProjectsProvider = (props: Props) => {
   }, []);
 
   const addProject = async (project: Project, onClose: () => void) => {
-    const response = await api.post('/api/v1/projects', { name: project.name, description: project.description});
+    const response = await api.post('/api/v1/projects', { name: project.name, description: project.description, shortDescription: project.shortDescription});
 
     if (response.status !== 200) {
       toasterContext.addToast('Something went wrong!', 'ERROR');

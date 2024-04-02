@@ -14,7 +14,7 @@ export const createUser = async (user, userGroup) => {
     user.firstName,
     user.lastName,
     new Date().toISOString(),
-    user.avatarURL,
+    user.avatarUrl,
   ];
 
   const foundUserGroup = await getUserGroupByName(userGroup || 'USER');

@@ -30,6 +30,7 @@ export const UserProvider = (props: Props) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      avatarUrl: user.avatarUrl,
       currentPassword,
       newPassword
     }).then((response: Response) => {

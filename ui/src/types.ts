@@ -22,3 +22,7 @@ export type CreatedByUser = {
   lastName?: string;
   username: string;
 };
+
+export type ImageUploadResponse = {
+  id: string;
+};

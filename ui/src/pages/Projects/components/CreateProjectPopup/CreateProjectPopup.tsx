@@ -7,6 +7,8 @@ import { validateStringInput } from '../../../../utils/validators.ts';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
 import { Project } from '../../types.ts';
 import MDEditor from '../../../../components/MDEditor/MDEditor.tsx';
+import { useRestApiContext } from '../../../../contexts/RestApiContext.tsx';
+import { ImageUploadResponse } from '../../../../types.ts';
 
 const CreateProjectContainer = styled.div`
   display: flex;
@@ -32,6 +34,7 @@ const CreateProjectPopup = (props: Props) => {
   const shortDescriptionRef = useRef<HTMLInputElement>(null);
   const [description, setDescription] = useState<string>(isEdit ? selectedProject?.description || '' : '');
   const projectsContext = useProjectsContext();
+  const api = useRestApiContext();
 
   const [validatedForm, setValidatedForm] = useState({
     name: isEdit,
@@ -62,6 +65,24 @@ const CreateProjectPopup = (props: Props) => {
 
   const isButtonDisabled = () => {
     return !validatedForm.name || !validatedForm.shortDescription;
+  };
+
+  const onImageUpload = async (images: File[]): Promise<string[]> => {
+    const result: Array<ImageUploadResponse> = await Promise.all<ImageUploadResponse>(
+      images.map((image) => {
+        return new Promise((resolve, reject) => {
+          const form = new FormData();
+          form.append('file', image);
+
+          api.post('/upload', form, false)
+            .then((response) => response.json())
+            .then((data: ImageUploadResponse) => resolve(data))
+            .catch((error) => reject(error));
+        });
+      })
+    );
+
+    return result.map((item) => `${import.meta.env.VITE_APP_API_URL}/upload/${item.id}`);
   };
 
   return (
@@ -99,7 +120,7 @@ const CreateProjectPopup = (props: Props) => {
           defaultValue={isEdit ? selectedProject?.shortDescription : undefined}
         />
         <div data-testid="CreateProject.editor.description">
-          <MDEditor value={description} onChange={setDescription} />
+          <MDEditor value={description} onChange={setDescription} onImageUpload={onImageUpload} />
         </div>
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">
           <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={isButtonDisabled()} data-testid="CreateProject.button.save" />

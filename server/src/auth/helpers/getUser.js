@@ -29,7 +29,7 @@ const mapUser = (user, userGroups) => ({
   firstName: user.first_name,
   lastName: user.last_name,
   createdAt: user.created_at,
-  avatarURL: user.avatar_url,
+  avatarUrl: user.avatar_url,
   userGroups: userGroups && userGroups.length > 0 ? userGroups.map(mapUserGroup) : undefined,
 });
 

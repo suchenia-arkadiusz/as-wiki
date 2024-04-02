@@ -42,7 +42,7 @@ export const AuthProvider = (props: Props) => {
     if (token || refreshToken) {
       api.get('/token').then((response) => {
         if (response.status === 401) {
-          api.get('/refresh', { 'Refresh-Token': refreshToken }).then((res) => {
+          api.get('/refresh', true, { 'Refresh-Token': refreshToken || '' }).then((res) => {
             if (res.status === 401) {
               navigateToLogin();
             } else {

@@ -48,3 +48,8 @@ ul .task-list-item input {
 .md-editor-preview-wrapper {
   padding: 0;
 }
+
+.md-editor-preview-wrapper img {
+  max-width: 1000px;
+  max-height: 1000px;
+}
