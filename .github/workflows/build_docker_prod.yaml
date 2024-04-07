@@ -6,9 +6,10 @@ on:
             - main
 
 jobs:
-    using: 'docker'
-    image: 'docker:dind'
     PROD-Build-Docker:
+        runs-on: ubuntu-latest
+        container:
+            image: 'docker:dind'
         env:
             BUILD_NUMBER: ${{ gitea.run_id }}
         steps:
