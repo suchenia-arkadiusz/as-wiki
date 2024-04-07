@@ -1,0 +1,55 @@
+name: Build & Test
+run-name: Build & Test
+on:
+    push:
+        branches:
+            - main
+            - develop
+    pull_request:
+        types:
+            - opened
+            - synchronize
+
+jobs:
+    using: 'docker'
+    image: 'node:18.17.0'
+    UI-Build-&-Test:
+        steps:
+            - uses: actions/checkout@v3
+            - name: Build
+              run: |
+                    cd ui
+                    npm install
+                    npm run eslint
+                    npm run build
+            - name: Test
+              run: |
+                    cd ui
+                    npm run test:coverage
+    SRV-Build-&-Test:
+        env:
+            DB_HOST: localhost
+            DB_USERNAME: testUser
+            DB_PASSWORD: testUserPassword
+            DB_NAME: aswiki_test
+            DB_PORT: 10000
+            APP_ADMIN_USER_PASSWORD: testUserPassword
+            APP_ADMIN_USER_EMAIL: test@aswiki.com
+            APP_ENV: test
+        steps:
+            - uses: actions/checkout@v3
+            - name: Build
+              run: |
+                    cd server
+                    npm install
+                    npm run eslint
+                    npm run build
+            - name: Test
+              run: |
+                    cd server
+                    docker-compose -f test-services.yml down
+                    docker-compose -f test-services.yml up -d
+                    sleep 10s
+                    npx db-migrate up -e test
+                    npm run test:coverage
+                    docker-compose -f test-services.yml down
