@@ -11,7 +11,7 @@ jobs:
         container:
             image: 'docker:dind'
         env:
-            BUILD_NUMBER: ${{ gitea.run_id }}
+            BUILD_NUMBER: ${{ github.run_id }}
         steps:
             - uses: actions/checkout@v3
             - name: UI Docker Build

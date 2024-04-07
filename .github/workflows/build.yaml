@@ -11,7 +11,7 @@ on:
             - synchronize
 
 jobs:
-    UI-Build-&-Test:
+    UI-Build-and-Test:
         runs-on: ubuntu-latest
         container:
             image: 'node:18.17.0'
@@ -27,7 +27,7 @@ jobs:
               run: |
                     cd ui
                     npm run test:coverage
-    SRV-Build-&-Test:
+    SRV-Build-and-Test:
         runs-on: ubuntu-latest
         container:
             image: 'node:18.17.0'
