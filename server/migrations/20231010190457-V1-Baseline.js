@@ -90,5 +90,6 @@ function createUsersTableAndAdminUser(db) {
     'admin'
 );`;
     db.runSql(createAdminUserQuery);
+    console.log('Admin user added');
   });
 }
