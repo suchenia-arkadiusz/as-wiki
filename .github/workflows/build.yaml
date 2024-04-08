@@ -13,8 +13,6 @@ on:
 jobs:
     UI-Build-and-Test:
         runs-on: ubuntu-latest
-        container:
-            image: 'node:18.17.0'
         steps:
             - uses: actions/checkout@v3
             - name: Build
@@ -29,8 +27,6 @@ jobs:
                     npm run test:coverage
     SRV-Build-and-Test:
         runs-on: ubuntu-latest
-        container:
-            image: 'node:18.17.0'
         env:
             DB_HOST: localhost
             DB_USERNAME: testUser
