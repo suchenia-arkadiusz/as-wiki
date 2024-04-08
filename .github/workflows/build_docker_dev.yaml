@@ -26,10 +26,10 @@ jobs:
               with:
                 registry: ${{ env.REGISTRY }}
                 username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
+                password: ${{ secrets.REPOSITORY_TOKEN }}
 
             - name: Extract UI metadata for Docker
-              id: meta
+              id: meta_ui
               uses: docker/metadata-action@v5
               with:
                 images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui
@@ -39,11 +39,11 @@ jobs:
               with:
                 context: "{{defaultContext}}:ui"
                 push: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+                tags: ${{ steps.meta_ui.outputs.tags }}
+                labels: ${{ steps.meta_ui.outputs.labels }}
 
             - name: Extract UI metadata for Docker
-              id: meta
+              id: meta_srv
               uses: docker/metadata-action@v5
               with:
                 images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv
@@ -53,5 +53,5 @@ jobs:
               with:
                 context: "{{defaultContext}}:server"
                 push: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}s-wiki-srv:0.0.$BUILD_NUMBER-dev
+                tags: ${{ steps.meta_srv.outputs.tags }}
+                labels: ${{ steps.meta_srv.outputs.labels }}s-wiki-srv:0.0.$BUILD_NUMBER-dev
