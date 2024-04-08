@@ -22,7 +22,7 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-  createUsersTableAndAdminUser(db).then(() => {
+  return createUsersTableAndAdminUser(db).then(() => {
     const filePath = path.join(__dirname, 'sqls', '20231010190457-V1-Baseline-up.sql');
     return new Promise(function (resolve, reject) {
       fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
