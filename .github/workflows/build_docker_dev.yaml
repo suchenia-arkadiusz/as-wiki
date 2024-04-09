@@ -26,14 +26,14 @@ jobs:
             - name: UI Docker Build
               run: |
                     cd ui
-                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER-dev .
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER-dev .
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
                     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest-dev
                     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER-dev
             - name: SRV Docker Build
               run: |
                     cd server
-                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev .
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev .
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
                     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev
                     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev
