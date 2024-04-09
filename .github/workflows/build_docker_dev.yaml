@@ -11,8 +11,6 @@ on:
 jobs:
     DEV-Build-Docker:
         runs-on: ubuntu-latest
-        container:
-            image: 'docker:dind'
         permissions:
             contents: read
             packages: write
