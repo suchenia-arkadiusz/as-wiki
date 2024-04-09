@@ -11,6 +11,8 @@ export const getPageById = async (pageId) => {
   } catch (err) {
     log.error({err}, 'Cannot get page');
   }
+
+  return undefined;
 };
 
 const mapPage = (page) => ({

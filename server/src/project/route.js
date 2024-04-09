@@ -5,7 +5,6 @@ import { updateProject, validateUpdateProjectInput } from './utils/updateProject
 import { getProjects } from './utils/getProjects';
 import { getProject } from './utils/getProject';
 import { acl } from '../security/permissions/acl';
-import { checkProjectPermissions } from './security/permissions/checkProjectPermissions';
 import {deleteProject} from './utils/deleteProject';
 
 export const projectRoute = () => {
@@ -13,10 +12,10 @@ export const projectRoute = () => {
   router.use(authenticate);
 
   router.post('/projects', acl(['project:write']), validateCreateProjectInput, createProject);
-  router.put('/projects/:id', validateUpdateProjectInput, updateProject);
+  router.put('/projects/:id', acl(['project:write']), validateUpdateProjectInput, updateProject);
   router.get('/projects', acl(['project:read']), getProjects);
-  router.get('/projects/:id', checkProjectPermissions, acl(['project:read']), getProject);
-  router.delete('/projects/:id',checkProjectPermissions, acl(['project:write']), deleteProject);
+  router.get('/projects/:id', acl(['project:read']), getProject);
+  router.delete('/projects/:id', acl(['project:write']), deleteProject);
 
   return router;
 };

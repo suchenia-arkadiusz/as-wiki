@@ -19,10 +19,12 @@ type Props = {
   iconName: string;
   width?: number;
   height?: number;
+  'data-testid'?: string;
 };
 
-const Icon = ({ iconName, width, height }: Props) => {
-  return <IconContainer data-testid="IconContainer" className={`${iconName}`} $width={width || 16} $height={height || 16} />;
+const Icon = (props: Props) => {
+  const { iconName, width, height } = props;
+  return <IconContainer data-testid={props['data-testid'] ? props['data-testid'] : 'Icon.container'} className={`${iconName}`} $width={width || 16} $height={height || 16} />;
 };
 
 export default Icon;

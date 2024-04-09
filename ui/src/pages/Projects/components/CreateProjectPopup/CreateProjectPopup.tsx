@@ -6,8 +6,9 @@ import styled from 'styled-components';
 import { validateStringInput } from '../../../../utils/validators.ts';
 import { useProjectsContext } from '../../../../contexts/ProjectsContext.tsx';
 import { Project } from '../../types.ts';
-import { MdEditor } from 'md-editor-rt';
-import 'md-editor-rt/lib/style.css';
+import MDEditor from '../../../../components/MDEditor/MDEditor.tsx';
+import { useRestApiContext } from '../../../../contexts/RestApiContext.tsx';
+import { ImageUploadResponse } from '../../../../types.ts';
 
 const CreateProjectContainer = styled.div`
   display: flex;
@@ -21,10 +22,6 @@ const CreateProjectButtonContainer = styled.div`
   width: 100%;
 `;
 
-const EditorContainer = styled.div`
-  height: 800px;
-`;
-
 type Props = {
   onClose: () => void;
   selectedProject: Project | undefined;
@@ -34,20 +31,58 @@ type Props = {
 const CreateProjectPopup = (props: Props) => {
   const { onClose, selectedProject, isEdit } = props;
   const nameRef = useRef<HTMLInputElement>(null);
+  const shortDescriptionRef = useRef<HTMLInputElement>(null);
   const [description, setDescription] = useState<string>(isEdit ? selectedProject?.description || '' : '');
   const projectsContext = useProjectsContext();
+  const api = useRestApiContext();
 
   const [validatedForm, setValidatedForm] = useState({
     name: isEdit,
-    description: isEdit
+    shortDescription: isEdit
   });
 
   const onSubmit = async () => {
     if (isEdit) {
-      projectsContext.editProject({...selectedProject, id: selectedProject?.id || '', name: nameRef.current?.value || '', description}, onClose);
+      projectsContext.editProject(
+        {
+          ...selectedProject,
+          id: selectedProject?.id || '',
+          name: nameRef.current?.value || '',
+          description,
+          shortDescription: shortDescriptionRef.current?.value || ''},
+        onClose
+      );
     } else {
-      projectsContext.addProject({id: '', name: nameRef.current?.value || '', description}, onClose);
+      projectsContext.addProject(
+        {id: '',
+          name: nameRef.current?.value || '',
+          description,
+          shortDescription: shortDescriptionRef.current?.value || ''},
+        onClose
+      );
     }
+  };
+
+  const isButtonDisabled = () => {
+    return !validatedForm.name || !validatedForm.shortDescription;
+  };
+
+  const onImageUpload = async (images: File[]): Promise<string[]> => {
+    const result: Array<ImageUploadResponse> = await Promise.all<ImageUploadResponse>(
+      images.map((image) => {
+        return new Promise((resolve, reject) => {
+          const form = new FormData();
+          form.append('file', image);
+
+          api.post('/upload', form, false)
+            .then((response) => response.json())
+            .then((data: ImageUploadResponse) => resolve(data))
+            .catch((error) => reject(error));
+        });
+      })
+    );
+
+    return result.map((item) => `${import.meta.env.VITE_APP_API_URL}/upload/${item.id}`);
   };
 
   return (
@@ -57,6 +92,7 @@ const CreateProjectPopup = (props: Props) => {
         data-color-mode='light'
       >
         <Input
+          data-testid='CreateProject.input.name'
           ref={nameRef}
           isRequired
           inputKey="project-name"
@@ -69,21 +105,25 @@ const CreateProjectPopup = (props: Props) => {
           }}
           defaultValue={isEdit ? selectedProject?.name : undefined}
         />
-        <EditorContainer data-testid='CreateProject.description'>
-          <MdEditor
-            showCodeRowNumber={true}
-            footers={[]}
-            toolbarsExclude={['save', 'prettier', 'pageFullscreen', 'fullscreen', 'htmlPreview', 'catalog', 'github']}
-            editorId='page-content-editor'
-            codeTheme='stackoverfloew'
-            language='en-US'
-            modelValue={description}
-            onChange={setDescription}
-            preview={false}
-          />
-        </EditorContainer>
+        <Input
+          data-testid='CreateProject.input.shortDescription'
+          ref={shortDescriptionRef}
+          isRequired
+          inputKey="project-short-description"
+          label="Short Description"
+          placeholder="Short description"
+          type="text"
+          validated={validatedForm.shortDescription}
+          onChange={() => {
+            setValidatedForm({ ...validatedForm, shortDescription: validateStringInput(shortDescriptionRef.current?.value || '') });
+          }}
+          defaultValue={isEdit ? selectedProject?.shortDescription : undefined}
+        />
+        <div data-testid="CreateProject.editor.description">
+          <MDEditor value={description} onChange={setDescription} onImageUpload={onImageUpload} />
+        </div>
         <CreateProjectButtonContainer data-testid="CreateProject.button.container">
-          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" />
+          <Button iconName="bi-floppy" onClick={onSubmit} text="Save" disabled={isButtonDisabled()} data-testid="CreateProject.button.save" />
         </CreateProjectButtonContainer>
       </CreateProjectContainer>
     </Popup>

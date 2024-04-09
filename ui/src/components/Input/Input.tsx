@@ -13,18 +13,22 @@ type InputProps = HTMLProps<HTMLInputElement> & {
   isRequired?: boolean;
   validated: boolean;
   inputKey: string | undefined;
+  'data-testid'?: string;
 };
 
 const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
-  const { label, placeholder, isRequired, validated, type, onChange, inputKey, defaultValue } = props;
+  const { label, placeholder, isRequired, validated, type, onChange, inputKey, defaultValue, value, disabled } = props;
+
+  const dataTestId = props['data-testid'] ? props['data-testid'] : 'InputContainer';
 
   return (
-    <InputContainer data-testid="InputContainer">
-      <label htmlFor={inputKey} data-testid="InputContainer.label">
+    <InputContainer data-testid={dataTestId}>
+      <label htmlFor={inputKey} data-testid={`${dataTestId}.label`}>
         {label} {isRequired ? '*' : null}
       </label>
       <input
-        data-testid="InputContainer.input"
+        data-testid={`${dataTestId}.input`}
+        value={value}
         ref={ref}
         className={`app-text-input${!validated ? ' app-input-not-validated' : ''}`}
         type={type}
@@ -33,6 +37,7 @@ const Input = forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>
         placeholder={placeholder}
         onChange={onChange}
         defaultValue={defaultValue}
+        disabled={disabled}
       />
     </InputContainer>
   );

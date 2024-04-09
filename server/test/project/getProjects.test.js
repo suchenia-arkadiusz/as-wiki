@@ -29,7 +29,7 @@ describe('API getProjects', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: `name-${Date.now()}`,
-          description: 'description',
+          shortDescription: 'description',
           isPublic: false,
           logoUrl: 'logoUrl',
         })
@@ -41,7 +41,7 @@ describe('API getProjects', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: `name-${Date.now()}`,
-          description: 'description',
+          shortDescription: 'description',
           isPublic: false,
           logoUrl: 'logoUrl',
         })

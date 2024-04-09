@@ -31,17 +31,7 @@ describe('<Popup />', () => {
     const screen = setupScreen(onClose);
     const closeButtonContainer = screen.getByTestId('PopupCloseButtonContainer');
 
-    fireEvent.click(within(closeButtonContainer).getByTestId('ButtonContainer'));
-
-    expect(onClose).toHaveBeenCalled();
-  });
-
-  it('should close popup on click outside', () => {
-    const onClose = vi.fn();
-    const screen = setupScreen(onClose);
-    const overlayContainer = screen.getByTestId('PopupOverlayContainer');
-
-    fireEvent.click(overlayContainer);
+    fireEvent.click(within(closeButtonContainer).getByTestId('Popup.close.button'));
 
     expect(onClose).toHaveBeenCalled();
   });

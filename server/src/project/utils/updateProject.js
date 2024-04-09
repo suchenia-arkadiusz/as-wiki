@@ -5,7 +5,8 @@ import {log} from '../../config/logger';
 export const validateUpdateProjectInput = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string(),
-    description: Joi.string(),
+    description: Joi.string().allow(null, ''),
+    shortDescription: Joi.string(),
     isPublic: Joi.boolean(),
     logoUrl: Joi.string(),
   });

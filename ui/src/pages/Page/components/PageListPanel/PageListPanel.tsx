@@ -56,10 +56,10 @@ const PageListPanel = (props: Props) => {
   return (
     <PageListPanelContainer data-testid="PageListPanel.container">
       <Right>
-        <Button iconName="bi-plus-lg" onClick={() => { onAddPage(false); }} text="Add Page" />
+        <Button iconName="bi-plus-lg" onClick={() => { onAddPage(false); }} text="Add Page" data-testid='PageListPanel.addPage.button' />
       </Right>
       <h1>{projectName}</h1>
-      <TreeList selectedPageId={selectedPageId} data={pages} onSelect={onSelect} />
+      <TreeList selectedDataElementId={selectedPageId} data={pages} onSelect={onSelect} data-testid='PageListPanel.list' />
     </PageListPanelContainer>
   );
 };

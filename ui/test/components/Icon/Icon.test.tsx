@@ -9,12 +9,12 @@ const setupScreen = (iconName: string = '') => {
 describe('Icon', () => {
   it('should render IconContainer', () => {
     const screen = setupScreen();
-    expect(screen.getByTestId('IconContainer')).toBeInTheDocument();
+    expect(screen.getByTestId('Icon.container')).toBeInTheDocument();
   });
 
-  it('should render IconContainer with className', () => {
+  it('should render Icon.container with className', () => {
     const screen = setupScreen('bi-x-lg');
-    expect(screen.getByTestId('IconContainer')).toBeInTheDocument();
-    expect(screen.getByTestId('IconContainer')).toHaveClass('bi-x-lg');
+    expect(screen.getByTestId('Icon.container')).toBeInTheDocument();
+    expect(screen.getByTestId('Icon.container')).toHaveClass('bi-x-lg');
   });
 });

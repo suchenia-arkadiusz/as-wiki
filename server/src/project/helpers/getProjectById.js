@@ -21,6 +21,7 @@ const mapProject = (project) => {
   return {
     id: project.id,
     name: project.name,
+    shortDescription: project.short_description,
     description: project.description,
     numberOfPages: project.num_pages,
     createdAt: project.created_at,

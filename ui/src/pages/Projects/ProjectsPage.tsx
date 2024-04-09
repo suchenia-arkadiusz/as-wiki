@@ -41,11 +41,15 @@ const ProjectsPage = () => {
           <h1>PROJECTS</h1>
         </Left>
         <Right data-testid="ProjectsPage.container.header.addProject">
-          <Button iconName="bi-plus-lg" onClick={() => openPopup(false, undefined)} text="Add Project" />
+          <Button
+            data-testid="ProjectsPage.button.addProject"
+            iconName="bi-plus-lg"
+            onClick={() => openPopup(false, undefined)}
+            text="Add Project" />
         </Right>
       </ProjectsPageHeader>
-      {popupProps.isPopupOpen ? <CreateProjectPopup onClose={closePopup} isEdit={popupProps.isEdit} selectedProject={popupProps.selectedProject} /> : null}
       <ProjectsTable openPopup={openPopup} />
+      {popupProps.isPopupOpen ? <CreateProjectPopup onClose={closePopup} isEdit={popupProps.isEdit} selectedProject={popupProps.selectedProject} /> : null}
     </ProjectsPageContainer>
   );
 };

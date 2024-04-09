@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import Input from '../../../../../components/Input/Input.tsx';
 import { useRef, useState } from 'react';
 import { type SignInFormValidated } from '../types.ts';
-import { useUserContext } from '../../../../../contexts/UserContext.tsx';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { validateStringInput } from '../../../../../utils/validators.ts';
 import Button from '../../../../../components/Button/Button.tsx';
-import { useRestApiContext } from '../../../../../contexts/RestApiContext.tsx';
-import { useToasterContext } from '../../../../../contexts/ToasterContext.tsx';
+import { useAuthContext } from '../../../../../contexts/AuthContext.tsx';
 
 const SignInFormContainer = styled.div`
   display: flex;
@@ -19,11 +16,7 @@ const SignInFormContainer = styled.div`
 `;
 
 const SignInForm = () => {
-  const api = useRestApiContext();
-  const navigate = useNavigate();
-  const userContext = useUserContext();
-  const toasterContext = useToasterContext();
-  const location = useLocation();
+  const {login} = useAuthContext();
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [validatedForm, setValidatedForm] = useState<SignInFormValidated>({
@@ -35,24 +28,7 @@ const SignInForm = () => {
     const username = usernameRef.current?.value || '';
     const password = passwordRef.current?.value || '';
 
-    const response = await api.post('/login', { username, password });
-
-    if (response.status === 401) {
-      toasterContext.addToast('Wrong username or password!', 'ERROR');
-    }
-
-    if (response.status === 200) {
-      const data = await response.json();
-      userContext.setUser(data.user);
-      localStorage.setItem('token', data.jwt);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      toasterContext.addToast('Signed in successfully!', 'SUCCESS');
-      if (location.state?.from) {
-        navigate(location.state.from);
-        return;
-      }
-      navigate('/dashboard');
-    }
+    login(username, password);
   };
 
   return (
@@ -65,6 +41,7 @@ const SignInForm = () => {
       }}
     >
       <Input
+        data-testid='SignInForm.username'
         ref={usernameRef}
         label="Username"
         type="text"
@@ -80,6 +57,7 @@ const SignInForm = () => {
         inputKey="sign-in-username"
       />
       <Input
+        data-testid='SignInForm.password'
         ref={passwordRef}
         label="Password"
         type="password"
@@ -94,7 +72,7 @@ const SignInForm = () => {
         }}
         inputKey="sign-in-password"
       />
-      <Button onClick={onSubmit} text="Sign in" />
+      <Button onClick={onSubmit} text="Sign in"  data-testid='SignInForm.button'/>
     </SignInFormContainer>
   );
 };

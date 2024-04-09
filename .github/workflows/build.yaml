@@ -1,0 +1,63 @@
+name: Build & Test
+run-name: Build & Test
+on:
+    push:
+        branches:
+            - main
+            - develop
+    pull_request:
+        types:
+            - opened
+            - synchronize
+
+jobs:
+    UI-Build-and-Test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Build
+              run: |
+                    . $NVM_DIR/nvm.sh
+                    cd ui
+                    nvm install
+                    npm install
+                    npm run eslint
+                    npm run build
+            - name: Test
+              run: |
+                    . $NVM_DIR/nvm.sh
+                    cd ui
+                    nvm install
+                    npm run test:coverage
+    SRV-Build-and-Test:
+        runs-on: ubuntu-latest
+        env:
+            DB_HOST: localhost
+            DB_USERNAME: testUser
+            DB_PASSWORD: testUserPassword
+            DB_NAME: aswiki_test
+            DB_PORT: 10000
+            APP_ADMIN_USER_PASSWORD: testUserPassword
+            APP_ADMIN_USER_EMAIL: test@aswiki.com
+            APP_ENV: test
+        steps:
+            - uses: actions/checkout@v3
+            - name: Build
+              run: |
+                    . $NVM_DIR/nvm.sh
+                    cd server
+                    nvm install
+                    npm install
+                    npm run eslint
+                    npm run build
+            - name: Test
+              run: |
+                    . $NVM_DIR/nvm.sh
+                    cd server
+                    nvm install
+                    docker-compose -f test-services.yml down
+                    docker-compose -f test-services.yml up -d
+                    sleep 10s
+                    npx db-migrate up -e test
+                    npm run test:coverage
+                    docker-compose -f test-services.yml down

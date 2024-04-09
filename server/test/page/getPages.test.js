@@ -32,7 +32,7 @@ describe('API getPages', () => {
         .set({ Authorization: `Bearer ${validToken}` })
         .send({
           name: `name-${Date.now()}`,
-          description: 'description',
+          shortDescription: 'description',
           isPublic: false,
           logoUrl: 'logoUrl',
         })

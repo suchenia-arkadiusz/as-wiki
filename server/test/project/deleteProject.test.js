@@ -1,41 +1,49 @@
 import { getExpressApp } from '../config/getApp';
-import { deleteProjectById } from '../../src/project/helpers/deleteProject';
 import { getUserByUsername } from '../../src/auth/helpers/getUser';
 import { generateJWT } from '../../src/auth/utils/generateJWT';
 import request from 'supertest';
-import expect from 'expect';
+import {createProject} from '../testUtils/projectUtils';
+import {createPage} from '../testUtils/pageUtils';
+import {addPermissionsForPage} from '../../src/pagePermissions/helpers/addPermissionsForPage';
 
-describe('deleteProject', () => {
+describe('API deleteProject', () => {
   let app;
 
   beforeAll(async () => {
     app = await getExpressApp();
   });
 
-  it('should return false if there is no project with the given id', async () => {
-    const result = await deleteProjectById('wrongId');
-
-    expect(result).toBe(false);
-  });
-
-  it('should return true if there is a project with the given id', async () => {
+  it('DELETE should return 500 if something went wrong', async () => {
     const adminUser = await getUserByUsername('admin');
     const validToken = generateJWT(adminUser, '1d');
-    const projectName = `name-${Date.now()}`;
 
-    const response = await request(app)
-      .post('/api/v1/projects')
-      .set('Cookie', [`refreshToken=${validToken}`])
-      .set('Header', [`authorization=${validToken}`])
-      .send({
-        name: projectName,
-        description: 'description',
-        isPublic: false,
-        logoUrl: 'logoUrl',
-      });
+    await request(app)
+      .delete('/api/v1/projects/1')
+      .set({ Authorization: `Bearer ${validToken}` })
+      .expect(500);
+  });
 
-    const result = await deleteProjectById(response.body.id);
+  it('DELETE should return 200 if there is a project with the given id', async () => {
+    const adminUser = await getUserByUsername('admin');
+    const validToken = generateJWT(adminUser, '1d');
+    const project = await createProject(app, validToken);
 
-    expect(result).toBe(true);
+    await request(app)
+      .delete(`/api/v1/projects/${project.id}`)
+      .set({ Authorization: `Bearer ${validToken}` })
+      .expect(204);
+  });
+
+  it('DELETE should return 204 if the project is deleted with all pages and permissions', async () => {
+    const adminUser = await getUserByUsername('admin');
+    const validToken = generateJWT(adminUser, '1d');
+    const project = await createProject(app, validToken);
+    const page = await createPage(app, project, validToken);
+    await addPermissionsForPage(page.id, {userId: adminUser.id});
+
+    await request(app)
+      .delete(`/api/v1/projects/${project.id}`)
+      .set({ Authorization: `Bearer ${validToken}` })
+      .expect(204);
   });
 });

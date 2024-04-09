@@ -27,3 +27,9 @@ export const IconsContainer = styled.div`
   gap: 10px;
   color: #747474;
 `;
+
+export const FlexRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+`;
