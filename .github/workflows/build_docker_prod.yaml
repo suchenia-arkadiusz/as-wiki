@@ -1,5 +1,5 @@
 name: Build PROD Docker image
-run-name: Build the asWiki app's DEV Docker image
+run-name: Build the asWiki app's PROD Docker image
 on:
     push:
         branches:
