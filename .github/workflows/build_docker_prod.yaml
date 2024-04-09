@@ -8,23 +8,27 @@ on:
 jobs:
     PROD-Build-Docker:
         runs-on: ubuntu-latest
-        container:
-            image: 'docker:dind'
+        permissions:
+            contents: read
+            packages: write
         env:
-            BUILD_NUMBER: ${{ github.run_id }}
+            BUILD_NUMBER: ${{ github.run_number }}
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repository
+              uses: actions/checkout@v4
             - name: UI Docker Build
               run: |
                     cd ui
-                    docker buildx build --platform linux/amd64,linux/arm64 -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER .
-                    docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER .
+                    docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER
             - name: SRV Docker Build
               run: |
                     cd server
-                    docker buildx build --platform linux/amd64,linux/arm64 -t git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest -t git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER .
-                    docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER .
+                    docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER
