@@ -1,7 +1,10 @@
 name: Build PROD Docker image
 run-name: Build the asWiki app's PROD Docker image
 on:
-    push:
+    workflow_run:
+        workflows: ["Build & Test"]
+        types:
+            - completed
         branches:
             - main
 
