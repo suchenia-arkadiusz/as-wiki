@@ -2,7 +2,7 @@ name: Build DEV Docker image
 run-name: Build the asWiki app's DEV Docker image
 on:
     workflow_run:
-        workflows: ["Build & Test"]
+        workflows: ["Build and Test"]
         types:
             - completed
         branches:
