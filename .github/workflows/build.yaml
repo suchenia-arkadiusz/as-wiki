@@ -1,5 +1,5 @@
-name: Build & Test
-run-name: Build & Test
+name: Build and Test
+run-name: Build and Test
 on:
     push:
         branches:

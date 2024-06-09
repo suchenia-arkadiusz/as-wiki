@@ -1,36 +1,41 @@
 name: Build PROD Docker image
 run-name: Build the asWiki app's PROD Docker image
 on:
-    push:
+    workflow_run:
+        workflows: ["Build and Test"]
+        types:
+            - completed
         branches:
             - main
 
 jobs:
     PROD-Build-Docker:
         runs-on: ubuntu-latest
-        container:
-            image: 'docker:dind'
+        permissions:
+            contents: read
+            packages: write
         env:
-            BUILD_NUMBER: ${{ github.run_id }}
+            BUILD_NUMBER: ${{ github.run_number }}
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v3
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
             - name: UI Docker Build
               run: |
                     cd ui
-                    docker build -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest -t git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER .
-                    docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:latest
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-ui:0.0.$BUILD_NUMBER
+                    docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER --push .
             - name: SRV Docker Build
               run: |
                     cd server
-                    docker build -t git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest -t git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER .
-                    docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest
-                    docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER
+                    docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER --push .
             - name: UNIFIED Docker Build
               run: |
-                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER .
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER --push .

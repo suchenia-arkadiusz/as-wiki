@@ -2,7 +2,7 @@ name: Build DEV Docker image
 run-name: Build the asWiki app's DEV Docker image
 on:
     workflow_run:
-        workflows: ["Build & Test"]
+        workflows: ["Build and Test"]
         types:
             - completed
         branches:
@@ -11,8 +11,6 @@ on:
 jobs:
     DEV-Build-Docker:
         runs-on: ubuntu-latest
-        container:
-            image: 'docker:dind'
         permissions:
             contents: read
             packages: write
@@ -23,23 +21,21 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v3
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
             - name: UI Docker Build
               run: |
                     cd ui
-                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER-dev .
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest-dev
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER-dev
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-ui:0.0.$BUILD_NUMBER-dev .
             - name: SRV Docker Build
               run: |
                     cd server
-                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev .
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev .
             - name: UNIFIED Docker Build
               run: |
-                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER-dev .
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest-dev
-                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER-dev
+                    docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER-dev .
