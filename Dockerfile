@@ -1,7 +1,7 @@
 FROM node:18.17.1-alpine3.18 as build-ui
 WORKDIR /app
 COPY ui .
-run npm install && npm run build
+run npm install && VITE_APP_API_URL="" npm run build
 
 FROM node:18.17.1-alpine3.18 as build-srv
 WORKDIR /app
