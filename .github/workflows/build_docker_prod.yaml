@@ -1,5 +1,5 @@
 name: Build PROD Docker image
-run-name: Build the asWiki app's DEV Docker image
+run-name: Build the asWiki app's PROD Docker image
 on:
     push:
         branches:
@@ -28,3 +28,9 @@ jobs:
                     docker login git.aru-software.pl -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
                     docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:latest
                     docker push git.aru-software.pl/aru-software/as-wiki/as-wiki-srv:0.0.$BUILD_NUMBER
+            - name: UNIFIED Docker Build
+              run: |
+                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER .
+                    docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER

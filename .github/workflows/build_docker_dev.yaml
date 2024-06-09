@@ -37,3 +37,9 @@ jobs:
                     docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
                     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:latest-dev
                     docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-srv:0.0.$BUILD_NUMBER-dev
+            - name: UNIFIED Docker Build
+              run: |
+                    docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest-dev -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER-dev .
+                    docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.REPOSITORY_TOKEN }}
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:latest-dev
+                    docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-unified:0.0.$BUILD_NUMBER-dev
